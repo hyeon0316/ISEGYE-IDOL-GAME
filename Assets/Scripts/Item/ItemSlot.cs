@@ -27,6 +27,7 @@ public class ItemSlot : MonoBehaviour
 
         GameObject obj = Instantiate(_setItems.Items[itemCode - INDEX]);
         obj.transform.SetParent(this.transform);
+        obj.transform.localScale = new Vector3(1, 1, 1);
         obj.transform.position = this.transform.position;
     }
 }
