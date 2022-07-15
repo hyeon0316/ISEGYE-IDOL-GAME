@@ -8,9 +8,16 @@ using UnityEngine;
 /// <summary>
 /// 적에게 데미지 10을 줌
 /// </summary>
-public class NomalAttack : MonoBehaviour
+public class NomalAttack : Item
 {
-   public int Damage = 10;
-   public const int ItemCode = 1;
 
+   public override void SetData()
+   {
+      
+   }
+
+   public override void Active()
+   {
+      throw new NotImplementedException();
+   }
 }

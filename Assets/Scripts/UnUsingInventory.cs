@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,16 @@ public class UnUsingInventory : MonoBehaviour
     private void Awake()
     {
         ItemSlots = this.GetComponentsInChildren<ItemSlot>();
+    }
+
+    private void Start()
+    {
         AddNewItem(1);
     }
 
     private void AddNewItem(uint itemCode)
     {
         ItemSlots[0].AddNewItem(itemCode);
+        ItemSlots[1].AddNewItem(6);
     }
 }

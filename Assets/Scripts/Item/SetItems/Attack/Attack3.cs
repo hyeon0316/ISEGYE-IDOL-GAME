@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack3 : MonoBehaviour
+public class Attack3 : Item
 {
     // Start is called before the first frame update
     void Start()
@@ -14,5 +14,15 @@ public class Attack3 : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void SetData()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Active()
+    {
+        throw new System.NotImplementedException();
     }
 }

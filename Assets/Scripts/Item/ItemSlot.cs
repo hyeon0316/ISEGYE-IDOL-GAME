@@ -4,38 +4,29 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    private Item _item;
-    public Item Item => _item;
-
-    private const int ATTACK_RANGE = 5;
-    private const int DEFENSE_RANGE = 10;
-    private const int ABILITY_RANGE = 15;
-
+    private const int MIN_CODE_RANGE = 1;
+    private const int MAX_CODE_RANGE = 15;
+    private const int INDEX = 1;
+    
+    private static SetItems _setItems;
 
     private void Awake()
     {
-        _item = this.GetComponentInChildren<Item>();
+        _setItems = FindObjectOfType<SetItems>();
     }
 
     public void AddNewItem(uint itemCode)
     {
-        if (_item.CurItemType == ItemType.Empty)
-        {
-            Destroy(_item.GetComponent<Item>());
-            
-            if (itemCode <= ATTACK_RANGE)
-                _item.AddComponent<Attack>();
-            else if (itemCode > ATTACK_RANGE && itemCode <= DEFENSE_RANGE)
-                _item.AddComponent<Defense>();
-            else if (itemCode > DEFENSE_RANGE && itemCode <= ABILITY_RANGE)
-                _item.AddComponent<Ability>();
-            
-            _item.SetData(itemCode);
-        }
-        else
-            return;
+        Debug.Assert(itemCode >= MIN_CODE_RANGE && itemCode <= MAX_CODE_RANGE);
+
+        GameObject obj = Instantiate(_setItems.Items[itemCode - INDEX]);
+        obj.transform.SetParent(this.transform);
+        obj.transform.position = this.transform.position;
     }
 }

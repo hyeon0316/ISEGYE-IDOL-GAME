@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _usingInventory = FindObjectOfType<UsingInventory>();
-        _unUsingInventory = FindObjectOfType<UnUsingInventory>();
+        _usingInventory = new UsingInventory(); //플레이어 마다 서로 각자의 인벤토리를 가지고 있어야 하므로 동적생성
+        _unUsingInventory = new UnUsingInventory();
     }
 
     private void Start()
