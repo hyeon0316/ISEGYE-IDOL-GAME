@@ -41,7 +41,7 @@ public class NetworkManager : MonoBehaviour
         CloseClient();
     }
 
-    void InitClient()
+    public void InitClient()
     {
         m_ServerIpEndPoint = new IPEndPoint(IPAddress.Parse(m_Ip), m_Port);
         m_Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -69,41 +69,18 @@ public class NetworkManager : MonoBehaviour
             //SetIncSendPacket();
             //Send();
         }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetRandomSendPacket();
-            Send();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            SetFinishPacket();
-            Send();
-        }
     }
 
-    void SetRandomSendPacket()
+    public void SetRandomSendPacket()
     {
         _mSendTestPacket.type = (uint) Random.Range(0,20);
         _mSendTestPacket.networkId = 100;
         _mSendTestPacket.c = Random.Range(0,9999);
+        
+        Send();
     }
 
     private int num = 1;
-    void SetIncSendPacket()
-    {
-        _mSendTestPacket.a = num;
-        _mSendTestPacket.b = num;
-        _mSendTestPacket.c = num;
-        num++;
-    }
-
-    void SetFinishPacket()
-    {
-        _mSendTestPacket.a = 0;
-        _mSendTestPacket.b = 0;
-        _mSendTestPacket.c = 0;
-    }
 
     void Send()
     {
@@ -111,7 +88,7 @@ public class NetworkManager : MonoBehaviour
         {
             byte[] sendPacket = StructToByteArray(_mSendTestPacket);
             m_Client.Send(sendPacket, 0, sendPacket.Length, SocketFlags.None);
-            Debug.Log($"{_mSendTestPacket.a} {_mSendTestPacket.b} {_mSendTestPacket.c}");
+            Debug.Log($"{_mSendTestPacket.type} {_mSendTestPacket.networkId} {_mSendTestPacket.c}");
         }
 
         catch (Exception ex)
@@ -153,7 +130,7 @@ public class NetworkManager : MonoBehaviour
 
     void DoReceivePacket()
     {
-        Debug.LogFormat($"{_mReceiveTestPacket.a} {_mReceiveTestPacket.b} {_mReceiveTestPacket.c}");
+        Debug.LogFormat($"{_mReceiveTestPacket.type} {_mReceiveTestPacket.networkId} {_mReceiveTestPacket.c}");
         //출력: m_IntArray[0] = 7 m_IntArray[1] = 47 FloatlVariable = 2020 StringlVariable = Coder ZeroBoolVariable = True IntlVariable = 13 
     }
 
