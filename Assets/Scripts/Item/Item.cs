@@ -30,12 +30,6 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         _image = GetComponent<Image>();
         _image.sprite = _sprite;
-        _originPos = this.transform.position;
-    }
-
-    private void Start()
-    {
-        _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
     }
 
     public abstract void SetData();
@@ -61,15 +55,18 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _originPos = this.transform.position;
+        _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
+        
         transform.position = eventData.position;
         transform.SetParent(GameObject.Find("DragItem").transform);
         
-        this.GetComponent<Image>().raycastTarget = false; //자기 자신 타겟 방지
+        this.GetComponent<Image>().raycastTarget = false; 
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position;
+        transform.position = new Vector3(eventData.position.x - Screen.width / 2, eventData.position.y - Screen.height / 2, 0);
     }
     
     public void OnEndDrag(PointerEventData eventData)
@@ -86,15 +83,25 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         Ray2D ray = new Ray2D(pos, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("ItemSlot"));
 
-        if (hit.collider != null)
+        if (hit.collider != null) //다른 슬롯에 드래그 했을 때
         {
-            Debug.Log("sdfsd");
+            GameObject obj = hit.collider.GetComponent<ItemSlot>().gameObject;
+            
+            if (obj.transform.childCount == 1)
+            {
+                obj.transform.GetChild(0).position = _originPos;
+                obj.transform.GetChild(0).SetParent(_originParent);
+            }
+
+            transform.SetParent(obj.transform);
+            transform.position = obj.transform.position;
+
             this.GetComponent<Image>().raycastTarget = true;
         }
-        else
+        else//슬롯이 아닌 다른 공간에 드래그 했을 때
         {
             transform.SetParent(_originParent);
-            transform.localPosition = _originPos;
+            transform.position = _originPos;
 
             this.GetComponent<Image>().raycastTarget = true;
         }
