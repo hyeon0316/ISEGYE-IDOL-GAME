@@ -26,7 +26,7 @@ public class NetworkManager : MonoBehaviour
     struct TestPacket
     {
         public UInt32 type;
-        public UInt64 networkId;
+        public UInt32 networkId;
         public int c;
     }
 
