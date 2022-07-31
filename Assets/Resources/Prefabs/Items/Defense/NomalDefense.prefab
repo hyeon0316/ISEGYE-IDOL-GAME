@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 808467898554039250}
   - component: {fileID: 8115156535648273330}
   - component: {fileID: 4733357671564908768}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: NomalDefense
   m_TagString: Untagged
   m_Icon: {fileID: 0}

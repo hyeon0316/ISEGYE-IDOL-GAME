@@ -25,7 +25,8 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     [SerializeField]
     private Sprite _sprite;
 
-    
+    public Sprite Sprite => _sprite;
+
     public virtual void Awake()
     {
         _image = GetComponent<Image>();
@@ -55,26 +56,33 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _originPos = this.transform.position;
-        _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
-        
-        transform.position = eventData.position;
-        transform.SetParent(GameObject.Find("DragItem").transform);
-        
-        this.GetComponent<Image>().raycastTarget = false; 
+        if (CursorManager.Instance.CurCursorType == CursorType.Nomal)
+        {
+            _originPos = this.transform.position;
+            _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
+
+            transform.position = eventData.position;
+            transform.SetParent(GameObject.Find("DragItem").transform);
+
+            this.GetComponent<Image>().raycastTarget = false;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = new Vector3(eventData.position.x - Screen.width / 2, eventData.position.y - Screen.height / 2, 0);
+        if (CursorManager.Instance.CurCursorType == CursorType.Nomal)
+        {
+            transform.position = new Vector3(eventData.position.x - Screen.width / 2, eventData.position.y - Screen.height / 2, 0);
+        }
     }
     
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag 호출");
-
-        ChangeSlot();
-
+        if(CursorManager.Instance.CurCursorType == CursorType.Nomal)
+        {
+            Debug.Log("OnEndDrag 호출");
+            ChangeSlot();
+        }
     }
 
     private void ChangeSlot()
@@ -108,6 +116,4 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         
     }
 
-  
-   
 }

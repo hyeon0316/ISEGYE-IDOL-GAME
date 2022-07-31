@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 808467898554039250}
   - component: {fileID: -7514594791651874771}
   - component: {fileID: -7164034307787056429}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Attack4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Upgrade: 0
-  _sprite: {fileID: 0}
+  _sprite: {fileID: 21300000, guid: f9a75a8970c36e645be6a529d573ef00, type: 3}
 --- !u!61 &-7164034307787056429
 BoxCollider2D:
   m_ObjectHideFlags: 0

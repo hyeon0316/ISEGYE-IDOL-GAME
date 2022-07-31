@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
 {
     public enum CharacterType
     {
+        Woowakgood,
         Ine,
         Jingburger,
         Lilpa,
@@ -39,6 +40,10 @@ public class Character : MonoBehaviour
     {
         switch (_curCharType)
         {
+            case CharacterType.Woowakgood:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Woowakgood}/Woowakgood");
+                _name = "우왁굳";
+                break;
             case CharacterType.Ine:
                 _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Ine}/Ine");
                 _name = "아이네";

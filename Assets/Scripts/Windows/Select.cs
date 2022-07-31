@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Profiling.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 
@@ -37,13 +38,30 @@ public class Select : MonoBehaviour
         SetInfo(true);
     }
 
-    public void SelectCharacter()
+    /// <summary>
+    /// 자신이 선택한 캐릭터 생성
+    /// </summary>
+    public void CreateCharacter()
     {
         var obj = new GameObject("Player");
         obj.AddComponent<Player>();
-        obj.GetComponent<Player>().SetStat(100, 10, NameText.text);
+        obj.GetComponent<Player>().SetStat(1, 100, 10, NameText.text);
         
         WindowManager.Instance.SetWindow((int)WindowType.InGame);
+        CreatePlayer();
+    }
+
+    /// <summary>
+    /// 자신을 제외한 나머지 7명의 플레이어 생성
+    /// </summary>
+    public void CreatePlayer()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            var obj = new GameObject("Player");
+            obj.AddComponent<Player>();
+            obj.GetComponent<Player>().SetStat(i + 2, 100, 10, NameText.text);
+        }
     }
     
     

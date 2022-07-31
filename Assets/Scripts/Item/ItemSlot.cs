@@ -21,7 +21,8 @@ public class ItemSlot : MonoBehaviour
         _setItems = FindObjectOfType<SetItems>();
     }
 
-    public void AddNewItem(uint itemCode)
+
+    public void AddNewItem(int itemCode)
     {
         Debug.Assert(itemCode >= MIN_CODE_RANGE && itemCode <= MAX_CODE_RANGE);
 
