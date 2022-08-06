@@ -6,12 +6,12 @@ using UnityEngine;
 public class UsingInventory : MonoBehaviour
 {
     //todo: 슬롯 별로 확률 지정하기
-    private Item[] _items;
-    
+    public ItemSlot[] ItemSlots;
 
 
     private void Awake()
     {
-        _items = new Item[6];
+        ItemSlots = this.GetComponentsInChildren<ItemSlot>();
     }
+
 }

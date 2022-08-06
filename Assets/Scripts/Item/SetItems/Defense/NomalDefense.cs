@@ -17,6 +17,6 @@ public class NomalDefense : Item
 
     public override void Active()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(this.GetType().Name);
     }
 }

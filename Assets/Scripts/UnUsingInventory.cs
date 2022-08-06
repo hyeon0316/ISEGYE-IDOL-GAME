@@ -30,7 +30,8 @@ public class UnUsingInventory : MonoBehaviour
 
     private void Update()
     {
-        CheckFull();
+        if(this.transform.parent.name == "Ready")
+            CheckFull();
     }
 
 
@@ -59,7 +60,6 @@ public class UnUsingInventory : MonoBehaviour
         }
         else
             Debug.Log("뽑기 실패");
-            
     }*/
 
     public void AddItem(int itemCode)

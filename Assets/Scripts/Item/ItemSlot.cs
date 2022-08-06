@@ -29,5 +29,24 @@ public class ItemSlot : MonoBehaviour
         GameObject obj = Instantiate(_setItems.Items[itemCode - INDEX]);
         obj.transform.SetParent(this.transform);
         obj.transform.position = this.transform.position;
+
+        obj.GetComponent<Item>().Code = itemCode; //아이템 코드 지정 후 전투씬에서 가져오기
+    }
+
+    public void ActiveItem()
+    {
+        if (this.transform.childCount == 1)
+        {
+            this.GetComponentInChildren<Item>().Active();
+        }
+        else
+        {
+            Debug.Log("비어 있음");
+        }
+    }
+
+    public void DeleteItem()
+    {
+        Destroy(this.transform.GetChild(0).gameObject);
     }
 }

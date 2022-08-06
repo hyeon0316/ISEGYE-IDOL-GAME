@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class Attack3 : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public override void SetData()
     {
@@ -23,6 +13,6 @@ public class Attack3 : Item
 
     public override void Active()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(this.GetType().Name);
     }
 }

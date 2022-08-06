@@ -18,8 +18,15 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     
     public uint Upgrade = 0;
 
-    public uint Code { get; protected set; }
-    
+    [SerializeField]
+    private int _code;
+
+    public int Code
+    {
+        get { return _code; }
+        set { _code = value; }
+    }
+
     private Image _image;
     
     [SerializeField]
@@ -31,6 +38,21 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         _image = GetComponent<Image>();
         _image.sprite = _sprite;
+    }
+
+    private void Update()
+    {
+        //전투단계로 전환될때 드래그 중이었던 아이템을 다시 원래 자리로 옮김
+        if (this.transform.parent.name == "DragItem")
+        {
+            if (FindObjectOfType<Ready>().ReadyTime == 0)
+            {
+                transform.SetParent(_originParent);
+                transform.position = _originPos;
+
+                this.GetComponent<Image>().raycastTarget = true;
+            }
+        }
     }
 
     public abstract void SetData();
@@ -54,9 +76,10 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         //todo: 아이템 사용이후 사라질때 이펙트 효과
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (CursorManager.Instance.CurCursorType == CursorType.Nomal)
+        if (InGame.CurGameType == GameType.Ready)
         {
             _originPos = this.transform.position;
             _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
@@ -70,15 +93,16 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (CursorManager.Instance.CurCursorType == CursorType.Nomal)
+        if (InGame.CurGameType == GameType.Ready)
         {
-            transform.position = new Vector3(eventData.position.x - Screen.width / 2, eventData.position.y - Screen.height / 2, 0);
+            transform.position = new Vector3(eventData.position.x - Screen.width / 2,
+                eventData.position.y - Screen.height / 2, 0);
         }
     }
-    
+
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(CursorManager.Instance.CurCursorType == CursorType.Nomal)
+        if (InGame.CurGameType == GameType.Ready)
         {
             Debug.Log("OnEndDrag 호출");
             ChangeSlot();

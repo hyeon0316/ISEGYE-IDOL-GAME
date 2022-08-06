@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class Ability3 : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void SetData()
     {
         throw new System.NotImplementedException();
@@ -23,6 +11,6 @@ public class Ability3 : Item
 
     public override void Active()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(this.GetType().Name);
     }
 }

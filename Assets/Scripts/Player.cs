@@ -11,12 +11,16 @@ public class Player : MonoBehaviour
     private int _hp;
     private int _defense;
 
-    public string Name;
+    public string NickName;
+
+    private Sprite _sprite;
+    public Sprite Sprite => _sprite;
     
     [SerializeField]
     private int _id;
 
     public int ID => _id;
+    public int Hp => _hp;
 
     private UsingInventory _usingInventory;
     private UnUsingInventory _unUsingInventory;
@@ -27,44 +31,41 @@ public class Player : MonoBehaviour
         _unUsingInventory = new UnUsingInventory();
     }
 
-    private void Start()
+    public void SetInventory()
     {
-        Debug.Log($"ID: {_id}");
-        Debug.Log($"Hp: {_hp}");
-        Debug.Log($"Defense: {_defense}");
+        _usingInventory = GameObject.Find("Canvas").transform.Find("InGame").transform.Find("Background").transform
+            .Find("Ready").transform.Find("UsingInventory").GetComponent<UsingInventory>();
+        
+        _unUsingInventory = GameObject.Find("Canvas").transform.Find("InGame").transform.Find("Background").transform
+            .Find("Ready").transform.Find("UnUsingInventory").GetComponent<UnUsingInventory>();
+    }
+
+    public void SetEnemyInventory(GameObject enemyInven)
+    {
+        _usingInventory = enemyInven.transform.GetChild(0).GetComponent<UsingInventory>();
+        _unUsingInventory = enemyInven.transform.GetChild(1).GetComponent<UnUsingInventory>();
     }
     
-    public void SetStat(int id,int hp, int defense, string name)
+    public void SetStat(int id,Sprite image, int hp, int defense, string name)
     {
         _id = id;
+        _sprite = image;
         _hp = hp;
         _defense = defense;
-        Name = name;
+        NickName = name;
     }
 
     /// <summary>
-    /// 100% 확률로 아이템 랜덤 획득(서버로 보낼 함수)
+    /// 준비단계에서 셋팅한 아이템을 전투단계에 사용
     /// </summary>
-    public void AddItem(int itemCode)
+    public void SetItem(ItemSlot[] usingSlots)
     {
-        _unUsingInventory.AddItem(itemCode);
+        for (int i = 0; i < _usingInventory.ItemSlots.Length; i++)
+        {
+            if (_usingInventory.ItemSlots[i].transform.childCount == 1)
+            {
+                usingSlots[i].AddNewItem(_usingInventory.ItemSlots[i].GetComponentInChildren<Item>().Code);
+            }
+        }
     }
-
-    /// <summary>
-    /// 50%확률로 세가지 아이템 중 원하는 아이템 하나를 선택하여 획득
-    /// </summary>
-    private void SelectGetItem()
-    {
-        
-    }
-
-    
-    /// <summary>
-    /// 특정 아이템 하나를 강화 시도(실패 확률 있음)
-    /// </summary>
-    private void UpgradeItem(int itemCode)
-    {
-        
-    }
-
 }

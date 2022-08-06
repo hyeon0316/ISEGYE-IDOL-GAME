@@ -18,6 +18,6 @@ public class NomalAttack : Item
 
    public override void Active()
    {
-      throw new NotImplementedException();
+      Debug.Log(this.GetType().Name);
    }
 }
