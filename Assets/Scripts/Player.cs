@@ -33,11 +33,8 @@ public class Player : MonoBehaviour
 
     public void SetInventory()
     {
-        _usingInventory = GameObject.Find("Canvas").transform.Find("InGame").transform.Find("Background").transform
-            .Find("Ready").transform.Find("UsingInventory").GetComponent<UsingInventory>();
-        
-        _unUsingInventory = GameObject.Find("Canvas").transform.Find("InGame").transform.Find("Background").transform
-            .Find("Ready").transform.Find("UnUsingInventory").GetComponent<UnUsingInventory>();
+        _usingInventory = GameObject.Find("Canvas").GetComponentInChildren<UsingInventory>(true);
+        _unUsingInventory = GameObject.Find("Canvas").GetComponentInChildren<UnUsingInventory>(true);
     }
 
     public void SetEnemyInventory(GameObject enemyInven)
