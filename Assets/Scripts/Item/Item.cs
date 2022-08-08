@@ -135,7 +135,8 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             GameObject obj = hit.collider.GetComponent<ItemSlot>().gameObject;
 
             _slotIndex2 = obj.transform.GetSiblingIndex() + (obj.transform.parent.name.Equals("UnUsingInventory") ? 6 : 0);
-            Player player = GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player;
+            PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+            Player player = playerManager.Players[playerManager.PlayerID - 1];
             if (player.UsingInventory.CheckDuplication(this))
             {
                 RePosItem(_originParent, _originPos);
@@ -144,30 +145,6 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             {
                 player.SwapItem(_slotIndex1, _slotIndex2);
             }
-            
-
-            /*if (obj.transform.parent.TryGetComponent(out UsingInventory usingInventory))
-            {
-                if (usingInventory.CheckDuplication(this))//UsingInven에 이미 같은 아이템이 있는데 옮길 경우
-                {
-                    Debug.Log("아이템 중복 셋팅 불가");
-                    RePosItem(_originParent, _originPos);
-                }
-                else
-                {
-                    Debug.Log("UsingInven에 드래그");
-
-                    _slotIndex2 = obj.transform.GetSiblingIndex();
-                    GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player.SwapItem(_slotIndex1, _slotIndex2);
-                }
-            }
-            else if (obj.transform.parent.TryGetComponent(out UnUsingInventory unUsingInventory))
-            {
-                Debug.Log("UnUsingInven에 드래그");
-
-                _slotIndex2 = obj.transform.GetSiblingIndex() + 6;
-                GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player.SwapItem(_slotIndex1, _slotIndex2);
-            }*/
         }
         else//슬롯이 아닌 다른 공간에 드래그 했을 때
         {

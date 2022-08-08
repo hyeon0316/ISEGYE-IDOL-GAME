@@ -64,7 +64,5 @@ public class Player : MonoBehaviour
         }
 
         dragItem.RePosItem(itemSlot2.transform, itemSlot2.transform.position);
-        
-        
     }
 }

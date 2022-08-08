@@ -13,7 +13,7 @@ public class Battle : MonoBehaviour
     
     private const int INDEX = 1;
     
-    private ServerRoom _serverRoom;
+    private PlayerManager _playerManager;
     
     //플레이어
     public GameObject MyFiled;
@@ -32,7 +32,7 @@ public class Battle : MonoBehaviour
 
     private void Awake()
     {
-        _serverRoom = FindObjectOfType<ServerRoom>();
+        _playerManager = FindObjectOfType<PlayerManager>();
         
         _usingItems = MyFiled.transform.GetChild(0).transform.gameObject;
         _playerImage = MyFiled.transform.GetChild(1).GetComponent<Image>();
@@ -56,16 +56,16 @@ public class Battle : MonoBehaviour
     
     private void SetPlayer()
     {
-       _serverRoom.Player.SetItem(_itemSlots);
-       _playerImage.sprite = _serverRoom.Player.Sprite;
-       _debugPlayerID.text = $"{_serverRoom.Player.ID}";
+       _playerManager.Players[_playerManager.PlayerID].SetItem(_itemSlots);
+       _playerImage.sprite = _playerManager.Players[_playerManager.PlayerID].Sprite;
+       _debugPlayerID.text = $"{_playerManager.Players[_playerManager.PlayerID].ID}";
     }
 
     private void SetEnemy()
     {
-        int rand = Random.Range(0, 7);
-        _serverRoom.Enemy[rand].SetItem(_eItemSlots);
-        _debugEnemyID.text = $"{_serverRoom.Enemy[rand].ID}";
+        int rand = Random.Range(2, 9);
+        _playerManager.Players[rand].SetItem(_eItemSlots);
+        _debugEnemyID.text = $"{_playerManager.Players[rand].ID}";
     }
 
     private IEnumerator ActiveItemCo()

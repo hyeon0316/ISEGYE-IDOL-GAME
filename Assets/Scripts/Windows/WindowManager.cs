@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public enum WindowType //todo: 매칭창 추가
 {
    Lobby,
+   Server,
+   Matching,
    Select,
    InGame
 }
