@@ -10,6 +10,9 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 {
     private Vector3 _originPos;
     private Transform _originParent;
+
+    public Vector3 OriginPos => _originPos;
+    public Transform OriginParent => _originParent;
     
     protected string Name;
     

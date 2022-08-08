@@ -46,21 +46,6 @@ public class UnUsingInventory : MonoBehaviour
         //todo: 서버에 데이터 전송
     }
 
-    /*/// <summary>
-    /// 50% 확률 버튼(일단 안 쓸 예정)
-    /// </summary>
-    public void SelectRandomItem(int itemList)
-    {
-        int rand = Random.Range(0, 2);
-        if (rand == 1)
-        {
-            int itemCode = ItemCode.Instance.SelectList[itemList];
-            AddItem(ItemCode.Instance.DistinctValue(itemCode, itemCode));
-            //todo: 서버에 데이터 전송
-        }
-        else
-            Debug.Log("뽑기 실패");
-    }*/
 
     public void AddItem(int itemCode)
     {

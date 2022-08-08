@@ -48,4 +48,21 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 서버로 보낼 아이템 스왑함수
+    /// </summary>
+    public void SwapItem(ItemSlot slot1, ItemSlot slot2)
+    {
+        Item moveItem = slot1.GetComponentInChildren<Item>();
+        moveItem.transform.SetParent(slot2.transform);
+        moveItem.transform.position = slot2.transform.position;
+
+        if (slot2.transform.childCount == 1)
+        {
+            Item tempItem = slot2.GetComponentInChildren<Item>();
+            tempItem.transform.position = moveItem.OriginPos;
+            tempItem.transform.SetParent(moveItem.OriginParent);
+        }
+    }
 }
