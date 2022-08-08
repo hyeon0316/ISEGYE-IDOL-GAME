@@ -134,7 +134,19 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         {
             GameObject obj = hit.collider.GetComponent<ItemSlot>().gameObject;
 
-            if (obj.transform.parent.TryGetComponent(out UsingInventory usingInventory))
+            _slotIndex2 = obj.transform.GetSiblingIndex() + (obj.transform.parent.name.Equals("UnUsingInventory") ? 6 : 0);
+            Player player = GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player;
+            if (player.UsingInventory.CheckDuplication(this))
+            {
+                RePosItem(_originParent, _originPos);
+            }
+            else
+            {
+                player.SwapItem(_slotIndex1, _slotIndex2);
+            }
+            
+
+            /*if (obj.transform.parent.TryGetComponent(out UsingInventory usingInventory))
             {
                 if (usingInventory.CheckDuplication(this))//UsingInven에 이미 같은 아이템이 있는데 옮길 경우
                 {
@@ -155,7 +167,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
                 _slotIndex2 = obj.transform.GetSiblingIndex() + 6;
                 GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player.SwapItem(_slotIndex1, _slotIndex2);
-            }
+            }*/
         }
         else//슬롯이 아닌 다른 공간에 드래그 했을 때
         {

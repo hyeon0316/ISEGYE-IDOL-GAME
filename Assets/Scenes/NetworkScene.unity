@@ -288,7 +288,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1167571833}
         m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
-        m_MethodName: InitClient
+        m_MethodName: ConnectServer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -686,8 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1a25f6435d30d4797e5b51e6afe247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Ip: 221.151.106.33
-  m_Port: 51341
+  ConnectServerBtn: {fileID: 455802502}
 --- !u!4 &1167571834
 Transform:
   m_ObjectHideFlags: 0
