@@ -115,29 +115,54 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         Ray2D ray = new Ray2D(pos, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("ItemSlot"));
 
+        UsingInventory usingInventory;
+        UnUsingInventory unUsingInventory;
+
         if (hit.collider != null) //다른 슬롯에 드래그 했을 때
         {
             GameObject obj = hit.collider.GetComponent<ItemSlot>().gameObject;
-            
-            if (obj.transform.childCount == 1)
+
+            if (obj.transform.parent.TryGetComponent(out usingInventory))
             {
-                obj.transform.GetChild(0).position = _originPos;
-                obj.transform.GetChild(0).SetParent(_originParent);
+                if (usingInventory.CheckDuplication(this))//UsingInven에 이미 같은 아이템이 있는데 옮길 경우
+                {
+                    Debug.Log("아이템 중복 셋팅 불가");
+                    SetThisItemPos(_originParent, _originPos);
+                }
+                else
+                {
+                    Debug.Log("UsingInven에 드래그");
+                    if (obj.transform.childCount == 1)
+                    {
+                        obj.transform.GetChild(0).position = _originPos;
+                        obj.transform.GetChild(0).SetParent(_originParent);
+                    }
+                    SetThisItemPos(obj.transform, obj.transform.position);
+                }
             }
-
-            transform.SetParent(obj.transform);
-            transform.position = obj.transform.position;
-
-            this.GetComponent<Image>().raycastTarget = true;
+            else if (obj.transform.parent.TryGetComponent(out unUsingInventory))
+            {
+                Debug.Log("UnUsingInven에 드래그");
+                if (obj.transform.childCount == 1)
+                {
+                    obj.transform.GetChild(0).position = _originPos;
+                    obj.transform.GetChild(0).SetParent(_originParent);
+                }
+                SetThisItemPos(obj.transform, obj.transform.position);
+            }
+            
         }
         else//슬롯이 아닌 다른 공간에 드래그 했을 때
         {
-            transform.SetParent(_originParent);
-            transform.position = _originPos;
-
-            this.GetComponent<Image>().raycastTarget = true;
+            SetThisItemPos(_originParent, _originPos);
         }
-        
+        this.GetComponent<Image>().raycastTarget = true;
     }
 
+    
+    private void SetThisItemPos(Transform parent, Vector3 pos)
+    {
+        transform.SetParent(parent);
+        transform.position = pos;
+    }
 }

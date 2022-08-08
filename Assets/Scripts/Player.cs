@@ -22,27 +22,10 @@ public class Player : MonoBehaviour
     public int ID => _id;
     public int Hp => _hp;
 
-    private UsingInventory _usingInventory;
-    private UnUsingInventory _unUsingInventory;
+    public UsingInventory UsingInventory;
+    public UnUsingInventory UnUsingInventory;
 
-    private void Awake()
-    {
-        _usingInventory = new UsingInventory(); //플레이어 마다 서로 각자의 인벤토리를 가지고 있어야 하므로 동적생성
-        _unUsingInventory = new UnUsingInventory();
-    }
 
-    public void SetInventory()
-    {
-        _usingInventory = GameObject.Find("Canvas").GetComponentInChildren<UsingInventory>(true);
-        _unUsingInventory = GameObject.Find("Canvas").GetComponentInChildren<UnUsingInventory>(true);
-    }
-
-    public void SetEnemyInventory(GameObject enemyInven)
-    {
-        _usingInventory = enemyInven.transform.GetChild(0).GetComponent<UsingInventory>();
-        _unUsingInventory = enemyInven.transform.GetChild(1).GetComponent<UnUsingInventory>();
-    }
-    
     public void SetStat(int id,Sprite image, int hp, int defense, string name)
     {
         _id = id;
@@ -57,11 +40,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public void SetItem(ItemSlot[] usingSlots)
     {
-        for (int i = 0; i < _usingInventory.ItemSlots.Length; i++)
+        for (int i = 0; i < UsingInventory.ItemSlots.Length; i++)
         {
-            if (_usingInventory.ItemSlots[i].transform.childCount == 1)
+            if (UsingInventory.ItemSlots[i].transform.childCount == 1)
             {
-                usingSlots[i].AddNewItem(_usingInventory.ItemSlots[i].GetComponentInChildren<Item>().Code);
+                usingSlots[i].AddNewItem(UsingInventory.ItemSlots[i].GetComponentInChildren<Item>().Code);
             }
         }
     }

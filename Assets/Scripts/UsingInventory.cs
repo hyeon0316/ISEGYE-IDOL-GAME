@@ -14,4 +14,21 @@ public class UsingInventory : MonoBehaviour
         ItemSlots = this.GetComponentsInChildren<ItemSlot>();
     }
 
+    /// <summary>
+    /// 아이템이 중복으로 셋팅되어 있는지 체크
+    /// </summary>
+    public bool CheckDuplication(Item checkItem)
+    {
+        for (int i = 0; i < ItemSlots.Length; i++)
+        {
+            if (ItemSlots[i].transform.childCount == 1)
+            {
+                if (checkItem.Code == ItemSlots[i].GetComponentInChildren<Item>().Code)
+                    return true;
+            }
+
+        }
+        return false;
+    }
+
 }

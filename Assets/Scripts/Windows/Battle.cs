@@ -20,14 +20,12 @@ public class Battle : MonoBehaviour
     private GameObject _usingItems;
     private ItemSlot[] _itemSlots;
     private Image _playerImage;
-    private Player _player;
 
     //적
     public GameObject EnemyFiled;
     private GameObject _eUsingItems;
     private ItemSlot[] _eItemSlots;
     private Image _enemyImage;
-    private Player _enemy;
 
     private TextMeshProUGUI _debugPlayerID;
     private TextMeshProUGUI _debugEnemyID;
@@ -55,31 +53,19 @@ public class Battle : MonoBehaviour
         StartCoroutine(ActiveItemCo());
     }
 
+    
     private void SetPlayer()
     {
-        _player = _serverRoom.PlayerObjs[_serverRoom.PlayerID - INDEX];
-        _player.SetItem(_itemSlots);
-        _playerImage.sprite = _player.Sprite;
-
-        _debugPlayerID.text = $"{_serverRoom.PlayerID}";
+       _serverRoom.Player.SetItem(_itemSlots);
+       _playerImage.sprite = _serverRoom.Player.Sprite;
+       _debugPlayerID.text = $"{_serverRoom.Player.ID}";
     }
 
     private void SetEnemy()
     {
-        int randID = Random.Range(1, 9);
-
-        while (true)
-        {
-            if (randID == _serverRoom.PlayerID)//플레이어 꺼가 이미 적용된 상태에서 바꿔지므로 이를 수정
-                randID = Random.Range(1, 9);
-            else
-                break;
-        }
-        _debugEnemyID.text = $"{randID}";
-            
-        _enemy = _serverRoom.PlayerObjs[randID - INDEX];
-        _enemy.SetItem(_eItemSlots);
-        _enemyImage.sprite = _enemy.Sprite;
+        int rand = Random.Range(0, 7);
+        _serverRoom.Enemy[rand].SetItem(_eItemSlots);
+        _debugEnemyID.text = $"{_serverRoom.Enemy[rand].ID}";
     }
 
     private IEnumerator ActiveItemCo()
