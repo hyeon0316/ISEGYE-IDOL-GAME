@@ -10,9 +10,15 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 {
     private Vector3 _originPos;
     private Transform _originParent;
+    private int _slotIndex1;
+    private int _slotIndex2;
 
     public Vector3 OriginPos => _originPos;
     public Transform OriginParent => _originParent;
+
+    public int SlotIndex1 => _slotIndex1;
+    public int SlotIndex2 => _slotIndex2;
+    
     
     protected string Name;
     
@@ -87,10 +93,17 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             _originPos = this.transform.position;
             _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
 
+            if (this.transform.parent.parent.TryGetComponent(out UsingInventory usingInventory))
+                _slotIndex1 = this.transform.parent.GetSiblingIndex();
+            else if (this.transform.parent.parent.TryGetComponent(out UnUsingInventory unUsingInventory))
+                _slotIndex1 = this.transform.parent.GetSiblingIndex() + 6;
+            
             transform.position = eventData.position;
             transform.SetParent(GameObject.Find("DragItem").transform);
 
             this.GetComponent<Image>().raycastTarget = false;
+
+           
         }
     }
 
@@ -107,7 +120,6 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         if (InGame.CurGameType == GameType.Ready)
         {
-            Debug.Log("OnEndDrag 호출");
             ChangeSlot();
         }
     }
@@ -118,52 +130,42 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         Ray2D ray = new Ray2D(pos, Vector2.zero);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("ItemSlot"));
 
-        UsingInventory usingInventory;
-        UnUsingInventory unUsingInventory;
-
         if (hit.collider != null) //다른 슬롯에 드래그 했을 때
         {
             GameObject obj = hit.collider.GetComponent<ItemSlot>().gameObject;
 
-            if (obj.transform.parent.TryGetComponent(out usingInventory))
+            if (obj.transform.parent.TryGetComponent(out UsingInventory usingInventory))
             {
                 if (usingInventory.CheckDuplication(this))//UsingInven에 이미 같은 아이템이 있는데 옮길 경우
                 {
                     Debug.Log("아이템 중복 셋팅 불가");
-                    SetThisItemPos(_originParent, _originPos);
+                    RePosItem(_originParent, _originPos);
                 }
                 else
                 {
                     Debug.Log("UsingInven에 드래그");
-                    if (obj.transform.childCount == 1)
-                    {
-                        obj.transform.GetChild(0).position = _originPos;
-                        obj.transform.GetChild(0).SetParent(_originParent);
-                    }
-                    SetThisItemPos(obj.transform, obj.transform.position);
+
+                    _slotIndex2 = obj.transform.GetSiblingIndex();
+                    GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player.SwapItem(_slotIndex1, _slotIndex2);
                 }
             }
-            else if (obj.transform.parent.TryGetComponent(out unUsingInventory))
+            else if (obj.transform.parent.TryGetComponent(out UnUsingInventory unUsingInventory))
             {
                 Debug.Log("UnUsingInven에 드래그");
-                if (obj.transform.childCount == 1)
-                {
-                    obj.transform.GetChild(0).position = _originPos;
-                    obj.transform.GetChild(0).SetParent(_originParent);
-                }
-                SetThisItemPos(obj.transform, obj.transform.position);
+
+                _slotIndex2 = obj.transform.GetSiblingIndex() + 6;
+                GameObject.Find("ServerRoom").GetComponent<ServerRoom>().Player.SwapItem(_slotIndex1, _slotIndex2);
             }
-            
         }
         else//슬롯이 아닌 다른 공간에 드래그 했을 때
         {
-            SetThisItemPos(_originParent, _originPos);
+            RePosItem(_originParent, _originPos);
         }
         this.GetComponent<Image>().raycastTarget = true;
     }
 
     
-    private void SetThisItemPos(Transform parent, Vector3 pos)
+    public void RePosItem(Transform parent, Vector3 pos)
     {
         transform.SetParent(parent);
         transform.position = pos;

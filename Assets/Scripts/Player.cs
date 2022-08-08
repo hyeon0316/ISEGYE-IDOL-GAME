@@ -49,20 +49,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 서버로 보낼 아이템 스왑함수
-    /// </summary>
-    public void SwapItem(ItemSlot slot1, ItemSlot slot2)
-    {
-        Item moveItem = slot1.GetComponentInChildren<Item>();
-        moveItem.transform.SetParent(slot2.transform);
-        moveItem.transform.position = slot2.transform.position;
 
-        if (slot2.transform.childCount == 1)
+    public void SwapItem(int slotIndex1, int slotIndex2)
+    {
+        ItemSlot itemSlot1 = slotIndex1 < 6 ? UsingInventory.ItemSlots[slotIndex1] : UnUsingInventory.ItemSlots[slotIndex1 - 6];
+        ItemSlot itemSlot2 = slotIndex2 < 6 ? UsingInventory.ItemSlots[slotIndex2] : UnUsingInventory.ItemSlots[slotIndex2 - 6];
+
+        Item dragItem = GameObject.Find("DragItem").GetComponentInChildren<Item>();
+
+        if (itemSlot2.transform.childCount == 1)
         {
-            Item tempItem = slot2.GetComponentInChildren<Item>();
-            tempItem.transform.position = moveItem.OriginPos;
-            tempItem.transform.SetParent(moveItem.OriginParent);
+            Item tempItem = itemSlot2.GetComponentInChildren<Item>();       
+            tempItem.RePosItem(dragItem.OriginParent, dragItem.OriginPos);
         }
+
+        dragItem.RePosItem(itemSlot2.transform, itemSlot2.transform.position);
+        
+        
     }
 }
