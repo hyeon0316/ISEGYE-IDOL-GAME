@@ -91,7 +91,7 @@ public class Packet : MonoBehaviour
 
         public cs_sc_changeItemSlotPacket(Int32 networkID, Int16 slot1, Int16 slot2)
         {
-            size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
+            size = (UInt16) Marshal.SizeOf<cs_sc_changeItemSlotPacket>();
             type = (char) PacketType.cs_sc_changeItemSlot;
             this.networkID = networkID;
             this.slot1 = slot1;

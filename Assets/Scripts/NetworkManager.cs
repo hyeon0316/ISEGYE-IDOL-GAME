@@ -5,8 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class NetworkManager : Singleton<NetworkManager>
@@ -138,9 +136,15 @@ public class NetworkManager : Singleton<NetworkManager>
         Send(packet);
     }
 
-    public void SnedChangeCharacterPacket(int networkID, int characterType)
+    public void SendChangeCharacterPacket(int networkID, int characterType)
     {
         Packet.cs_sc_changeCharacterPacket packet = new Packet.cs_sc_changeCharacterPacket(networkID, (char)characterType);
+        Send(packet);
+    }
+
+    public void SendChangeItemSlotPacket(Int32 networkID, Int16 slot1, Int16 slot2)
+    {
+        var packet = new Packet.cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
         Send(packet);
     }
 
@@ -203,7 +207,8 @@ public class NetworkManager : Singleton<NetworkManager>
                 Debug.Log("연결이 해제되었습니다");
                 break;
             case PacketType.cs_sc_changeItemSlot:
-                //var packet1 = ByteArrayToStruct<Packet.cs_sc_changeItemSlotPacket>(bytes);
+                var changeItemSlotPacket = ByteArrayToStruct<Packet.cs_sc_changeItemSlotPacket>(bytes);
+                PlayerManager.Instance.GetPlayer(changeItemSlotPacket.networkID).SwapItem(changeItemSlotPacket.slot1,changeItemSlotPacket.slot2);
                 break;
             case PacketType.cs_sc_changeCharacter:
                 var changeCharacterPacket = ByteArrayToStruct<Packet.cs_sc_changeCharacterPacket>(bytes);

@@ -94,7 +94,7 @@ public class Select : MonoBehaviour
     public void PickCharacterButton(int type)
     {
         _playerManager.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10, NameText.text);
-        NetworkManager.Instance.SnedChangeCharacterPacket(_playerManager.Players[0].ID, type);
+        NetworkManager.Instance.SendChangeCharacterPacket(_playerManager.Players[0].ID, type);
     }
     
     private IEnumerator SetSelectTimerCo()

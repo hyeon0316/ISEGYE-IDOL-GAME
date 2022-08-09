@@ -18,17 +18,15 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public int SlotIndex1 => _slotIndex1;
     public int SlotIndex2 => _slotIndex2;
-    
-    
+
+
     protected string Name;
-    
-    [TextArea]
-    protected string Description;
-    
+
+    [TextArea] protected string Description;
+
     public uint Upgrade = 0;
 
-    [SerializeField]
-    private int _code;
+    [SerializeField] private int _code;
 
     public int Code
     {
@@ -37,9 +35,8 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     }
 
     private Image _image;
-    
-    [SerializeField]
-    private Sprite _sprite;
+
+    [SerializeField] private Sprite _sprite;
 
     public Sprite Sprite => _sprite;
 
@@ -65,7 +62,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     }
 
     public abstract void SetData();
-        
+
     /// <summary>
     /// 아이템 효과 사용
     /// </summary>
@@ -75,7 +72,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         //todo: 아이템 사용 시 나오는 이펙트 효과 
     }
-        
+
     public virtual void Show()
     {
         //todo: 아이템 첫 등장 시 나오는 이펙트 효과
@@ -97,13 +94,11 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
                 _slotIndex1 = this.transform.parent.GetSiblingIndex();
             else if (this.transform.parent.parent.TryGetComponent(out UnUsingInventory unUsingInventory))
                 _slotIndex1 = this.transform.parent.GetSiblingIndex() + 6;
-            
+
             transform.position = eventData.position;
             transform.SetParent(GameObject.Find("DragItem").transform);
 
             this.GetComponent<Image>().raycastTarget = false;
-
-           
         }
     }
 
@@ -134,7 +129,8 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         {
             GameObject obj = hit.collider.GetComponent<ItemSlot>().gameObject;
 
-            _slotIndex2 = obj.transform.GetSiblingIndex() + (obj.transform.parent.name.Equals("UnUsingInventory") ? 6 : 0);
+            _slotIndex2 = obj.transform.GetSiblingIndex() +
+                          (obj.transform.parent.name.Equals("UnUsingInventory") ? 6 : 0);
             PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
             Player player = playerManager.Players[playerManager.PlayerID - 1];
             if (player.UsingInventory.CheckDuplication(this))
@@ -143,17 +139,20 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             }
             else
             {
-                player.SwapItem(_slotIndex1, _slotIndex2);
+                //player.SwapItem(_slotIndex1, _slotIndex2);
+                NetworkManager.Instance.SendChangeItemSlotPacket(playerManager.Players[0].ID, (Int16) _slotIndex1,
+                    (Int16) _slotIndex2);
             }
         }
-        else//슬롯이 아닌 다른 공간에 드래그 했을 때
+        else //슬롯이 아닌 다른 공간에 드래그 했을 때
         {
             RePosItem(_originParent, _originPos);
         }
+
         this.GetComponent<Image>().raycastTarget = true;
     }
 
-    
+
     public void RePosItem(Transform parent, Vector3 pos)
     {
         transform.SetParent(parent);

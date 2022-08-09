@@ -32,7 +32,7 @@ public class Ready : MonoBehaviour
     
     private IEnumerator SetReadyTimerCo()
     {
-        _readyTime = 10;
+        _readyTime = 20;
         while (true)
         {
             if (_readyTime <= 0)
