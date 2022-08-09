@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager : Singleton<NetworkManager>
 {
     private Socket _socket;
     private IPAddress _serverIp;
@@ -135,6 +135,12 @@ public class NetworkManager : MonoBehaviour
         packet.type = (char) PacketType.cs_startMatching;
         packet.networkID = PlayerManager.Instance.Players[0].ID;
         packet.character = (char) 0;
+        Send(packet);
+    }
+
+    public void SnedChangeCharacterPacket(int networkID, int characterType)
+    {
+        Packet.cs_sc_changeCharacterPacket packet = new Packet.cs_sc_changeCharacterPacket(networkID, (char)characterType);
         Send(packet);
     }
 
