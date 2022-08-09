@@ -11,7 +11,7 @@ public class Select : MonoBehaviour
 {
     [Header("CharacterInfo")] 
     public GameObject InfoWindow;
-    public Image[] CharacterImage;
+    public ChoiceCharacter[] ChoiceCharacters;
     
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI DescText;
@@ -42,12 +42,26 @@ public class Select : MonoBehaviour
     {
         InfoWindow.SetActive(isActive);
     }
-  
+
+
+
+    public void CharacterImageIndex(int networkID, int characterType)
+    {
+        for (int i = 0; i < ChoiceCharacters.Length; i++)
+        {
+            if (networkID == ChoiceCharacters[i].NetworkID)
+            {
+                ChoiceCharacters[i].ChangeCharacterImage(characterType);
+                break;
+            }
+        }
+    }
+
     public void ShowInfo(string name, string desc, Sprite image)
     {
         NameText.text = name;
         DescText.text = desc;
-        CharacterImage[0].sprite = image;
+        ChoiceCharacters[0].Image.sprite = image;
         
         SetInfo(true);
     }
@@ -62,18 +76,13 @@ public class Select : MonoBehaviour
     }
     
     
-    public void EntryInGame()
-    {
-        StopCoroutine(SetSelectTimerCo());
-        WindowManager.Instance.SetWindow((int)WindowType.InGame);
-    }
 
     /// <summary>
     /// 캐릭터를 직접 선택
     /// </summary>
     public void PickCharacterButton()
     {
-        _playerManager.Players[_playerManager.PlayerID - 1].SetStat(CharacterImage[0].sprite, 100, 10, NameText.text);
+        _playerManager.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10, NameText.text);
     }
     
     private IEnumerator SetSelectTimerCo()
@@ -104,14 +113,14 @@ public class Select : MonoBehaviour
     /// </summary>
     private void SetAutoCharacter()
     {
-        for (int i = 0; i < CharacterImage.Length; i++)
+        for (int i = 0; i < ChoiceCharacters.Length; i++)
         {
-            if (CharacterImage[i].sprite == null)
+            if (ChoiceCharacters[i].Image.sprite == null)
             {
                 Character character = Characters[(int) Character.CharacterType.Woowakgood];
 
-                CharacterImage[i].sprite = character.Image.sprite;
-                _playerManager.Players[i].SetStat(CharacterImage[i].sprite, 100, 10, character.Name);
+                ChoiceCharacters[i].Image.sprite = character.Image.sprite;
+                _playerManager.Players[i].SetStat(ChoiceCharacters[i].Image.sprite, 100, 10, character.Name);
             }
         }
     }
