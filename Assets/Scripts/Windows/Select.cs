@@ -12,7 +12,6 @@ public class Select : MonoBehaviour
     [Header("CharacterInfo")] 
     public GameObject InfoWindow;
     public Image[] CharacterImage;
-    public GameObject SelectButton;
     
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI DescText;
@@ -42,7 +41,6 @@ public class Select : MonoBehaviour
     private void SetInfo(bool isActive)
     {
         InfoWindow.SetActive(isActive);
-        SelectButton.SetActive(isActive);
     }
   
     public void ShowInfo(string name, string desc, Sprite image)
@@ -61,7 +59,6 @@ public class Select : MonoBehaviour
         {
             btn.GetComponent<Button>().interactable = isActive;
         }
-        SelectButton.GetComponent<Button>().interactable = isActive;
     }
     
     
@@ -81,7 +78,7 @@ public class Select : MonoBehaviour
     
     private IEnumerator SetSelectTimerCo()
     {
-        _timer = 10;
+        _timer = 15;
         while (true)
         {
             if (_timer <= 0)
