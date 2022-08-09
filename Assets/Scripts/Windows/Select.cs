@@ -19,19 +19,12 @@ public class Select : MonoBehaviour
 
     private float _timer;
 
-    private PlayerManager _playerManager;
-
 
     public Character[] Characters;
 
-    private void Awake()
-    {
-        _playerManager = FindObjectOfType<PlayerManager>();
-    }
     
     private void OnEnable()
     {
-        //_playerManager.CreateEnemy();
         SetInfo(false);
         SetButton(true);
         StartCoroutine(SetSelectTimerCo());
@@ -63,6 +56,8 @@ public class Select : MonoBehaviour
             if (networkID == ChoiceCharacters[i].NetworkID)
             {
                 ChoiceCharacters[i].ChangeCharacterImage(characterType);
+                PlayerManager.Instance.GetPlayer(networkID).Type = (CharacterType)characterType;
+                PlayerManager.Instance.GetPlayer(networkID).Sprite = ChoiceCharacters[i].Image.sprite;
                 break;
             }
         }
@@ -93,8 +88,9 @@ public class Select : MonoBehaviour
     /// </summary>
     public void PickCharacterButton(int type)
     {
-        _playerManager.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10, NameText.text);
-        NetworkManager.Instance.SendChangeCharacterPacket(_playerManager.Players[0].ID, type);
+        PlayerManager.Instance.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10, NameText.text);
+        NetworkManager.Instance.SendChangeCharacterPacket(PlayerManager.Instance.Players[0].ID, type);
+        PlayerManager.Instance.Players[0].Type = (CharacterType)type;
     }
     
     private IEnumerator SetSelectTimerCo()
@@ -129,10 +125,10 @@ public class Select : MonoBehaviour
         {
             if (ChoiceCharacters[i].Image.sprite == null)
             {
-                Character character = Characters[(int) Character.CharacterType.Woowakgood];
+                Character character = Characters[(int) CharacterType.Woowakgood];
 
                 ChoiceCharacters[i].Image.sprite = character.Image.sprite;
-                _playerManager.Players[i].SetStat(ChoiceCharacters[i].Image.sprite, 100, 10, character.Name);
+                PlayerManager.Instance.Players[i].SetStat(ChoiceCharacters[i].Image.sprite, 100, 10, character.Name);
             }
         }
     }

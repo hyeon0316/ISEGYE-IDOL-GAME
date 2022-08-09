@@ -22,25 +22,25 @@ public class ChoiceCharacter : MonoBehaviour
         switch (type)
         {
             case 0:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Woowakgood}/Woowakgood");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Woowakgood}/Woowakgood");
                 break;
             case 1:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Ine}/Ine");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Ine}/Ine");
                 break;
             case 2:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Jingburger}/Jingburger");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Jingburger}/Jingburger");
                 break;
             case 3:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Lilpa}/Lilpa");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Lilpa}/Lilpa");
                 break;
             case 4:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Jururu}/Jururu");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Jururu}/Jururu");
                 break;
             case 5:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Gosegu}/Gosegu");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Gosegu}/Gosegu");
                 break;
             case 6:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{Character.CharacterType.Viichan}/Viichan");
+                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Viichan}/Viichan");
                 break;
             
         }         

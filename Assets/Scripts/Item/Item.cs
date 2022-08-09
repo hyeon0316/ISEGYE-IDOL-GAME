@@ -132,7 +132,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             _slotIndex2 = obj.transform.GetSiblingIndex() +
                           (obj.transform.parent.name.Equals("UnUsingInventory") ? 6 : 0);
             PlayerManager playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-            Player player = playerManager.Players[playerManager.PlayerID - 1];
+            Player player = playerManager.Players[0];
             if (player.UsingInventory.CheckDuplication(this))
             {
                 RePosItem(_originParent, _originPos);

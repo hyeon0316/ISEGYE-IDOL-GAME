@@ -11,8 +11,6 @@ public class Battle : MonoBehaviour
 {
     private const int INDEX = 1;
     
-    private PlayerManager _playerManager;
-    
     //플레이어
     public GameObject MyFiled;
     private GameObject _usingItems;
@@ -30,8 +28,6 @@ public class Battle : MonoBehaviour
 
     private void Awake()
     {
-        _playerManager = FindObjectOfType<PlayerManager>();
-        
         _usingItems = MyFiled.transform.GetChild(0).transform.gameObject;
         _playerImage = MyFiled.transform.GetChild(1).GetComponent<Image>();
         _itemSlots = _usingItems.GetComponentsInChildren<ItemSlot>();
@@ -53,15 +49,16 @@ public class Battle : MonoBehaviour
     
     private void SetPlayer()
     {
-       _playerManager.Players[_playerManager.PlayerID - INDEX].SetItem(_itemSlots);
-       _playerImage.sprite = _playerManager.Players[_playerManager.PlayerID - INDEX].Sprite;
-       _debugPlayerID.text = $"{_playerManager.Players[_playerManager.PlayerID - INDEX].ID}";
+        PlayerManager.Instance.Players[0].SetItem(_itemSlots);
+       _playerImage.sprite = PlayerManager.Instance.Players[0].Sprite;
+       _debugPlayerID.text = $"{PlayerManager.Instance.Players[0].ID}";
     }
 
     private void SetEnemy()
     {
         int rand = Random.Range(1, 8);
-        _playerManager.Players[rand].SetItem(_eItemSlots);
-        _debugEnemyID.text = $"{_playerManager.Players[rand].ID}";
+        PlayerManager.Instance.Players[rand].SetItem(_eItemSlots);
+        _enemyImage.sprite = PlayerManager.Instance.Players[rand].Sprite;
+        _debugEnemyID.text = $"{PlayerManager.Instance.Players[rand].ID}";
     }
 }

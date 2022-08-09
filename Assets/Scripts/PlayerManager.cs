@@ -10,9 +10,6 @@ public class PlayerManager : Singleton<PlayerManager>
    public const int PLAYER_COUNT = 8;
    private int _enemyIndex;
 
-   private int _playerID = 1;
-   public int PlayerID => _playerID;
-
    private Select _select;
 
    public Player[] Players = new Player[8];

@@ -8,14 +8,21 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
+    public CharacterType Type;
+    
     private int _hp;
     private int _defense;
 
     public string NickName;
 
     private Sprite _sprite;
-    public Sprite Sprite => _sprite;
-    
+
+    public Sprite Sprite
+    {
+        get { return _sprite; }
+        set { _sprite = value; }
+    }
+
     [SerializeField]
     private int _id;
 

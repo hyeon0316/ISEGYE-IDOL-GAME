@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CharacterType
+{
+    Woowakgood,
+    Ine,
+    Jingburger,
+    Lilpa,
+    Jururu,
+    Gosegu,
+    Viichan
+}
+
 public class Character : MonoBehaviour
 {
-    public enum CharacterType
-    {
-        Woowakgood,
-        Ine,
-        Jingburger,
-        Lilpa,
-        Jururu,
-        Gosegu,
-        Viichan
-    }
 
     [SerializeField]
     private CharacterType _curCharType;
