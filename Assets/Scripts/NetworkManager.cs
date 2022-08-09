@@ -190,6 +190,8 @@ public class NetworkManager : Singleton<NetworkManager>
                 Debug.Log($"room id : {connectRoomPacket.roomNumber.ToString()}에 입장");
                 PlayerManager.Instance.CreateEnemy(connectRoomPacket.users);
                 WindowManager.Instance.SetWindow(3);
+                FindObjectOfType<Select>().ChoiceCharacters[0].NetworkID = PlayerManager.Instance.Players[0].ID;
+                FindObjectOfType<Select>().SetNetworkID(connectRoomPacket.users);
                 break;
             case PacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<Packet.cs_sc_AddNewItemPacket>(bytes);
@@ -205,8 +207,9 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case PacketType.cs_sc_changeCharacter:
                 var changeCharacterPacket = ByteArrayToStruct<Packet.cs_sc_changeCharacterPacket>(bytes);
+                Debug.Log($"{changeCharacterPacket.networkID} -> {(int)changeCharacterPacket.characterType}");
                 FindObjectOfType<Select>()
-                    .ChangeCharacterImage(changeCharacterPacket.networkID, changeCharacterPacket.characterType);
+                    .ChangeCharacterImage(changeCharacterPacket.networkID, (int)changeCharacterPacket.characterType);
                 break;
             default:
                 Debug.LogError("새로운 패킷");

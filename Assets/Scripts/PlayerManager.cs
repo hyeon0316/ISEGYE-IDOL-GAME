@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class PlayerManager : Singleton<PlayerManager>
 {
    public Transform EnemyParent;
-   private const int PLAYER_COUNT = 8;
+   public const int PLAYER_COUNT = 8;
    private int _enemyIndex;
 
    private int _playerID = 1;

@@ -41,6 +41,20 @@ public class Select : MonoBehaviour
     {
         InfoWindow.SetActive(isActive);
     }
+
+    public void SetNetworkID(Packet.UserInfo[] userInfos)
+    {
+        int index = 1;
+        for (int i = 0; i < PlayerManager.PLAYER_COUNT; i++)
+        {
+            if (userInfos[i].networkID == ChoiceCharacters[0].NetworkID)
+            {
+                continue;
+            }
+
+            ChoiceCharacters[index++].NetworkID = (int)userInfos[i].networkID;
+        }
+    }
     
     public void ChangeCharacterImage(int networkID, int characterType)
     {
