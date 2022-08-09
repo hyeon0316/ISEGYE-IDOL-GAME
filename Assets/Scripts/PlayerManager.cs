@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
       _select = GameObject.Find("Canvas").transform.Find("Select").GetComponent<Select>();
    }
 
-   Player GetPlayer(int networkID)
+   public Player GetPlayer(int networkID)
    {
       foreach(var player in Players)
       {
@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
    {
       Player  player = GameObject.Find("Canvas").transform.Find("InGame").transform.Find("Background").transform.Find("Ready").GetComponent<Player>();
 
-      player.SetStat(_playerID, _select.CharacterImage.sprite, 100, 10, "Player");
+      player.SetID(_playerID);
       Players[_playerID - INDEX] = player;
       
       CreateEnemy(_playerID);
@@ -56,7 +56,7 @@ public class PlayerManager : MonoBehaviour
          GameObject enemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
          enemy.transform.SetParent(EnemyParent);
          enemy.name = $"Enemy{i}";
-         enemy.GetComponent<Player>().SetStat(i, null, 100,10, "AI");
+         enemy.GetComponent<Player>().SetID(i);
 
          Players[_enemyIndex] = enemy.GetComponent<Player>();
          _enemyIndex++;

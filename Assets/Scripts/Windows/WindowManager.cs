@@ -19,9 +19,6 @@ public class WindowManager : Singleton<WindowManager>
    [SerializeField] private GameObject[] _windows;
    public GameObject[] Windows => _windows; 
       
-
-   private WindowType _curWindowType;
-
    private void Start()
    {
       SetWindow((int)WindowType.Lobby);

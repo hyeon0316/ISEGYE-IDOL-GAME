@@ -21,10 +21,16 @@ public class Character : MonoBehaviour
     private CharacterType _curCharType;
     
     private Image _image;
+
+    public Image Image => _image;
+    
     private string _name;
+
+    public string Name => _name;
     
     [TextArea]
     public string Description;
+
 
     private void Awake()
     {
@@ -35,6 +41,7 @@ public class Character : MonoBehaviour
     {
         SetCharacter();
     }
+
 
     private void SetCharacter()
     {

@@ -8,20 +8,16 @@ public class Ready : MonoBehaviour
     public GameObject RouletteWindow;
     
     public TextMeshProUGUI ReadyTimer;
-    private float _readyTime = 10;
+    private float _readyTime;
     private bool _isActive = false;
 
     public float ReadyTime => _readyTime;
     
     private void OnEnable()
     {
-        StartCoroutine(SetReadyTimeCo());
+        StartCoroutine(SetReadyTimerCo());
     }
 
-    private void OnDisable()
-    {
-        _readyTime = 10;
-    }
 
     private void Update()
     {
@@ -34,8 +30,9 @@ public class Ready : MonoBehaviour
         }
     }
     
-    private IEnumerator SetReadyTimeCo()
+    private IEnumerator SetReadyTimerCo()
     {
+        _readyTime = 10;
         while (true)
         {
             if (_readyTime <= 0)
