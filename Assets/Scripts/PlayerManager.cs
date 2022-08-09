@@ -47,8 +47,8 @@ public class PlayerManager : Singleton<PlayerManager>
          GameObject enemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
          enemy.transform.SetParent(EnemyParent);
          enemy.name = $"Enemy{userInfos[i].networkID}";
-         Players[index].SetID((int)userInfos[i].networkID);
-         Players[index++] = enemy.GetComponent<Player>();
+         Players[index] = enemy.GetComponent<Player>();
+         Players[index++].SetID((int)userInfos[i].networkID);
       }
    }
 }
