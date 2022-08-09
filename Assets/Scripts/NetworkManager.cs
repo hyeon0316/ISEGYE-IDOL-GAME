@@ -208,7 +208,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case PacketType.cs_sc_changeItemSlot:
                 var changeItemSlotPacket = ByteArrayToStruct<Packet.cs_sc_changeItemSlotPacket>(bytes);
-                PlayerManager.Instance.GetPlayer(changeItemSlotPacket.networkID).SwapItem(changeItemSlotPacket.slot1,changeItemSlotPacket.slot2);
+                PlayerManager.Instance.GetPlayer(changeItemSlotPacket.networkID).SwapItemNetwork(changeItemSlotPacket.slot1,changeItemSlotPacket.slot2);
                 break;
             case PacketType.cs_sc_changeCharacter:
                 var changeCharacterPacket = ByteArrayToStruct<Packet.cs_sc_changeCharacterPacket>(bytes);

@@ -69,4 +69,21 @@ public class Player : MonoBehaviour
 
         dragItem.RePosItem(itemSlot2.transform, itemSlot2.transform.position);
     }
+    
+    public void SwapItemNetwork(int slotIndex1, int slotIndex2)
+    {
+        ItemSlot itemSlot1 = slotIndex1 < 6 ? UsingInventory.ItemSlots[slotIndex1] : UnUsingInventory.ItemSlots[slotIndex1 - 6];
+        ItemSlot itemSlot2 = slotIndex2 < 6 ? UsingInventory.ItemSlots[slotIndex2] : UnUsingInventory.ItemSlots[slotIndex2 - 6];
+
+        if (itemSlot2.transform.childCount == 1)
+        {
+            Item tempItem = itemSlot2.GetComponentInChildren<Item>();       
+            tempItem.RePosItem(itemSlot1.transform, Vector3.zero);
+            tempItem.transform.localPosition = Vector3.zero;
+        }
+        
+        Item tempItem2 = itemSlot1.GetComponentInChildren<Item>();       
+        tempItem2.RePosItem(itemSlot2.transform, Vector3.zero);
+        tempItem2.transform.localPosition = Vector3.zero;
+    }
 }
