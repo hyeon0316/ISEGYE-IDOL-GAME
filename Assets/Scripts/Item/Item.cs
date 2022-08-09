@@ -140,6 +140,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             else
             {
                 //player.SwapItem(_slotIndex1, _slotIndex2);
+                RePosItem(_originParent, _originPos);
                 NetworkManager.Instance.SendChangeItemSlotPacket(playerManager.Players[0].ID, (Int16) _slotIndex1,
                     (Int16) _slotIndex2);
             }
