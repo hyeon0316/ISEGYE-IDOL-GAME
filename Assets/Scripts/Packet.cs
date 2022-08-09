@@ -128,8 +128,8 @@ public class Packet : MonoBehaviour
 
         public cs_sc_changeCharacterPacket(Int32 networkID, char characterType)
         {
-            size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
-            type = (char) PacketType.cs_sc_upgradeItem;
+            size = (UInt16) Marshal.SizeOf<cs_sc_changeCharacterPacket>();
+            type = (char) PacketType.cs_sc_changeCharacter;
             this.networkID = networkID;
             this.characterType = characterType;
         }
