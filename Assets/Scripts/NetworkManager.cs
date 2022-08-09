@@ -126,17 +126,17 @@ public class NetworkManager : MonoBehaviour
         cs_sc_AddNewItemPacket packet;
         packet = new cs_sc_AddNewItemPacket(user.networkID, itemCode);
         Send(user, packet);
-    }
-
-    public void StartMatching(User user)
-    {
-        cs_StartMatchingPacket packet;
-        packet.size = (char) Marshal.SizeOf<cs_StartMatchingPacket>();
-        packet.type = (char) PacketType.cs_startMatching;
-        packet.networkID = user.networkID;
-        packet.character = (char) 0;
-        Send(user, packet);
     }*/
+
+    public void StartMatching()
+    {
+        Packet.cs_StartMatchingPacket packet;
+        packet.size = (UInt16) Marshal.SizeOf<Packet.cs_StartMatchingPacket>();
+        packet.type = (char) PacketType.cs_startMatching;
+        packet.networkID = PlayerManager.Instance.Players[0].ID;
+        packet.character = (char) 0;
+        Send(packet);
+    }
 
     void Receive()
     {
@@ -167,7 +167,7 @@ public class NetworkManager : MonoBehaviour
             return;
         }
 
-        int size = packet[0];
+        int size = BitConverter.ToUInt16(packet);
         byte[] bytes = new byte[size];
         Debug.Log($"{size}의 데이터를 받았습니다");
         Array.Copy(packet, 0, bytes, 0, size);
@@ -175,39 +175,19 @@ public class NetworkManager : MonoBehaviour
         {
             case PacketType.sc_connectServer:
                 var connectServerPacket = ByteArrayToStruct<Packet.sc_ConnectServerPacket>(bytes);
-                //Users[i].networkID = connectServerPacket.networkID;
+                //Users[i].networkID = connectServerPacket.networkID;4
+                PlayerManager.Instance.Players[0].SetID(connectServerPacket.networkID);
                 Debug.Log($"플레이어 네트워크ID : {connectServerPacket.networkID} 로 접속");
                 break;
             case PacketType.sc_connectRoom:
                 var connectRoomPacket = ByteArrayToStruct<Packet.sc_ConnectRoomPacket>(bytes);
                 Debug.Log($"room id : {connectRoomPacket.roomNumber.ToString()}에 입장");
-                foreach (Packet.UserInfo userInfo in connectRoomPacket.users)
-                {
-                    Debug.Log($"네트워크 id : {userInfo.networkID}, 캐릭터 type : {(Character.CharacterType) userInfo.character}");
-                    /*foreach (User user in Users)
-                    {
-                        if (user.isRoom)
-                        {
-                            continue;
-                        }
-
-                        if (user.networkID == userInfo.networkID)
-                        {
-                            user.isRoom = true;
-                            user.roomNumber = connectRoomPacket.roomNumber;
-                            AddDebug($"{i}번 클라이언트 room id : {user.roomNumber.ToString()} 입장");
-                            break;
-                        }
-                    }*/
-                }
+                PlayerManager.Instance.CreateEnemy(connectRoomPacket.users);
+                WindowManager.Instance.SetWindow(3);
                 break;
             case PacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<Packet.cs_sc_AddNewItemPacket>(bytes);
                 //AddDebug($"{addNewItemPacket.networkID} 번 유저가 새로운 아이템 {addNewItemPacket.itemCode} 을 추가하였습니다");
-                break;
-            case PacketType.cs_sc_test:
-                var testPacket = ByteArrayToStruct<Packet.cs_sc_testPacket>(bytes);
-                //AddDebug($"Room 번호 : {Users[i].roomNumber.ToString()}, 데이터 : {testPacket.number.ToString()}");
                 break;
             case PacketType.sc_disconnect:
                 DisconnectServer();

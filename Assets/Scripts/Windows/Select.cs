@@ -28,11 +28,10 @@ public class Select : MonoBehaviour
     {
         _playerManager = FindObjectOfType<PlayerManager>();
     }
-
-
+    
     private void OnEnable()
     {
-        _playerManager.CreatePlayer();
+        //_playerManager.CreateEnemy();
         SetInfo(false);
         SetButton(true);
         StartCoroutine(SetSelectTimerCo());

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
    public Transform EnemyParent;
    private const int PLAYER_COUNT = 8;
@@ -34,34 +34,21 @@ public class PlayerManager : MonoBehaviour
       return null;
    }
 
-   public void CreatePlayer()
+   public void CreateEnemy(Packet.UserInfo[] userInfos)
    {
-      Player  player = GameObject.Find("Canvas").transform.Find("InGame").transform.Find("Background").transform.Find("Ready").GetComponent<Player>();
-
-      player.SetID(_playerID);
-      Players[_playerID - INDEX] = player;
-      
-      CreateEnemy(_playerID);
-      
-   }
-
-   private void CreateEnemy(int exceptID)
-   {
-      _enemyIndex = 1;
-      for (int i = 1; i <= PLAYER_COUNT; i++)
+      int index = 1;
+      for (int i = 0; i < PLAYER_COUNT; i++)
       {
-         if(exceptID == i)
+         if (userInfos[i].networkID == Players[0].ID)
+         {
             continue;
-
+         }
+         
          GameObject enemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
          enemy.transform.SetParent(EnemyParent);
-         enemy.name = $"Enemy{i}";
-         enemy.GetComponent<Player>().SetID(i);
-
-         Players[_enemyIndex] = enemy.GetComponent<Player>();
-         _enemyIndex++;
+         enemy.name = $"Enemy{userInfos[i].networkID}";
+         Players[index].SetID((int)userInfos[i].networkID);
+         Players[index++] = enemy.GetComponent<Player>();
       }
    }
-   
-   
 }

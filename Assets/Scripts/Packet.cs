@@ -16,7 +16,6 @@ enum PacketType
     sc_disconnect,
     cs_startMatching,
     cs_sc_addNewItem,
-    cs_sc_test,
     cs_sc_changeItemSlot,
     cs_sc_upgradeItem,
 }
@@ -79,24 +78,6 @@ public class Packet : MonoBehaviour
         }
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    [Serializable]
-    public struct cs_sc_testPacket
-    {
-        public readonly UInt16 size;
-        public readonly char type;
-        public readonly Int32 networkID;
-        public readonly Int32 number;
-
-        public cs_sc_testPacket(Int32 networkID, Int32 num)
-        {
-            size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
-            type = (char) PacketType.cs_sc_test;
-            this.networkID = networkID;
-            number = num;
-        }
-    }
-    
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     [Serializable]
     public struct cs_sc_changeItemSlotPacket
