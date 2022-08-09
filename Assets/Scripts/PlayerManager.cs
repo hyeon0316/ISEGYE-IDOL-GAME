@@ -8,7 +8,6 @@ public class PlayerManager : Singleton<PlayerManager>
 {
    public Transform EnemyParent;
    private const int PLAYER_COUNT = 8;
-   private const int INDEX = 1;
    private int _enemyIndex;
 
    private int _playerID = 1;

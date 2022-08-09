@@ -41,10 +41,8 @@ public class Select : MonoBehaviour
     {
         InfoWindow.SetActive(isActive);
     }
-
-
-
-    public void CharacterImageIndex(int networkID, int characterType)
+    
+    public void ChangeCharacterImage(int networkID, int characterType)
     {
         for (int i = 0; i < ChoiceCharacters.Length; i++)
         {
@@ -79,9 +77,10 @@ public class Select : MonoBehaviour
     /// <summary>
     /// 캐릭터를 직접 선택
     /// </summary>
-    public void PickCharacterButton()
+    public void PickCharacterButton(int type)
     {
         _playerManager.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10, NameText.text);
+        Packet.cs_sc_changeCharacterPacket packet = new Packet.cs_sc_changeCharacterPacket(_playerManager.Players[0].ID, (char)type);
     }
     
     private IEnumerator SetSelectTimerCo()

@@ -195,8 +195,12 @@ public class NetworkManager : MonoBehaviour
                 Debug.Log("연결이 해제되었습니다");
                 break;
             case PacketType.cs_sc_changeItemSlot:
-                var packet1 = ByteArrayToStruct<Packet.cs_sc_changeItemSlotPacket>(bytes);
-                
+                //var packet1 = ByteArrayToStruct<Packet.cs_sc_changeItemSlotPacket>(bytes);
+                break;
+            case PacketType.cs_sc_changeCharacter:
+                var changeCharacterPacket = ByteArrayToStruct<Packet.cs_sc_changeCharacterPacket>(bytes);
+                FindObjectOfType<Select>()
+                    .ChangeCharacterImage(changeCharacterPacket.networkID, changeCharacterPacket.characterType);
                 break;
             default:
                 Debug.LogError("새로운 패킷");

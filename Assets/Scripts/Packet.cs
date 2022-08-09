@@ -18,6 +18,7 @@ enum PacketType
     cs_sc_addNewItem,
     cs_sc_changeItemSlot,
     cs_sc_upgradeItem,
+    cs_sc_changeCharacter,
 }
 
 public class Packet : MonoBehaviour
@@ -113,6 +114,24 @@ public class Packet : MonoBehaviour
             type = (char) PacketType.cs_sc_upgradeItem;
             this.networkID = networkID;
             this.slot = slot;
+        }
+    }
+    
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+    [Serializable]
+    public struct cs_sc_changeCharacterPacket
+    {
+        public readonly UInt16 size;
+        public readonly char type;
+        public readonly Int32 networkID;
+        public readonly char characterType;
+
+        public cs_sc_changeCharacterPacket(Int32 networkID, char characterType)
+        {
+            size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
+            type = (char) PacketType.cs_sc_upgradeItem;
+            this.networkID = networkID;
+            this.characterType = characterType;
         }
     }
 }
