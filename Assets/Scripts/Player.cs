@@ -33,14 +33,18 @@ public class Player : MonoBehaviour
     public UnUsingInventory UnUsingInventory;
 
 
-    public void SetStat(Sprite image, int hp, int defense, string name)
+    public void SetStat(Sprite image, int hp, int defense)
     {
         _sprite = image;
         _hp = hp;
         _defense = defense;
-        NickName = name;
     }
 
+    public void SetName(string name)
+    {
+        NickName = name;
+    }
+    
     public void SetID(int id)
     {
         _id = id;

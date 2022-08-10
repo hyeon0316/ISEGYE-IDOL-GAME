@@ -2,14 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
    public Transform EnemyParent;
    public const int PLAYER_COUNT = 8;
-   private int _enemyIndex;
-
    private Select _select;
 
    public Player[] Players = new Player[8];
@@ -46,6 +43,7 @@ public class PlayerManager : Singleton<PlayerManager>
          enemy.name = $"Enemy{userInfos[i].networkID}";
          Players[index] = enemy.GetComponent<Player>();
          Players[index++].SetID((int)userInfos[i].networkID);
+         //todo: 닉네임 설정
       }
    }
 }

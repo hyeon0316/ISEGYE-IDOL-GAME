@@ -88,7 +88,7 @@ public class Select : MonoBehaviour
     /// </summary>
     public void PickCharacterButton(int type)
     {
-        PlayerManager.Instance.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10, NameText.text);
+        PlayerManager.Instance.Players[0].SetStat(ChoiceCharacters[0].Image.sprite, 100, 10);
         NetworkManager.Instance.SendChangeCharacterPacket(PlayerManager.Instance.Players[0].ID, type);
         PlayerManager.Instance.Players[0].Type = (CharacterType)type;
     }
@@ -128,7 +128,7 @@ public class Select : MonoBehaviour
                 Character character = Characters[(int) CharacterType.Woowakgood];
 
                 ChoiceCharacters[i].Image.sprite = character.Image.sprite;
-                PlayerManager.Instance.Players[i].SetStat(ChoiceCharacters[i].Image.sprite, 100, 10, character.Name);
+                PlayerManager.Instance.Players[i].SetStat(ChoiceCharacters[i].Image.sprite, 100, 10);
             }
         }
     }
