@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,9 +14,11 @@ public class Player : MonoBehaviour
     private int _hp;
     private int _defense;
 
-    public string NickName;
+    private string _nickName;
 
     private Sprite _sprite;
+
+    private TextMeshProUGUI _nameText;
 
     public Sprite Sprite
     {
@@ -33,6 +36,11 @@ public class Player : MonoBehaviour
     public UnUsingInventory UnUsingInventory;
 
 
+    private void Awake()
+    {
+        _nameText = this.transform.Find("NickName").GetComponent<TextMeshProUGUI>();
+    }
+    
     public void SetStat(Sprite image, int hp, int defense)
     {
         _sprite = image;
@@ -42,7 +50,8 @@ public class Player : MonoBehaviour
 
     public void SetName(string name)
     {
-        NickName = name;
+        _nickName = name;
+        _nameText.text = _nickName;
     }
     
     public void SetID(int id)
