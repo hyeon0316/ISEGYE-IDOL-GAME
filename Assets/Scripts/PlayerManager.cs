@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class PlayerManager : Singleton<PlayerManager>
@@ -42,7 +43,10 @@ public class PlayerManager : Singleton<PlayerManager>
          enemy.transform.position += new Vector3(1000 * (index - 1), 0, 0);
          enemy.name = $"Enemy{userInfos[i].networkID}";
          Players[index] = enemy.GetComponent<Player>();
-         Players[index++].SetID((int)userInfos[i].networkID);
+         Players[index].SetID((int)userInfos[i].networkID);
+         Players[index].SetName(Encoding.Unicode.GetString(userInfos[i].name));
+         Debug.Log(Players[index].NickName);
+         ++index;
          //todo: 닉네임 설정
       }
    }

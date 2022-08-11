@@ -21,14 +21,15 @@ enum PacketType
     cs_sc_changeCharacter,
 }
 
-public class Packet : MonoBehaviour
+namespace Packet
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     [Serializable]
     public struct UserInfo
     {
         public UInt32 networkID;
-        public char character;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 22)]
+        public Byte[] name;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
@@ -58,7 +59,8 @@ public class Packet : MonoBehaviour
         public UInt16 size;
         public char type;
         public Int32 networkID;
-        public char character;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 22)]
+        public Byte[] name;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]

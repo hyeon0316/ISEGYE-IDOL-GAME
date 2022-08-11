@@ -35,7 +35,7 @@ public class Select : MonoBehaviour
         InfoWindow.SetActive(isActive);
     }
 
-    public void SetNetworkID(Packet.UserInfo[] userInfos)
+    public void SetUserInfo(Packet.UserInfo[] userInfos)
     {
         int index = 1;
         for (int i = 0; i < PlayerManager.PLAYER_COUNT; i++)

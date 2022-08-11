@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,11 @@ public class NetworkManager : Singleton<NetworkManager>
 
     void Start()
     {
+        byte[] strbyte = Encoding.Unicode.GetBytes("aabbss");
+        string bb = Encoding.Unicode.GetString(strbyte);
+        Debug.Log(strbyte.Length);
+        byte[] nameBytes = new byte[20];
+        Debug.Log(nameBytes[0]);
     }
 
     void OnApplicationQuit()
@@ -132,7 +138,10 @@ public class NetworkManager : Singleton<NetworkManager>
         packet.size = (UInt16) Marshal.SizeOf<Packet.cs_StartMatchingPacket>();
         packet.type = (char) PacketType.cs_startMatching;
         packet.networkID = PlayerManager.Instance.Players[0].ID;
-        packet.character = (char) 0;
+        byte[] nameBuf = new byte[22];
+        var encodingStrBytes = Encoding.Unicode.GetBytes(PlayerManager.Instance.Players[0].NickName.Trim((char)8203));
+        Array.Copy(encodingStrBytes,nameBuf, encodingStrBytes.Length);
+        packet.name = nameBuf;
         Send(packet);
     }
 
@@ -195,7 +204,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 PlayerManager.Instance.CreateEnemy(connectRoomPacket.users);
                 WindowManager.Instance.SetWindow(3);
                 FindObjectOfType<Select>().ChoiceCharacters[0].NetworkID = PlayerManager.Instance.Players[0].ID;
-                FindObjectOfType<Select>().SetNetworkID(connectRoomPacket.users);
+                FindObjectOfType<Select>().SetUserInfo(connectRoomPacket.users);
                 break;
             case PacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<Packet.cs_sc_AddNewItemPacket>(bytes);
