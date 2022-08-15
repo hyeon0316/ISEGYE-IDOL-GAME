@@ -18,8 +18,6 @@ public class ItemSlot : MonoBehaviour
 
     public int ActivePercent;
 
-    public bool HaveItem;
-
     private void Awake()
     {
         _setItems = FindObjectOfType<SetItems>();

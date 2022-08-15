@@ -47,7 +47,6 @@ public class PlayerManager : Singleton<PlayerManager>
          Players[index].SetName(Encoding.Unicode.GetString(userInfos[i].name));
          Debug.Log(Players[index].NickName);
          ++index;
-         //todo: 닉네임 설정
       }
    }
 }

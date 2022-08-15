@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
 
     private Sprite _sprite;
 
-    private TextMeshProUGUI _nameText;
+    public TextMeshProUGUI NameText;
+    public TextMeshProUGUI HpText;
 
     public Sprite Sprite
     {
@@ -35,52 +36,32 @@ public class Player : MonoBehaviour
     public UnUsingInventory UnUsingInventory;
 
 
-    private void Awake()
-    {
-        _nameText = this.transform.Find("NickName").GetComponent<TextMeshProUGUI>();
-
-        GameObject item = Resources.Load<GameObject>("Prefabs/ItemSlot");
-        ItemSlot[] itemSlots = new ItemSlot[6];
-        for (int i = 0; i < 6; ++i)
-        {
-            var a =  GameObject.Instantiate(item);
-            itemSlots[i] = a.GetComponent<ItemSlot>();
-        }
-        itemSlots[0].ActivePercent = 23;
-        itemSlots[1].ActivePercent = 23;
-        itemSlots[2].ActivePercent = 20;
-        itemSlots[3].ActivePercent = 20;
-        itemSlots[4].ActivePercent = 17;
-        itemSlots[5].ActivePercent = 17;
-        
-        itemSlots[0].HaveItem = true;
-        itemSlots[1].HaveItem = true;
-        itemSlots[3].HaveItem = true;
-        itemSlots[4].HaveItem = true;
-        itemSlots[5].HaveItem = true;
-        var result = GetRandItemOrder(itemSlots);
-        foreach (var b in result)
-        {
-            Debug.Log(b);
-        }
-    }
-
-    public void SetStat(Sprite image, int hp, int defense)
+    public void Init(Sprite image, int hp, int defense)
     {
         _sprite = image;
         _hp = hp;
+        HpText.text = $"체력: {_hp}";
         _defense = defense;
     }
 
     public void SetName(string name)
     {
         NickName = name;
-        _nameText.text = NickName;
+        NameText.text = NickName;
     }
 
     public void SetID(int id)
     {
         _id = id;
+    }
+    
+    /// <summary>
+    /// 데미지 또는 회복이후 체력 갱신
+    /// </summary>
+    public void UpdateHp(int amount)
+    {
+        _hp += amount;
+        HpText.text = $"체력: {_hp}";
     }
 
     /// <summary>
@@ -142,19 +123,19 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 플레이어가 가진 아이템을 랜덤한 순서로 뽑아내는 아이템
     /// </summary>
-    public byte[] GetRandItemOrder(ItemSlot[] itemSlots)
+    public byte[] GetRandItemOrder()
     {
-        byte[] queue = new byte[30];
+        byte[] result = new byte[30];
         int index = 0;
         int sum = 0;
         List<byte> slots = new List<byte>();
 
-        for (int i = 0; i < itemSlots.Length; ++i)
+        for (int i = 0; i < UsingInventory.ItemSlots.Length; ++i)
         {
-            if (itemSlots[i].HaveItem)
+            if (UsingInventory.ItemSlots[i].transform.childCount ==1)
             {
                 slots.Add((byte) i);
-                sum += itemSlots[i].ActivePercent;
+                sum += UsingInventory.ItemSlots[i].ActivePercent;
             }
         }
 
@@ -171,11 +152,11 @@ public class Player : MonoBehaviour
             int rand = Random.Range(0, loopSum);
             for (int i = 0; i < loopLength; i++)
             {
-                int percent = itemSlots[slots[i]].ActivePercent;
+                int percent = UsingInventory.ItemSlots[slots[i]].ActivePercent;
                 rand -= percent;
                 if (rand < 0)
                 {
-                    queue[index++] = slots[i];
+                    result[index++] = slots[i];
                     loopSum -= percent;
                     slots.Remove(slots[i]);
                     loopLength--;
@@ -186,13 +167,13 @@ public class Player : MonoBehaviour
             {
                 loopSum = sum;
                 loopLength = length;
-                for (int i = 0; i < itemSlots.Length - length; i++)
+                for (int i = 0; i < UsingInventory.ItemSlots.Length - length; i++)
                 {
-                    queue[index++] = 255;
+                    result[index++] = 255;//나머지 빈 공간
                 }
             }
         }
 
-        return queue;
+        return result;
     }
 }
