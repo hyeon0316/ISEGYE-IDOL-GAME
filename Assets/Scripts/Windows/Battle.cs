@@ -26,6 +26,8 @@ public class Battle : MonoBehaviour
     private TextMeshProUGUI _debugPlayerID;
     private TextMeshProUGUI _debugEnemyID;
 
+    public BattlePlayer[] BattlePlayers;
+
     private void Awake()
     {
         _usingItems = MyFiled.transform.GetChild(0).transform.gameObject;
@@ -46,6 +48,24 @@ public class Battle : MonoBehaviour
         SetEnemy();
     }
 
+    public void SetFirstPlayer(int networkID)
+    {
+        if (BattlePlayers[0].Player.ID == networkID)
+            BattlePlayers[0].SetFirstTurn();
+        else
+            BattlePlayers[1].SetFirstTurn();
+    }
+
+    public void BattleAAA()
+    {
+        BattlePlayers[0].ActiveItem();
+        BattlePlayers[1].ActiveItem();
+    }
+
+    private void Foo()
+    {
+        //BattlePlayers[0].SetBattlePlayer(PlayerManager.Instance.Players[0], PlayerManager.Instance.Players[0].GetRandItemOrder());
+    }
     
     private void SetPlayer()
     {

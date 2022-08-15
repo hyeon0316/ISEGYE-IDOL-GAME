@@ -38,6 +38,31 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _nameText = this.transform.Find("NickName").GetComponent<TextMeshProUGUI>();
+
+        GameObject item = Resources.Load<GameObject>("Prefabs/ItemSlot");
+        ItemSlot[] itemSlots = new ItemSlot[6];
+        for (int i = 0; i < 6; ++i)
+        {
+            var a =  GameObject.Instantiate(item);
+            itemSlots[i] = a.GetComponent<ItemSlot>();
+        }
+        itemSlots[0].ActivePercent = 23;
+        itemSlots[1].ActivePercent = 23;
+        itemSlots[2].ActivePercent = 20;
+        itemSlots[3].ActivePercent = 20;
+        itemSlots[4].ActivePercent = 17;
+        itemSlots[5].ActivePercent = 17;
+        
+        itemSlots[0].HaveItem = true;
+        itemSlots[1].HaveItem = true;
+        itemSlots[3].HaveItem = true;
+        itemSlots[4].HaveItem = true;
+        itemSlots[5].HaveItem = true;
+        var result = GetRandItemOrder(itemSlots);
+        foreach (var b in result)
+        {
+            Debug.Log(b);
+        }
     }
 
     public void SetStat(Sprite image, int hp, int defense)
@@ -112,5 +137,62 @@ public class Player : MonoBehaviour
         Item tempItem2 = itemSlot1.GetComponentInChildren<Item>();
         tempItem2.RePosItem(itemSlot2.transform, Vector3.zero);
         tempItem2.transform.localPosition = Vector3.zero;
+    }
+
+    /// <summary>
+    /// 플레이어가 가진 아이템을 랜덤한 순서로 뽑아내는 아이템
+    /// </summary>
+    public byte[] GetRandItemOrder(ItemSlot[] itemSlots)
+    {
+        byte[] queue = new byte[30];
+        int index = 0;
+        int sum = 0;
+        List<byte> slots = new List<byte>();
+
+        for (int i = 0; i < itemSlots.Length; ++i)
+        {
+            if (itemSlots[i].HaveItem)
+            {
+                slots.Add((byte) i);
+                sum += itemSlots[i].ActivePercent;
+            }
+        }
+
+        int length = slots.Count;
+        for (int i = 0; i < length * 4; i++)
+        {
+            slots.Add(slots[i % length]);
+        }
+
+        int loopSum = sum;
+        int loopLength = length;
+        while (slots.Count > 0)
+        {
+            int rand = Random.Range(0, loopSum);
+            for (int i = 0; i < loopLength; i++)
+            {
+                int percent = itemSlots[slots[i]].ActivePercent;
+                rand -= percent;
+                if (rand < 0)
+                {
+                    queue[index++] = slots[i];
+                    loopSum -= percent;
+                    slots.Remove(slots[i]);
+                    loopLength--;
+                    break;
+                }
+            }
+            if (loopLength == 0)
+            {
+                loopSum = sum;
+                loopLength = length;
+                for (int i = 0; i < itemSlots.Length - length; i++)
+                {
+                    queue[index++] = 255;
+                }
+            }
+        }
+
+        return queue;
     }
 }
