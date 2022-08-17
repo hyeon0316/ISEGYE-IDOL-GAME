@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
+using Packet;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,11 +23,8 @@ public class NetworkManager : Singleton<NetworkManager>
 
     void Start()
     {
-        byte[] strbyte = Encoding.Unicode.GetBytes("aabbss");
-        string bb = Encoding.Unicode.GetString(strbyte);
-        Debug.Log(strbyte.Length);
-        byte[] nameBytes = new byte[20];
-        Debug.Log(nameBytes[0]);
+        Byte[] aa = new byte[59];
+        cs_sc_battleItemQueuePacket packet = new cs_sc_battleItemQueuePacket(0, aa);
     }
 
     void OnApplicationQuit()
@@ -156,6 +154,8 @@ public class NetworkManager : Singleton<NetworkManager>
         var packet = new Packet.cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
         Send(packet);
     }
+    
+    public void Send
 
     void Receive()
     {

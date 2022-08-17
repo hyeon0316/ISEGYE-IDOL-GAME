@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// 패킷 타입<br/>
@@ -19,6 +20,7 @@ enum PacketType
     cs_sc_changeItemSlot,
     cs_sc_upgradeItem,
     cs_sc_changeCharacter,
+    cs_sc_battleItemQueue,
 }
 
 namespace Packet
@@ -130,10 +132,30 @@ namespace Packet
 
         public cs_sc_changeCharacterPacket(Int32 networkID, char characterType)
         {
-            size = (UInt16) Marshal.SizeOf<cs_sc_changeCharacterPacket>();
+            size = (UInt16) Marshal.SizeOf<cs_sc_battleItemQueuePacket>();
             type = (char) PacketType.cs_sc_changeCharacter;
             this.networkID = networkID;
             this.characterType = characterType;
+        }
+    }
+    
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+    [Serializable]
+    public struct cs_sc_battleItemQueuePacket
+    {
+        public readonly UInt16 size;
+        public readonly char type;
+        public readonly Int32 networkID;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
+        public Byte[] itemQueue;
+        
+        public cs_sc_battleItemQueuePacket(Int32 networkID, Byte[] itemQueue)
+        {
+            size = (UInt16) Marshal.SizeOf<cs_sc_battleItemQueuePacket>();
+            type = (char) PacketType.cs_sc_changeCharacter;
+            this.networkID = networkID;
+            Assert.IsTrue(itemQueue.Length == 60, "아이템 순서의 개수가 맞지 않습니다");
+            this.itemQueue = itemQueue;
         }
     }
 }
