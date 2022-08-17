@@ -146,15 +146,15 @@ namespace Packet
         public readonly UInt16 size;
         public readonly char type;
         public readonly Int32 networkID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 60)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.ItemQueueLength)]
         public Byte[] itemQueue;
         
         public cs_sc_battleItemQueuePacket(Int32 networkID, Byte[] itemQueue)
         {
             size = (UInt16) Marshal.SizeOf<cs_sc_battleItemQueuePacket>();
-            type = (char) PacketType.cs_sc_changeCharacter;
+            type = (char) PacketType.cs_sc_battleItemQueue;
             this.networkID = networkID;
-            Assert.IsTrue(itemQueue.Length == 60, "아이템 순서의 개수가 맞지 않습니다");
+            Assert.IsTrue(itemQueue.Length == Global.ItemQueueLength);
             this.itemQueue = itemQueue;
         }
     }

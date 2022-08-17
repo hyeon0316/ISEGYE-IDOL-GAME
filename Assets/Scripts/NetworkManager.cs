@@ -21,12 +21,6 @@ public class NetworkManager : Singleton<NetworkManager>
     private const int MaxPacketSize = 1500;
     public GameObject ConnectServerBtn;
 
-    void Start()
-    {
-        Byte[] aa = new byte[59];
-        cs_sc_battleItemQueuePacket packet = new cs_sc_battleItemQueuePacket(0, aa);
-    }
-
     void OnApplicationQuit()
     {
         DisconnectServer();
@@ -87,21 +81,6 @@ public class NetworkManager : Singleton<NetworkManager>
     private void Update()
     {
         Receive();
-        /*timer += Time.deltaTime;
-        if (timer >= 0.01f)
-        {
-            timer = 0;
-            for (int i = 0; i < Users.Length; i++)
-            {
-                if (!Users[i].isRoom)
-                {
-                    continue;
-                }
-
-                cs_sc_testPacket packet = new cs_sc_testPacket(Users[i].networkID, 0);
-                Send(Users[i], packet);
-            }
-        }*/
     }
 
     void Send(object packet)
@@ -123,17 +102,10 @@ public class NetworkManager : Singleton<NetworkManager>
         }
     }
 
-    /*public void SendAddNewItem(User user, Int32 itemCode)
-    {
-        cs_sc_AddNewItemPacket packet;
-        packet = new cs_sc_AddNewItemPacket(user.networkID, itemCode);
-        Send(user, packet);
-    }*/
-
     public void StartMatching()
     {
-        Packet.cs_StartMatchingPacket packet;
-        packet.size = (UInt16) Marshal.SizeOf<Packet.cs_StartMatchingPacket>();
+        cs_StartMatchingPacket packet;
+        packet.size = (UInt16) Marshal.SizeOf<cs_StartMatchingPacket>();
         packet.type = (char) PacketType.cs_startMatching;
         packet.networkID = PlayerManager.Instance.Players[0].ID;
         byte[] nameBuf = new byte[22];
@@ -145,17 +117,21 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void SendChangeCharacterPacket(int networkID, int characterType)
     {
-        Packet.cs_sc_changeCharacterPacket packet = new Packet.cs_sc_changeCharacterPacket(networkID, (char)characterType);
+        cs_sc_changeCharacterPacket packet = new cs_sc_changeCharacterPacket(networkID, (char)characterType);
         Send(packet);
     }
 
     public void SendChangeItemSlotPacket(Int32 networkID, Int16 slot1, Int16 slot2)
     {
-        var packet = new Packet.cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
+        var packet = new cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
         Send(packet);
     }
-    
-    public void Send
+
+    public void SendBattleItemQueuePacket(Int32 networkID, Byte[] itemQueue)
+    {
+        var packet = new cs_sc_battleItemQueuePacket(networkID, itemQueue);
+        Send(packet);
+    }
 
     void Receive()
     {
@@ -193,13 +169,13 @@ public class NetworkManager : Singleton<NetworkManager>
         switch ((PacketType) packet[2]) // type
         {
             case PacketType.sc_connectServer:
-                var connectServerPacket = ByteArrayToStruct<Packet.sc_ConnectServerPacket>(bytes);
+                var connectServerPacket = ByteArrayToStruct<sc_ConnectServerPacket>(bytes);
                 //Users[i].networkID = connectServerPacket.networkID;4
                 PlayerManager.Instance.Players[0].SetID(connectServerPacket.networkID);
                 Debug.Log($"플레이어 네트워크ID : {connectServerPacket.networkID} 로 접속");
                 break;
             case PacketType.sc_connectRoom:
-                var connectRoomPacket = ByteArrayToStruct<Packet.sc_ConnectRoomPacket>(bytes);
+                var connectRoomPacket = ByteArrayToStruct<sc_ConnectRoomPacket>(bytes);
                 Debug.Log($"room id : {connectRoomPacket.roomNumber.ToString()}에 입장");
                 PlayerManager.Instance.CreateEnemy(connectRoomPacket.users);
                 WindowManager.Instance.SetWindow(3);
@@ -207,7 +183,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 FindObjectOfType<Select>().SetUserInfo(connectRoomPacket.users);
                 break;
             case PacketType.cs_sc_addNewItem:
-                var addNewItemPacket = ByteArrayToStruct<Packet.cs_sc_AddNewItemPacket>(bytes);
+                var addNewItemPacket = ByteArrayToStruct<cs_sc_AddNewItemPacket>(bytes);
                 //AddDebug($"{addNewItemPacket.networkID} 번 유저가 새로운 아이템 {addNewItemPacket.itemCode} 을 추가하였습니다");
                 break;
             case PacketType.sc_disconnect:
@@ -216,11 +192,11 @@ public class NetworkManager : Singleton<NetworkManager>
                 Debug.Log("연결이 해제되었습니다");
                 break;
             case PacketType.cs_sc_changeItemSlot:
-                var changeItemSlotPacket = ByteArrayToStruct<Packet.cs_sc_changeItemSlotPacket>(bytes);
+                var changeItemSlotPacket = ByteArrayToStruct<cs_sc_changeItemSlotPacket>(bytes);
                 PlayerManager.Instance.GetPlayer(changeItemSlotPacket.networkID).SwapItemNetwork(changeItemSlotPacket.slot1,changeItemSlotPacket.slot2);
                 break;
             case PacketType.cs_sc_changeCharacter:
-                var changeCharacterPacket = ByteArrayToStruct<Packet.cs_sc_changeCharacterPacket>(bytes);
+                var changeCharacterPacket = ByteArrayToStruct<cs_sc_changeCharacterPacket>(bytes);
                 Debug.Log($"{changeCharacterPacket.networkID} -> {(int)changeCharacterPacket.characterType}");
                 FindObjectOfType<Select>()
                     .ChangeCharacterImage(changeCharacterPacket.networkID, (int)changeCharacterPacket.characterType);
