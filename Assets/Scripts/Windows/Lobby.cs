@@ -23,8 +23,13 @@ public class Lobby : MonoBehaviour
 
     public void SetNickName()
     {
-        //todo: 닉네임 설정
         PlayerManager.Instance.Players[0].SetName(NickName.text);
         WindowManager.Instance.SetWindow((int)WindowType.Server);
+    }
+
+    public void SetDefaultName()
+    {
+        if (NickName.text == "")
+            NickName.text = "Player";
     }
 }
