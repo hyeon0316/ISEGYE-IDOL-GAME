@@ -178,7 +178,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 var connectRoomPacket = ByteArrayToStruct<sc_ConnectRoomPacket>(bytes);
                 Debug.Log($"room id : {connectRoomPacket.roomNumber.ToString()}에 입장");
                 PlayerManager.Instance.CreateEnemy(connectRoomPacket.users);
-                WindowManager.Instance.SetWindow(3);
+                WindowManager.Instance.SetWindow(2);
                 FindObjectOfType<Select>().ChoiceCharacters[0].NetworkID = PlayerManager.Instance.Players[0].ID;
                 FindObjectOfType<Select>().SetUserInfo(connectRoomPacket.users);
                 break;
