@@ -23,9 +23,10 @@ public class Lobby : MonoBehaviour
 
     public void SetNickName()
     {
-        if (string.IsNullOrWhiteSpace(NickName.text))
+        if (NickName.text.Trim((char) 8203).Length == 0)
+        {
             NickName.text = "Player";
-        
+        }
         PlayerManager.Instance.Players[0].SetName(NickName.text);
         WindowManager.Instance.SetWindow((int)WindowType.Server);
     }
