@@ -30,8 +30,7 @@ public class UnUsingInventory : MonoBehaviour
 
     private void Update()
     {
-        if(this.transform.parent.name == "Ready")
-            CheckFull();
+        CheckFull();
     }
 
 
@@ -62,16 +61,19 @@ public class UnUsingInventory : MonoBehaviour
     private void CheckFull()
     {
         //todo: 업데이트로 계속 돌리지 않고 아이템 옮길 때만 검사하기
-        int fullCheck = 0;
-        for (int i = 0; i < ItemSlots.Length; i++)
+        if (this.transform.parent.name == "Ready")
         {
-            if (ItemSlots[i].transform.childCount == 1)
-                ++fullCheck;
-        }
+            int fullCheck = 0;
+            for (int i = 0; i < ItemSlots.Length; i++)
+            {
+                if (ItemSlots[i].transform.childCount == 1)
+                    ++fullCheck;
+            }
 
-        if (fullCheck == SLOT_MAX)
-            GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = false;
-        else
-            GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = true;
+            if (fullCheck == SLOT_MAX)
+                GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = false;
+            else
+                GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = true;
+        }
     }
 }

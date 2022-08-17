@@ -54,6 +54,28 @@ public class Player : MonoBehaviour
     {
         _id = id;
     }
+
+    /// <summary>
+    /// UnUsing의 아이템들을 Using에 자동 셋팅
+    /// </summary>
+    public void AutoSetItem()
+    {
+        if (UsingInventory.IsEmpty())
+        {
+            int index = 0;
+            
+            for (int i = 0; i < UnUsingInventory.ItemSlots.Length; i++)
+            {
+                if (UnUsingInventory.ItemSlots[i].transform.childCount == 1)
+                {
+                    Item item = UnUsingInventory.ItemSlots[i].GetComponentInChildren<Item>();
+                    item.transform.SetParent(UsingInventory.ItemSlots[index].transform);
+                    item.transform.position = UsingInventory.ItemSlots[index++].transform.position;
+
+                }
+            }
+        }
+    }
     
     /// <summary>
     /// 데미지 또는 회복이후 체력 갱신
@@ -125,7 +147,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public byte[] GetRandItemOrder()
     {
-        byte[] result = new byte[60];
+        byte[] result = new byte[Global.ItemQueueLength];
         int index = 0;
         int sum = 0;
         List<byte> slots = new List<byte>();

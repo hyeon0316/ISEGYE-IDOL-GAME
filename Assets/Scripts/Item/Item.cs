@@ -48,17 +48,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     private void Update()
     {
-        //전투단계로 전환될때 드래그 중이었던 아이템을 다시 원래 자리로 옮김
-        if (this.transform.parent.name == "DragItem")
-        {
-            if (FindObjectOfType<Ready>().ReadyTime == 0)
-            {
-                transform.SetParent(_originParent);
-                transform.position = _originPos;
-
-                this.GetComponent<Image>().raycastTarget = true;
-            }
-        }
+        CancelDrag();
     }
 
     public abstract void SetData();
@@ -83,6 +73,23 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         //todo: 아이템 사용이후 사라질때 이펙트 효과
     }
 
+    /// <summary>
+    /// 전투단계로 전환될때 드래그 중이었던 아이템을 다시 원래 자리로 옮김
+    /// </summary>
+    private void CancelDrag()
+    {
+        if (this.transform.parent.name == "DragItem")
+        {
+            if (FindObjectOfType<Ready>().ReadyTime == 0)
+            {
+                transform.SetParent(_originParent);
+                transform.position = _originPos;
+
+                this.GetComponent<Image>().raycastTarget = true;
+            }
+        }
+    }
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (InGame.CurGameType == GameType.Ready)

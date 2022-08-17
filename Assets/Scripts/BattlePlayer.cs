@@ -30,11 +30,6 @@ public class BattlePlayer : MonoBehaviour
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
         AvatarImage.sprite = Player.Sprite;
         PlayerNickName.text = $"{Player.NickName}";
-
-        foreach (var v in _itemOrder)
-        {
-            Debug.Log($"{Player.NickName}{v}");
-        }
     }
 
     public void UpdateAvatarHp(int amount)
