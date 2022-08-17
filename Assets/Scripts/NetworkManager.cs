@@ -66,7 +66,7 @@ public class NetworkManager : Singleton<NetworkManager>
         {
             _socket.EndConnect(iar);
             Debug.Log($"{_socket.RemoteEndPoint.ToString()}에 접속 완료");
-            StartMatching();
+            Invoke("StartMatching", 1f);
         }
         catch (SocketException)
         {
