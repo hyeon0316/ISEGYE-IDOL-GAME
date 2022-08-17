@@ -8,26 +8,22 @@ using UnityEngine.UI;
 public class Lobby : MonoBehaviour
 {
     //todo: 지금은 로비에 Start버튼 뿐이지만 나중에 다른 기능 추가
-    public GameObject InputNickName;
+    public GameObject NickNameParent;
+    public TMP_InputField InputNickName;
     public GameObject StartButton;
-
-    public TextMeshProUGUI NickName;
-
-
 
     public void OnInputField()
     {
-        InputNickName.SetActive(true);
+        NickNameParent.SetActive(true);
         StartButton.SetActive(false);
     }
 
     public void SetNickName()
     {
-        if (NickName.text.Trim((char) 8203).Length == 0)
-        {
-            NickName.text = "Player";
-        }
-        PlayerManager.Instance.Players[0].SetName(NickName.text);
+        if (InputNickName.text.Trim((char) 8203).Length == 0 || string.IsNullOrWhiteSpace(InputNickName.text))
+            InputNickName.text = "플레이어";
+        
+        PlayerManager.Instance.Players[0].SetName(InputNickName.text);
         WindowManager.Instance.SetWindow((int)WindowType.Server);
     }
 
