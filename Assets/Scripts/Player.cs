@@ -125,14 +125,14 @@ public class Player : MonoBehaviour
     /// </summary>
     public byte[] GetRandItemOrder()
     {
-        byte[] result = new byte[30];
+        byte[] result = new byte[60];
         int index = 0;
         int sum = 0;
         List<byte> slots = new List<byte>();
 
         for (int i = 0; i < UsingInventory.ItemSlots.Length; ++i)
         {
-            if (UsingInventory.ItemSlots[i].transform.childCount ==1)
+            if (UsingInventory.ItemSlots[i].transform.childCount == 1)
             {
                 slots.Add((byte) i);
                 sum += UsingInventory.ItemSlots[i].ActivePercent;
@@ -157,23 +157,25 @@ public class Player : MonoBehaviour
                 if (rand < 0)
                 {
                     result[index++] = slots[i];
+                    result[index++] = 1;
                     loopSum -= percent;
                     slots.Remove(slots[i]);
                     loopLength--;
                     break;
                 }
             }
+
             if (loopLength == 0)
             {
                 loopSum = sum;
                 loopLength = length;
                 for (int i = 0; i < UsingInventory.ItemSlots.Length - length; i++)
                 {
-                    result[index++] = 255;//나머지 빈 공간
+                    result[index++] = 255; //나머지 빈 공간
+                    result[index++] = 0;
                 }
             }
         }
-
         return result;
     }
 }

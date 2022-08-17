@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -39,6 +40,8 @@ public class BattlePlayer : MonoBehaviour
     public void UpdateAvatarHp(int amount)
     {
         AvatarHp += amount;
+        if (AvatarHp < 0)
+            AvatarHp = 0;
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
     }
 
@@ -56,7 +59,7 @@ public class BattlePlayer : MonoBehaviour
             do
             {
                 itemSlot = _itemOrder[_index++];
-                active = (bool)_itemOrder[_index++];
+                active = Convert.ToBoolean(_itemOrder[_index++]);
                 if (_index == _itemOrder.Length)
                     _index = 0;
             } while (itemSlot == 255);

@@ -15,6 +15,7 @@ public class Battle : MonoBehaviour
     {
         SetPlayer();
         SetEnemy();
+        StartCoroutine(StartBattleCo());
     }
 
     private void FinishBattle()
@@ -30,6 +31,18 @@ public class Battle : MonoBehaviour
             BattlePlayers[1].SetFirstTurn();
     }
 
+    private IEnumerator StartBattleCo()
+    {
+        while (true)
+        {
+            if (BattlePlayers[0].AvatarHp < 0 || BattlePlayers[1].AvatarHp < 0)
+                break;
+            
+            StartBattle();
+            yield return new WaitForSeconds(2f);
+        }
+    }
+    
     public void StartBattle()
     {
         BattlePlayers[0].ActiveItem();
@@ -40,6 +53,7 @@ public class Battle : MonoBehaviour
     private void SetPlayer()
     {
         BattlePlayers[0].SetBattlePlayer(PlayerManager.Instance.Players[0], PlayerManager.Instance.Players[0].GetRandItemOrder());
+        BattlePlayers[0].SetFirstTurn();//순서 임시 부여
     }
 
     private void SetEnemy()
