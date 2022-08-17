@@ -17,9 +17,15 @@ public class NetworkManager : Singleton<NetworkManager>
     private const int ServerPort = 51341;
     private IPEndPoint _serverIpEndPoint;
     private bool _isFinishConnectServer = false;
+    private bool _isSuccessConnectServer = false;
 
     private const int MaxPacketSize = 1500;
     public GameObject ConnectServerBtn;
+
+    private void Start()
+    {
+        //Invoke("StartMatching", 1f);
+    }
 
     void OnApplicationQuit()
     {
@@ -65,8 +71,7 @@ public class NetworkManager : Singleton<NetworkManager>
         try
         {
             _socket.EndConnect(iar);
-            Debug.Log($"{_socket.RemoteEndPoint.ToString()}에 접속 완료");
-            Invoke("StartMatching", 1f);
+            _isSuccessConnectServer = true;
         }
         catch (SocketException)
         {
@@ -81,6 +86,11 @@ public class NetworkManager : Singleton<NetworkManager>
     private void Update()
     {
         Receive();
+        if (_isSuccessConnectServer)
+        {
+            _isSuccessConnectServer = false;
+            Invoke("StartMatching", 1);
+        }
     }
 
     void Send(object packet)
