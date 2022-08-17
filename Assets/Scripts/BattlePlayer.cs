@@ -52,14 +52,19 @@ public class BattlePlayer : MonoBehaviour
         if (_isMyturn)
         {
             int itemSlot;
-            
+            bool active = false;
             do
             {
                 itemSlot = _itemOrder[_index++];
+                active = (bool)_itemOrder[_index++];
                 if (_index == _itemOrder.Length)
                     _index = 0;
             } while (itemSlot == 255);
-            ItemSlots[itemSlot].ActiveItem();
+            
+            if (active)
+            {
+                ItemSlots[itemSlot].ActiveItem();
+            }
         }
 
         _isMyturn = !_isMyturn;
