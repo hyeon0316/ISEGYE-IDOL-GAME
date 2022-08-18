@@ -9,11 +9,6 @@ public class UsingInventory : MonoBehaviour
     public ItemSlot[] ItemSlots;
 
 
-    private void Awake()
-    {
-        ItemSlots = this.GetComponentsInChildren<ItemSlot>();
-    }
-
 
     /// <summary>
     /// 6개의 슬롯 모두 아이템이 없는지 확인

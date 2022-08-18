@@ -47,6 +47,8 @@ public class Ready : MonoBehaviour
             _readyTime -= Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
+        yield return new WaitForSeconds(0.1f);//아이템 드래그 취소 이후 딜레이
+        PlayerManager.Instance.AutoSetItem();
         yield return new WaitForSeconds(1f);
         Debug.Log("전투 돌입");
         FindObjectOfType<InGame>().OpenBattle();        

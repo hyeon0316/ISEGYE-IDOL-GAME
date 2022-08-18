@@ -51,17 +51,18 @@ public class BattlePlayer : MonoBehaviour
         {
             int itemSlot;
             bool active = false;
-            do
-            {
-                itemSlot = _itemOrder[_index++];
-                active = Convert.ToBoolean(_itemOrder[_index++]);
-                if (_index == _itemOrder.Length)
-                    _index = 0;
-            } while (itemSlot == 255);
-            
+
+            itemSlot = _itemOrder[_index++];
+            active = Convert.ToBoolean(_itemOrder[_index++]);
+            if (_index == _itemOrder.Length)
+                _index = 0;
+
             if (active)
             {
-                ItemSlots[itemSlot].ActiveItem();
+                if(itemSlot == 255)
+                    Debug.Log("비어 있음");
+                else
+                    ItemSlots[itemSlot].ActiveItem();
             }
         }
 

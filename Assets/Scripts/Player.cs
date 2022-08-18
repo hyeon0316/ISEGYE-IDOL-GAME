@@ -66,12 +66,17 @@ public class Player : MonoBehaviour
             
             for (int i = 0; i < UnUsingInventory.ItemSlots.Length; i++)
             {
+                if (index == 6)//아이템이 다 채워졌을 때
+                    break;
+                
                 if (UnUsingInventory.ItemSlots[i].transform.childCount == 1)
                 {
                     Item item = UnUsingInventory.ItemSlots[i].GetComponentInChildren<Item>();
-                    item.transform.SetParent(UsingInventory.ItemSlots[index].transform);
-                    item.transform.position = UsingInventory.ItemSlots[index++].transform.position;
-
+                    if (!UsingInventory.CheckDuplication(item))
+                    {
+                        item.transform.SetParent(UsingInventory.ItemSlots[index].transform);
+                        item.transform.position = UsingInventory.ItemSlots[index++].transform.position;
+                    }
                 }
             }
         }

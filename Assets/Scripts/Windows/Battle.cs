@@ -35,9 +35,12 @@ public class Battle : MonoBehaviour
     {
         while (true)
         {
-            if (BattlePlayers[0].AvatarHp < 0 || BattlePlayers[1].AvatarHp < 0)
+            if (BattlePlayers[0].AvatarHp <= 0 || BattlePlayers[1].AvatarHp <= 0) //todo: 나중에는 제한시간이 다 지나면 끝남
+            {
+                FindObjectOfType<InGame>().CloseBattle();//임시
                 break;
-            
+            }
+
             StartBattle();
             yield return new WaitForSeconds(2f);
         }
@@ -47,6 +50,8 @@ public class Battle : MonoBehaviour
     {
         BattlePlayers[0].ActiveItem();
         BattlePlayers[1].ActiveItem();
+        
+        BattlePlayers[1].UpdateAvatarHp(-20);//임시
     }
 
     

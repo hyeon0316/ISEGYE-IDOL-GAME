@@ -41,10 +41,6 @@ public class ItemSlot : MonoBehaviour
         {
             this.GetComponentInChildren<Item>().Active();
         }
-        else
-        {
-            Debug.Log("비어 있음");
-        }
     }
 
     public void DeleteItem()

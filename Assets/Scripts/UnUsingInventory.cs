@@ -16,11 +16,6 @@ public class UnUsingInventory : MonoBehaviour
     private const int SLOT_MAX = 10;
 
     
-    private void Awake()
-    {
-        ItemSlots = this.GetComponentsInChildren<ItemSlot>();
-    }
-
     private void Start()
     {
         //기본 아이템 미리 생성

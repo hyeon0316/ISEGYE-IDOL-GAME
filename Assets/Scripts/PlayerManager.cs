@@ -28,6 +28,14 @@ public class PlayerManager : Singleton<PlayerManager>
       return null;
    }
 
+   public void AutoSetItem()
+   {
+      for(int i=0; i<Players.Length; i++)
+      {
+         Players[i].AutoSetItem();
+      }
+   }
+
    public void CreateEnemy(Packet.UserInfo[] userInfos)
    {
       int index = 1;
