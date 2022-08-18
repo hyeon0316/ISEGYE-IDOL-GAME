@@ -11,12 +11,9 @@ using UnityEngine;
 public class NomalAttack : Item
 {
 
-   public override void SetData()
-   {
-      
-   }
+   
 
-   public override void Active()
+   public override void Active(BattlePlayer battlePlayer)
    {
       Debug.Log(this.GetType().Name);
    }

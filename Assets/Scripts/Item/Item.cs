@@ -51,12 +51,11 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         CancelDrag();
     }
 
-    public abstract void SetData();
 
     /// <summary>
     /// 아이템 효과 사용
     /// </summary>
-    public abstract void Active(); //todo: 매개변수로 배틀플레이어를 넘겨주는 식?
+    public abstract void Active(BattlePlayer battlePlayer); //todo: 매개변수로 배틀플레이어를 넘겨주는 식?
 
     public virtual void ShowUsingEffect()
     {

@@ -35,11 +35,11 @@ public class ItemSlot : MonoBehaviour
         obj.GetComponent<Item>().Code = itemCode; //아이템 코드 지정 후 전투씬에서 가져오기
     }
 
-    public void ActiveItem()
+    public void ActiveItem(BattlePlayer battlePlayer)
     {
         if (this.transform.childCount == 1)
         {
-            this.GetComponentInChildren<Item>().Active();
+            this.GetComponentInChildren<Item>().Active(battlePlayer);
         }
     }
 

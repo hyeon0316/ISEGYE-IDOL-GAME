@@ -37,7 +37,7 @@ public class Battle : MonoBehaviour
         {
             if (BattlePlayers[0].AvatarHp <= 0 || BattlePlayers[1].AvatarHp <= 0) //todo: 나중에는 제한시간이 다 지나면 끝남
             {
-                FindObjectOfType<InGame>().CloseBattle();//임시
+                FindObjectOfType<InGame>().CloseBattle();//임시(플레이어 8명 다 같이 끝나고 넘어가야함)
                 break;
             }
 

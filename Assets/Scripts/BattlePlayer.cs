@@ -62,7 +62,7 @@ public class BattlePlayer : MonoBehaviour
                 if(itemSlot == 255)
                     Debug.Log("비어 있음");
                 else
-                    ItemSlots[itemSlot].ActiveItem();
+                    ItemSlots[itemSlot].ActiveItem(this);
             }
         }
 

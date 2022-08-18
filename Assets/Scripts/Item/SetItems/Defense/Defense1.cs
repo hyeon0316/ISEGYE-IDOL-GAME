@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class Defense1 : Item
 {
-
-    public override void SetData()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Active()
+    
+    public override void Active(BattlePlayer battlePlayer)
     {
         Debug.Log(this.GetType().Name);
     }

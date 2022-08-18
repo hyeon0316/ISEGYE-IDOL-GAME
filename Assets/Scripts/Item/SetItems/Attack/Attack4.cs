@@ -5,12 +5,7 @@ using UnityEngine;
 public class Attack4 : Item
 {
 
-    public override void SetData()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Active()
+    public override void Active(BattlePlayer battlePlayer)
     {
         Debug.Log(this.GetType().Name);
     }
