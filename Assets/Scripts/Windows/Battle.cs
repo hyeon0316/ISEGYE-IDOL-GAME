@@ -11,7 +11,6 @@ public class Battle : MonoBehaviour
 {
     public BattlePlayer[] BattlePlayers;
 
-    public byte[] EnemyActiveIndex = new byte[60];
     
     private void OnEnable()
     {
@@ -66,7 +65,6 @@ public class Battle : MonoBehaviour
     private void SetEnemy()
     {
         Player enemy = PlayerManager.Instance.Players[1];
-        enemy.ActiveIndex = EnemyActiveIndex;        
         BattlePlayers[1].SetBattlePlayer(enemy, enemy.ActiveIndex);
     }
 }
