@@ -11,6 +11,8 @@ public class Battle : MonoBehaviour
 {
     public BattlePlayer[] BattlePlayers;
 
+    public byte[] EnemyActiveIndex = new byte[60];
+    
     private void OnEnable()
     {
         SetPlayer();
@@ -63,7 +65,8 @@ public class Battle : MonoBehaviour
 
     private void SetEnemy()
     {
-        int rand = Random.Range(1, 8);
-        BattlePlayers[1].SetBattlePlayer(PlayerManager.Instance.Players[rand], PlayerManager.Instance.Players[rand].GetRandItemOrder());
+        Player enemy = PlayerManager.Instance.Players[1];
+        enemy.ActiveIndex = EnemyActiveIndex;        
+        BattlePlayers[1].SetBattlePlayer(enemy, enemy.ActiveIndex);
     }
 }

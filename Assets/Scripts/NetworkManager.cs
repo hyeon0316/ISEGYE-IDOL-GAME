@@ -213,6 +213,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case PacketType.cs_sc_battleItemQueue:
                 var battleItemQueuePacket = ByteArrayToStruct<cs_sc_battleItemQueuePacket>(bytes);
+                FindObjectOfType<Battle>().EnemyActiveIndex = battleItemQueuePacket.itemQueue;
                 break;
             default:
                 Debug.LogError("새로운 패킷");

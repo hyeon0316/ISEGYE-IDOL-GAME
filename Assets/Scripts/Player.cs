@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI NameText;
     public TextMeshProUGUI HpText;
 
+    public byte[] ActiveIndex = new byte[60];
+
     public Sprite Sprite
     {
         get { return _sprite; }
