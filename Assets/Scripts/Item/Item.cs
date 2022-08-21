@@ -147,8 +147,8 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             {
                 //player.SwapItem(_slotIndex1, _slotIndex2);
                 RePosItem(_originParent, _originPos);
-                NetworkManager.Instance.SendChangeItemSlotPacket(playerManager.Players[0].ID, (Int16) _slotIndex1,
-                    (Int16) _slotIndex2);
+                NetworkManager.Instance.SendChangeItemSlotPacket(playerManager.Players[0].ID, (Byte) _slotIndex1,
+                    (Byte) _slotIndex2);
             }
         }
         else //슬롯이 아닌 다른 공간에 드래그 했을 때

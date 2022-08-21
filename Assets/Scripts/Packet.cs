@@ -21,6 +21,7 @@ enum PacketType
     cs_sc_upgradeItem,
     cs_sc_changeCharacter,
     cs_sc_battleItemQueue,
+    cs_battleReady,
 }
 
 namespace Packet
@@ -39,7 +40,7 @@ namespace Packet
     public struct sc_ConnectServerPacket
     {
         public UInt16 size;
-        public char type;
+        public Byte type;
         public Int32 networkID;
     }
 
@@ -48,7 +49,7 @@ namespace Packet
     public struct sc_ConnectRoomPacket
     {
         public UInt16 size;
-        public char type;
+        public Byte type;
         public Int32 roomNumber;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         public UserInfo[] users;
@@ -59,7 +60,7 @@ namespace Packet
     public struct cs_StartMatchingPacket
     {
         public UInt16 size;
-        public char type;
+        public Byte type;
         public Int32 networkID;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 22)]
         public Byte[] name;
@@ -70,14 +71,14 @@ namespace Packet
     public struct cs_sc_AddNewItemPacket
     {
         public readonly UInt16 size;
-        public readonly char type;
+        public readonly Byte type;
         public readonly Int32 networkID;
         public readonly Int32 itemCode;
 
         public cs_sc_AddNewItemPacket(Int32 networkID, Int32 itemCode)
         {
             size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
-            type = (char) PacketType.cs_sc_addNewItem;
+            type = (Byte) PacketType.cs_sc_addNewItem;
             this.networkID = networkID;
             this.itemCode = itemCode;
         }
@@ -88,15 +89,15 @@ namespace Packet
     public struct cs_sc_changeItemSlotPacket
     {
         public readonly UInt16 size;
-        public readonly char type;
+        public readonly Byte type;
         public readonly Int32 networkID;
-        public readonly Int16 slot1;
-        public readonly Int16 slot2;
+        public readonly Byte slot1;
+        public readonly Byte slot2;
 
-        public cs_sc_changeItemSlotPacket(Int32 networkID, Int16 slot1, Int16 slot2)
+        public cs_sc_changeItemSlotPacket(Int32 networkID, Byte slot1, Byte slot2)
         {
             size = (UInt16) Marshal.SizeOf<cs_sc_changeItemSlotPacket>();
-            type = (char) PacketType.cs_sc_changeItemSlot;
+            type = (Byte) PacketType.cs_sc_changeItemSlot;
             this.networkID = networkID;
             this.slot1 = slot1;
             this.slot2 = slot2;
@@ -108,14 +109,14 @@ namespace Packet
     public struct cs_sc_upgradeItemPacket
     {
         public readonly UInt16 size;
-        public readonly char type;
+        public readonly Byte type;
         public readonly Int32 networkID;
-        public readonly Int16 slot;
+        public readonly Byte slot;
 
-        public cs_sc_upgradeItemPacket(Int32 networkID, Int16 slot)
+        public cs_sc_upgradeItemPacket(Int32 networkID, Byte slot)
         {
             size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
-            type = (char) PacketType.cs_sc_upgradeItem;
+            type = (Byte) PacketType.cs_sc_upgradeItem;
             this.networkID = networkID;
             this.slot = slot;
         }
@@ -126,36 +127,47 @@ namespace Packet
     public struct cs_sc_changeCharacterPacket
     {
         public readonly UInt16 size;
-        public readonly char type;
+        public readonly Byte type;
         public readonly Int32 networkID;
         public readonly char characterType;
 
         public cs_sc_changeCharacterPacket(Int32 networkID, char characterType)
         {
-            size = (UInt16) Marshal.SizeOf<cs_sc_battleItemQueuePacket>();
-            type = (char) PacketType.cs_sc_changeCharacter;
+            size = (UInt16) Marshal.SizeOf<sc_battleItemQueuePacket>();
+            type = (Byte) PacketType.cs_sc_changeCharacter;
             this.networkID = networkID;
             this.characterType = characterType;
         }
     }
+
+    public struct cs_battleReadyPacket
+    {
+        public readonly UInt16 size;
+        public readonly Byte type;
+        public readonly Int32 networkID;
+
+        public cs_battleReadyPacket(Int32 networkID)
+        {
+            size = (UInt16) Marshal.SizeOf<cs_battleReadyPacket>();
+            type = (Byte) PacketType.cs_battleReady;
+            this.networkID = networkID;
+        }
+    }
+
+    public struct ItemQueueInfo
+    {
+        public Int32 networkID;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.ItemQueueLength)]
+        public Byte[] itemQueue;
+    }
     
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     [Serializable]
-    public struct cs_sc_battleItemQueuePacket
+    public struct sc_battleItemQueuePacket
     {
         public readonly UInt16 size;
-        public readonly char type;
-        public readonly Int32 networkID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.ItemQueueLength)]
-        public Byte[] itemQueue;
-        
-        public cs_sc_battleItemQueuePacket(Int32 networkID, Byte[] itemQueue)
-        {
-            size = (UInt16) Marshal.SizeOf<cs_sc_battleItemQueuePacket>();
-            type = (char) PacketType.cs_sc_battleItemQueue;
-            this.networkID = networkID;
-            Assert.IsTrue(itemQueue.Length == Global.ItemQueueLength);
-            this.itemQueue = itemQueue;
-        }
+        public readonly Byte type;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.MaxRoomPlayer)]
+        public ItemQueueInfo[] itemQueueInfos;
     }
 }

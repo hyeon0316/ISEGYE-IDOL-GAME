@@ -89,7 +89,7 @@ public class NetworkManager : Singleton<NetworkManager>
         if (_isSuccessConnectServer)
         {
             _isSuccessConnectServer = false;
-            Invoke("StartMatching", 1);
+            Invoke("SendStartMatchingPacket", 1);
         }
     }
 
@@ -112,11 +112,11 @@ public class NetworkManager : Singleton<NetworkManager>
         }
     }
 
-    public void StartMatching()
+    private void SendStartMatchingPacket()
     {
         cs_StartMatchingPacket packet;
         packet.size = (UInt16) Marshal.SizeOf<cs_StartMatchingPacket>();
-        packet.type = (char) PacketType.cs_startMatching;
+        packet.type = (Byte) PacketType.cs_startMatching;
         packet.networkID = PlayerManager.Instance.Players[0].ID;
         byte[] nameBuf = new byte[22];
         var encodingStrBytes = Encoding.Unicode.GetBytes(PlayerManager.Instance.Players[0].NickName.Trim((char)8203));
@@ -131,15 +131,9 @@ public class NetworkManager : Singleton<NetworkManager>
         Send(packet);
     }
 
-    public void SendChangeItemSlotPacket(Int32 networkID, Int16 slot1, Int16 slot2)
+    public void SendChangeItemSlotPacket(Int32 networkID, Byte slot1, Byte slot2)
     {
         var packet = new cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
-        Send(packet);
-    }
-
-    public void SendBattleItemQueuePacket(Int32 networkID, Byte[] itemQueue)
-    {
-        var packet = new cs_sc_battleItemQueuePacket(networkID, itemQueue);
         Send(packet);
     }
 
