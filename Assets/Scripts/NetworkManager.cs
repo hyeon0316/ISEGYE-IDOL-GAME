@@ -136,6 +136,12 @@ public class NetworkManager : Singleton<NetworkManager>
         var packet = new cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
         Send(packet);
     }
+    
+    public void SendBattleReadyPacket(Int32 networkID)
+    {
+        cs_battleReadyPacket packet = new cs_battleReadyPacket(networkID);
+        Send(packet);
+    }
 
     void Receive()
     {
@@ -207,8 +213,16 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case PacketType.cs_sc_battleItemQueue:
                 var battleItemQueuePacket = ByteArrayToStruct<sc_battleItemQueuePacket>(bytes);
-                //Player player = PlayerManager.Instance.GetPlayer(battleItemQueuePacket.networkID);
-                //player.ActiveIndex = battleItemQueuePacket.itemQueue;
+                for (int i = 0; i < battleItemQueuePacket.itemQueueInfos.Length; i++)
+                {
+                    int playerID = battleItemQueuePacket.itemQueueInfos[i].networkID;
+                    if (playerID == -1)
+                        break;
+                    
+                    Player player = PlayerManager.Instance.GetPlayer(playerID);
+                    player.ActiveIndex = battleItemQueuePacket.itemQueueInfos[i].itemQueue;
+                }
+                FindObjectOfType<InGame>().OpenBattle(); 
                 break;
             default:
                 Debug.LogError("새로운 패킷");

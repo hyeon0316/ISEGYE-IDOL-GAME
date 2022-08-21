@@ -13,11 +13,11 @@ public class BattleManager : MonoBehaviour
 
     private void OnEnable()
     {
-        int index = 0;
+        int id = 1;
         for (int i = 0; i < Battles.Length; i++)
         {
-            Battles[i].SetPlayer(index++);
-            Battles[i].SetEnemy(index);
+            Battles[i].SetPlayer(id++);
+            Battles[i].SetEnemy(id);
             Battles[i].StartBattleCo();
         }
     }

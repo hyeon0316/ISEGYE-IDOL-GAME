@@ -51,8 +51,7 @@ public class Ready : MonoBehaviour
         PlayerManager.Instance.AutoSetItem();
         yield return new WaitForSeconds(1f);
         Debug.Log("전투 돌입");
-        //FindObjectOfType<InGame>().OpenBattle();  
-        //todo: 패킷 전송하여 모든 플레이어가 준비 되면 배틀 시작
+        NetworkManager.Instance.SendBattleReadyPacket(PlayerManager.Instance.Players[0].ID);
     }
     
     /// <summary>

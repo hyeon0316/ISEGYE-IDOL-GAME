@@ -108,6 +108,9 @@ public class Player : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 싱글용
+    /// </summary>
     public void SwapItem(int slotIndex1, int slotIndex2)
     {
         ItemSlot itemSlot1 = slotIndex1 < 6
