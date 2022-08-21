@@ -206,9 +206,9 @@ public class NetworkManager : Singleton<NetworkManager>
                     .ChangeCharacterImage(changeCharacterPacket.networkID, (int)changeCharacterPacket.characterType);
                 break;
             case PacketType.cs_sc_battleItemQueue:
-                var battleItemQueuePacket = ByteArrayToStruct<cs_sc_battleItemQueuePacket>(bytes);
-                Player player = PlayerManager.Instance.GetPlayer(battleItemQueuePacket.networkID);
-                player.ActiveIndex = battleItemQueuePacket.itemQueue;
+                var battleItemQueuePacket = ByteArrayToStruct<sc_battleItemQueuePacket>(bytes);
+                //Player player = PlayerManager.Instance.GetPlayer(battleItemQueuePacket.networkID);
+                //player.ActiveIndex = battleItemQueuePacket.itemQueue;
                 break;
             default:
                 Debug.LogError("새로운 패킷");
