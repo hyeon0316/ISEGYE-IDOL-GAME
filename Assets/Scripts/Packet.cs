@@ -51,7 +51,6 @@ namespace Packet
     {
         public UInt16 size;
         public Byte type;
-        public Int32 roomNumber;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         public UserInfo[] users;
     }
