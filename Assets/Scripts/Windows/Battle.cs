@@ -1,29 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class Battle : MonoBehaviour
 {
     public BattlePlayer[] BattlePlayers;
-
     
-    private void OnEnable()
-    {
-        SetPlayer();
-        SetEnemy();
-        StartCoroutine(StartBattleCo());
-    }
-
-    private void FinishBattle()
-    {
-        //todo: 나중에는 모든 플레이어가 전투가 끝나면 최종적으로 종료(Ready창으로 이동)
-    }
-
+    
     public void SetFirstPlayer(int networkID)
     {
         if (BattlePlayers[0].Player.ID == networkID)
@@ -31,14 +14,15 @@ public class Battle : MonoBehaviour
         else
             BattlePlayers[1].SetFirstTurn();
     }
-
-    private IEnumerator StartBattleCo()
+    
+    public IEnumerator StartBattleCo()
     {
         while (true)
         {
             if (BattlePlayers[0].AvatarHp <= 0 || BattlePlayers[1].AvatarHp <= 0) //todo: 나중에는 제한시간이 다 지나면 끝남
             {
-                FindObjectOfType<InGame>().CloseBattle();//임시(플레이어 8명 다 같이 끝나고 넘어가야함)
+                //FindObjectOfType<InGame>().CloseBattle();
+                //todo: 패킷 전송하여 모든 플레이어가 전투가 끝나면 Ready창 이동
                 break;
             }
 
@@ -47,7 +31,7 @@ public class Battle : MonoBehaviour
         }
     }
     
-    public void StartBattle()
+    private void StartBattle()
     {
         BattlePlayers[0].ActiveItem();
         BattlePlayers[1].ActiveItem();
@@ -56,15 +40,15 @@ public class Battle : MonoBehaviour
     }
 
     
-    private void SetPlayer()
+    public void SetPlayer(int playerIndex)
     {
-        BattlePlayers[0].SetBattlePlayer(PlayerManager.Instance.Players[0], PlayerManager.Instance.Players[0].GetRandItemOrder());
+        BattlePlayers[0].SetBattlePlayer(PlayerManager.Instance.Players[playerIndex], PlayerManager.Instance.Players[playerIndex].ActiveIndex);
         BattlePlayers[0].SetFirstTurn();//순서 임시 부여
     }
 
-    private void SetEnemy()
+    public void SetEnemy(int enemyIndex)
     {
-        Player enemy = PlayerManager.Instance.Players[1];
-        BattlePlayers[1].SetBattlePlayer(enemy, enemy.ActiveIndex);
+        BattlePlayers[1].SetBattlePlayer(PlayerManager.Instance.Players[enemyIndex], PlayerManager.Instance.Players[enemyIndex].ActiveIndex);
     }
+    
 }

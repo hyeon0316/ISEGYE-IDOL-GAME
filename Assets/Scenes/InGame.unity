@@ -3614,7 +3614,7 @@ GameObject:
   - component: {fileID: 463793875}
   - component: {fileID: 463793876}
   m_Layer: 5
-  m_Name: Me
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6827,7 +6827,7 @@ GameObject:
   - component: {fileID: 731834007}
   - component: {fileID: 731834008}
   m_Layer: 5
-  m_Name: Me
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7260,6 +7260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 796105568}
+  - component: {fileID: 796105569}
   m_Layer: 5
   m_Name: 1vs1 (1)
   m_TagString: Untagged
@@ -7289,6 +7290,21 @@ RectTransform:
   m_AnchoredPosition: {x: -1900, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &796105569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796105567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b455cae2a9de408ca9d26c7c7cf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattlePlayers:
+  - {fileID: 463793876}
+  - {fileID: 1308195638}
 --- !u!1 &818920591
 GameObject:
   m_ObjectHideFlags: 0
@@ -7336,6 +7352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 824324909}
+  - component: {fileID: 824324910}
   m_Layer: 5
   m_Name: 1vs1
   m_TagString: Untagged
@@ -7365,6 +7382,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &824324910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824324908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b455cae2a9de408ca9d26c7c7cf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattlePlayers:
+  - {fileID: 1059272898}
+  - {fileID: 827640745}
 --- !u!1 &827640743
 GameObject:
   m_ObjectHideFlags: 0
@@ -7376,7 +7408,7 @@ GameObject:
   - component: {fileID: 827640744}
   - component: {fileID: 827640745}
   m_Layer: 5
-  m_Name: Enemy
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11548,7 +11580,7 @@ GameObject:
   - component: {fileID: 1224067957}
   - component: {fileID: 1224067956}
   m_Layer: 5
-  m_Name: Enemy
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11867,7 +11899,7 @@ GameObject:
   - component: {fileID: 1308195639}
   - component: {fileID: 1308195638}
   m_Layer: 5
-  m_Name: Enemy
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12332,6 +12364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1338796669}
+  - component: {fileID: 1338796670}
   m_Layer: 5
   m_Name: 1vs1 (2)
   m_TagString: Untagged
@@ -12361,6 +12394,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -966}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1338796670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338796668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b455cae2a9de408ca9d26c7c7cf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattlePlayers:
+  - {fileID: 1357776092}
+  - {fileID: 2137121361}
 --- !u!1 &1357776090
 GameObject:
   m_ObjectHideFlags: 0
@@ -12372,7 +12420,7 @@ GameObject:
   - component: {fileID: 1357776091}
   - component: {fileID: 1357776092}
   m_Layer: 5
-  m_Name: Me
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16776,15 +16824,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce831da7f84d66949827962e955af131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BattlePlayers:
-  - {fileID: 1059272898}
-  - {fileID: 827640745}
-  - {fileID: 463793876}
-  - {fileID: 1308195638}
-  - {fileID: 1357776092}
-  - {fileID: 2137121361}
-  - {fileID: 731834008}
-  - {fileID: 1224067956}
+  Battles:
+  - {fileID: 824324910}
+  - {fileID: 796105569}
+  - {fileID: 1338796670}
+  - {fileID: 2115801745}
 --- !u!1001 &1790997284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19123,6 +19167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2115801744}
+  - component: {fileID: 2115801745}
   m_Layer: 5
   m_Name: 1vs1 (3)
   m_TagString: Untagged
@@ -19152,6 +19197,21 @@ RectTransform:
   m_AnchoredPosition: {x: 1900, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2115801745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115801743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 703b455cae2a9de408ca9d26c7c7cf28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BattlePlayers:
+  - {fileID: 731834008}
+  - {fileID: 1224067956}
 --- !u!1 &2120462021
 GameObject:
   m_ObjectHideFlags: 0
@@ -19488,7 +19548,7 @@ GameObject:
   - component: {fileID: 2137121362}
   - component: {fileID: 2137121361}
   m_Layer: 5
-  m_Name: Enemy
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
