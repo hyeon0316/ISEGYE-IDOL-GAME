@@ -211,7 +211,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 FindObjectOfType<Select>()
                     .ChangeCharacterImage(changeCharacterPacket.networkID, (int)changeCharacterPacket.characterType);
                 break;
-            case PacketType.cs_sc_battleItemQueue:
+            case PacketType.sc_battleItemQueue:
                 var battleItemQueuePacket = ByteArrayToStruct<sc_battleItemQueuePacket>(bytes);
                 for (int i = 0; i < battleItemQueuePacket.itemQueueInfos.Length; i++)
                 {

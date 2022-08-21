@@ -20,7 +20,8 @@ enum PacketType
     cs_sc_changeItemSlot,
     cs_sc_upgradeItem,
     cs_sc_changeCharacter,
-    cs_sc_battleItemQueue,
+    sc_battleItemQueue,
+    sc_battleOpponentQueue,
     cs_battleReady,
 }
 
