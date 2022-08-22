@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    public CharacterType Type;
+    public CharacterType Type = CharacterType.Empty;
 
     private int _hp;
     private int _defense;

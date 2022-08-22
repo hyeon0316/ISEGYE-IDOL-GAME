@@ -12,7 +12,8 @@ public enum CharacterType
     Lilpa,
     Jururu,
     Gosegu,
-    Viichan
+    Viichan,
+    Empty
 }
 
 public class Character : MonoBehaviour
@@ -20,6 +21,8 @@ public class Character : MonoBehaviour
 
     [SerializeField]
     private CharacterType _curCharType;
+
+    public CharacterType CurCharType => _curCharType;
     
     private Image _image;
 

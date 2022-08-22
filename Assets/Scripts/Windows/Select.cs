@@ -73,6 +73,9 @@ public class Select : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 버튼 활성화 비활성화 여부
+    /// </summary>
     private void SetButton(bool isActive)
     {
         foreach (var btn in Characters)
@@ -80,17 +83,33 @@ public class Select : MonoBehaviour
             btn.GetComponent<Button>().interactable = isActive;
         }
     }
-    
-    
+
+    /// <summary>
+    /// 하나의 버튼 외에 나머지를 활성화
+    /// </summary>
+    private void SetOnlyButton(int type)
+    {
+        foreach (var btn in Characters)
+        {
+            if(btn.CurCharType == (CharacterType)type)
+                btn.GetComponent<Button>().interactable = false;
+            
+            btn.GetComponent<Button>().interactable = true;
+        }
+    }
 
     /// <summary>
     /// 캐릭터를 직접 선택
     /// </summary>
     public void PickCharacterButton(int type)
     {
-        PlayerManager.Instance.Players[0].Init(ChoiceCharacters[0].Image.sprite, 100, 10);
-        NetworkManager.Instance.SendChangeCharacterPacket(PlayerManager.Instance.Players[0].ID, type);
-        PlayerManager.Instance.Players[0].Type = (CharacterType)type;
+        Player player = PlayerManager.Instance.Players[0];
+       
+        player.Init(ChoiceCharacters[0].Image.sprite, 100, 10);
+        NetworkManager.Instance.SendChangeCharacterPacket(player.ID, type);
+        player.Type = (CharacterType)type;
+        
+        SetOnlyButton(type);
     }
     
     private IEnumerator SetSelectTimerCo()
@@ -121,9 +140,9 @@ public class Select : MonoBehaviour
     /// </summary>
     private void SetAutoCharacter()
     {
-        for (int i = 0; i < ChoiceCharacters.Length; i++)
+        for (int i = 0; i < PlayerManager.Instance.Players.Length; i++)
         {
-            if (ChoiceCharacters[i].Image.sprite == null)
+            if (PlayerManager.Instance.Players[i].Type == CharacterType.Empty)
             {
                 Character character = Characters[(int) CharacterType.Woowakgood];
 
