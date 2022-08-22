@@ -115,7 +115,7 @@ namespace Packet
 
         public cs_sc_upgradeItemPacket(Int32 networkID, Byte slot)
         {
-            size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
+            size = (UInt16) Marshal.SizeOf<cs_sc_upgradeItemPacket>();
             type = (Byte) PacketType.cs_sc_upgradeItem;
             this.networkID = networkID;
             this.slot = slot;
@@ -133,13 +133,15 @@ namespace Packet
 
         public cs_sc_changeCharacterPacket(Int32 networkID, char characterType)
         {
-            size = (UInt16) Marshal.SizeOf<sc_battleItemQueuePacket>();
+            size = (UInt16) Marshal.SizeOf<cs_sc_changeCharacterPacket>();
             type = (Byte) PacketType.cs_sc_changeCharacter;
             this.networkID = networkID;
             this.characterType = characterType;
         }
     }
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+    [Serializable]
     public struct cs_battleReadyPacket
     {
         public readonly UInt16 size;
@@ -154,6 +156,8 @@ namespace Packet
         }
     }
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
+    [Serializable]
     public struct ItemQueueInfo
     {
         public Int32 networkID;
