@@ -93,8 +93,8 @@ public class Select : MonoBehaviour
         {
             if(btn.CurCharType == (CharacterType)type)
                 btn.GetComponent<Button>().interactable = false;
-            
-            btn.GetComponent<Button>().interactable = true;
+            else
+                btn.GetComponent<Button>().interactable = true;
         }
     }
 
