@@ -73,9 +73,9 @@ namespace Packet
         public readonly UInt16 size;
         public readonly Byte type;
         public readonly Int32 networkID;
-        public readonly Int32 itemCode;
+        public readonly Byte itemCode;
 
-        public cs_sc_AddNewItemPacket(Int32 networkID, Int32 itemCode)
+        public cs_sc_AddNewItemPacket(Int32 networkID, Byte itemCode)
         {
             size = (UInt16) Marshal.SizeOf<cs_sc_AddNewItemPacket>();
             type = (Byte) PacketType.cs_sc_addNewItem;

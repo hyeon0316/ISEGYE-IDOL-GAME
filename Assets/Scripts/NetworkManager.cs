@@ -96,7 +96,7 @@ public class NetworkManager : Singleton<NetworkManager>
         }
     }
 
-    void Send(object packet)
+    void SendPacket(object packet)
     {
         if (packet == null)
         {
@@ -125,26 +125,32 @@ public class NetworkManager : Singleton<NetworkManager>
         var encodingStrBytes = Encoding.Unicode.GetBytes(PlayerManager.Instance.Players[0].NickName.Trim((char) 8203));
         Array.Copy(encodingStrBytes, nameBuf, encodingStrBytes.Length);
         packet.name = nameBuf;
-        Send(packet);
+        SendPacket(packet);
     }
 
     public void SendChangeCharacterPacket(int networkID, int characterType)
     {
         cs_sc_changeCharacterPacket packet = new cs_sc_changeCharacterPacket(networkID, (char) characterType);
-        Send(packet);
+        SendPacket(packet);
     }
 
     public void SendChangeItemSlotPacket(Int32 networkID, Byte slot1, Byte slot2)
     {
         var packet = new cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
-        Send(packet);
+        SendPacket(packet);
     }
 
     public void SendBattleReadyPacket(Int32 networkID)
     {
         cs_battleReadyPacket packet = new cs_battleReadyPacket(networkID);
         DebugText.text = networkID.ToString();
-        Send(packet);
+        SendPacket(packet);
+    }
+
+    public void SendAddNewItemPacket(Int32 networkID, Byte itemCode)
+    {
+        cs_sc_AddNewItemPacket packet = new cs_sc_AddNewItemPacket(networkID, itemCode);
+        SendPacket(packet);
     }
 
     void Receive()
@@ -198,6 +204,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case PacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<cs_sc_AddNewItemPacket>(bytes);
+                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory.AddItem(addNewItemPacket.itemCode);
                 //AddDebug($"{addNewItemPacket.networkID} 번 유저가 새로운 아이템 {addNewItemPacket.itemCode} 을 추가하였습니다");
                 break;
             case PacketType.sc_disconnect:
