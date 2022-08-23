@@ -22,7 +22,6 @@ public class NetworkManager : Singleton<NetworkManager>
     private bool _isSuccessConnectServer = false;
 
     private const int MaxPacketSize = 1500;
-    private bool isLocalServer = true;
     public TMP_Text DebugText;
 
     private void Start()
@@ -35,7 +34,19 @@ public class NetworkManager : Singleton<NetworkManager>
         DisconnectServer();
     }
 
-    public void ConnectServer()
+    // 서버 컴퓨터 서버
+    public void StartConnectServer()
+    {
+        ConnectServer(ServerPort);
+    }
+
+    // 개인 컴퓨터 서버
+    public void StartConnectLocalServer()
+    {
+        ConnectServer(ServerLocalPort);
+    }
+
+    private void ConnectServer(int port)
     {
         try
         {
@@ -47,7 +58,7 @@ public class NetworkManager : Singleton<NetworkManager>
             throw;
         }
 
-        _serverIpEndPoint = new IPEndPoint(_serverIp, isLocalServer ? ServerLocalPort : ServerPort);
+        _serverIpEndPoint = new IPEndPoint(_serverIp, port);
         _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         _socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, true);
         //_socket.Connect(_serverIpEndPoint);
