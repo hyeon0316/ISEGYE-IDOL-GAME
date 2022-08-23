@@ -37,7 +37,7 @@ public class UnUsingInventory : MonoBehaviour
         int rand = Random.Range(1, 16); //SetItems에 지정되어있는 0~14번째 인덱스중 하나 선택
         
         AddItem(rand);
-        //todo: 서버에 데이터 전송
+        NetworkManager.Instance.SendAddNewItemPacket(PlayerManager.Instance.Players[0].ID,(byte)rand);
     }
 
 
