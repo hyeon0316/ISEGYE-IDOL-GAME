@@ -5,7 +5,8 @@ using UnityEngine;
 public class Battle : MonoBehaviour
 {
     public BattlePlayer[] BattlePlayers;
-    
+
+    public bool IsFinish;
     
     public void SetFirstPlayer(int networkID)
     {
@@ -15,28 +16,28 @@ public class Battle : MonoBehaviour
             BattlePlayers[1].SetFirstTurn();
     }
     
-    public IEnumerator StartBattleCo()
+    private IEnumerator StartBattleCo()
     {
         while (true)
         {
-            if (BattlePlayers[0].AvatarHp <= 0 || BattlePlayers[1].AvatarHp <= 0) //todo: 나중에는 제한시간이 다 지나면 끝남
+            if (BattlePlayers[0].AvatarHp <= 0 || BattlePlayers[1].AvatarHp <= 0) //todo: 나중에는 제한시간이 다 지나면 끝나는 조건문도 추가
             {
-                //FindObjectOfType<InGame>().CloseBattle();
-                //todo: 패킷 전송하여 모든 플레이어가 전투가 끝나면 Ready창 이동
+                IsFinish = true;
+                FindObjectOfType<BattleManager>().CheckFinishBattle();
                 break;
             }
 
-            StartBattle();
+            BattlePlayers[0].ActiveItem();
+            BattlePlayers[1].ActiveItem();
+        
+            BattlePlayers[1].UpdateAvatarHp(-20);//임시
             yield return new WaitForSeconds(2f);
         }
     }
     
-    private void StartBattle()
+    public void StartBattle()
     {
-        BattlePlayers[0].ActiveItem();
-        BattlePlayers[1].ActiveItem();
-        
-        BattlePlayers[1].UpdateAvatarHp(-20);//임시
+        StartCoroutine(StartBattleCo());
     }
 
     

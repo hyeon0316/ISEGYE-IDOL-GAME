@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
 {
     public Battle[] Battles;
 
+    
     private void OnEnable()
     {
         int index = 0;
@@ -18,7 +19,23 @@ public class BattleManager : MonoBehaviour
         {
             Battles[i].SetPlayer(index++);
             Battles[i].SetEnemy(index);
-            Battles[i].StartBattleCo();
+            Battles[i].StartBattle();
         }
+    }
+
+    private void Update()
+    {
+       
+    }
+
+    public void CheckFinishBattle()
+    {
+        foreach (var battle in Battles)
+        {
+            if (!battle.IsFinish)
+                return;
+        }
+        
+        FindObjectOfType<InGame>().CloseBattle();
     }
 }

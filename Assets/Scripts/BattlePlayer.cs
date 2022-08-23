@@ -57,6 +57,7 @@ public class BattlePlayer : MonoBehaviour
             if (_index == _itemOrder.Length)
                 _index = 0;
 
+            Debug.Log(Player.NickName);
             if (active)
             {
                 if(itemSlot == 255)
