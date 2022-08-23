@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -30,6 +31,14 @@ public class BattlePlayer : MonoBehaviour
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
         AvatarImage.sprite = Player.Sprite;
         PlayerNickName.text = $"{Player.NickName}";
+
+        StringBuilder debug = new StringBuilder();
+        foreach (var s in _itemOrder)
+        {
+            debug.Append(s);
+            debug.Append(",");
+        }
+        Debug.Log(debug);
     }
 
     public void UpdateAvatarHp(int amount)
@@ -57,13 +66,15 @@ public class BattlePlayer : MonoBehaviour
             if (_index == _itemOrder.Length)
                 _index = 0;
 
-            Debug.Log(Player.NickName);
             if (active)
             {
                 if(itemSlot == 255)
                     Debug.Log("비어 있음");
                 else
+                {
                     ItemSlots[itemSlot].ActiveItem(this);
+                    ItemSlots[itemSlot].DeleteItem();//임시
+                }
             }
         }
 

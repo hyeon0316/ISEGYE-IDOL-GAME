@@ -40,6 +40,12 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public Sprite Sprite => _sprite;
 
+    public Image Image
+    {
+        get { return _image; }
+        set { _image = value; }
+    }
+
     public virtual void Awake()
     {
         _image = GetComponent<Image>();
@@ -165,4 +171,5 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         transform.SetParent(parent);
         transform.position = pos;
     }
+    
 }

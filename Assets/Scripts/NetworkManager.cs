@@ -147,6 +147,9 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void SendChangeItemSlotPacket(Int32 networkID, Byte slot1, Byte slot2)
     {
+        if (slot1 == slot2)
+            return;
+        
         var packet = new cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
         SendPacket(packet);
     }
