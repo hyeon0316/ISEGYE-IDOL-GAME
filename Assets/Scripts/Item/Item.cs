@@ -118,8 +118,9 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         if (InGame.CurGameType == GameType.Ready)
         {
-            transform.position = new Vector3(eventData.position.x - Screen.width / 2,
-                eventData.position.y - Screen.height / 2, 0);
+            Vector3 pos = Input.mousePosition;
+            pos = Camera.main.ScreenToWorldPoint(pos); //마우스 좌표를 월드 좌표(카메라 안)로 변환
+            transform.position = new Vector3(pos.x, pos.y, 0);
         }
     }
 
