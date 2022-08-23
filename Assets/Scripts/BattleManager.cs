@@ -18,7 +18,7 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < Battles.Length; i++)
         {
             Battles[i].SetPlayer(index++);
-            Battles[i].SetEnemy(index);
+            Battles[i].SetEnemy(index++);
             Battles[i].StartBattle();
         }
     }
