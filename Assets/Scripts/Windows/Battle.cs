@@ -41,15 +41,17 @@ public class Battle : MonoBehaviour
     }
 
     
-    public void SetPlayer(int playerIndex)
+    public void SetPlayer(int playerID)
     {
-        BattlePlayers[0].SetBattlePlayer(PlayerManager.Instance.Players[playerIndex], PlayerManager.Instance.Players[playerIndex].ActiveIndex);
-        BattlePlayers[0].SetFirstTurn();//순서 임시 부여
+        Player player = PlayerManager.Instance.GetPlayer(playerID);
+        BattlePlayers[0].SetBattlePlayer(player, player.ActiveIndex);
+        BattlePlayers[0].SetFirstTurn();
     }
 
-    public void SetEnemy(int enemyIndex)
+    public void SetEnemy(int enemyID)
     {
-        BattlePlayers[1].SetBattlePlayer(PlayerManager.Instance.Players[enemyIndex], PlayerManager.Instance.Players[enemyIndex].ActiveIndex);
+        Player enemy = PlayerManager.Instance.GetPlayer(enemyID);
+        BattlePlayers[1].SetBattlePlayer(enemy, enemy.ActiveIndex);
     }
     
 }

@@ -11,21 +11,22 @@ public class BattleManager : MonoBehaviour
 {
     public Battle[] Battles;
 
+    public Int32[] BattleOpponents;
+
     
     private void OnEnable()
+    {
+        StartBattle();
+    }
+
+    private void StartBattle()
     {
         int index = 0;
         for (int i = 0; i < Battles.Length; i++)
         {
-            Battles[i].SetPlayer(index++);
-            Battles[i].SetEnemy(index++);
-            Battles[i].StartBattle();
+            Battles[i].SetPlayer(BattleOpponents[index++]);
+            Battles[i].SetEnemy(BattleOpponents[index++]);
         }
-    }
-
-    private void Update()
-    {
-       
     }
 
     public void CheckFinishBattle()

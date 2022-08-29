@@ -37,6 +37,9 @@ public class UnUsingInventory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Unusing의 슬롯에 모두 아이템이 존재 하는지 체크하여 뽑기 버튼 활성화 여부 판단
+    /// </summary>
     public void CheckFullSlot()
     {
         int fullCheck = 0;

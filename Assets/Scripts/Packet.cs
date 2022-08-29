@@ -20,7 +20,7 @@ enum PacketType
     cs_sc_changeItemSlot,
     cs_sc_upgradeItem,
     cs_sc_changeCharacter,
-    sc_battleItemQueue,
+    sc_battleInfo,
     cs_battleReady,
 }
 
@@ -166,7 +166,7 @@ namespace Packet
     
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     [Serializable]
-    public struct sc_battleItemQueuePacket
+    public struct sc_battleInfoPacket
     {
         public readonly UInt16 size;
         public readonly Byte type;

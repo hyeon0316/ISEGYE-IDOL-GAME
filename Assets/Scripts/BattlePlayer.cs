@@ -27,6 +27,7 @@ public class BattlePlayer : MonoBehaviour
         _itemOrder = itemOrder;
         
         Player.SetItem(ItemSlots);
+        _isMyturn = false;
         AvatarHp = 100;
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
         AvatarImage.sprite = Player.Sprite;
