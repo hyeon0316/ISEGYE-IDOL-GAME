@@ -4,4 +4,10 @@
     private const int _itemQueueRepeat = 5;         // 아이템 순서 반복 횟수
     public const int ItemQueueLength = _usingItemCount * _itemQueueRepeat * 2;
     public const int MaxRoomPlayer = 8;
+    
+    //게임 첫 시작시 기본적으로 주워지는 아이템의 코드
+    public const int DefaultItem1 = 1;
+    public const int DefaultItem2 = 6;
+
+    public const int SlotMaxCount = 10;
 }

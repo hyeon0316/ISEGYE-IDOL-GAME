@@ -58,6 +58,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 게임 첫 시작시 기본적으로 주워지는 아이템 생성
+    /// </summary>
+    public void AddDefaultItem()
+    {
+        UnUsingInventory.AddItem(Global.DefaultItem1);
+        UnUsingInventory.AddItem(Global.DefaultItem2);
+    }
+
+    /// <summary>
     /// UnUsing의 아이템들을 Using에 자동 셋팅
     /// </summary>
     public void AutoSetItem()
@@ -150,6 +159,8 @@ public class Player : MonoBehaviour
         Item tempItem2 = itemSlot1.GetComponentInChildren<Item>();
         tempItem2.RePosItem(itemSlot2.transform, Vector3.zero);
         tempItem2.transform.localPosition = Vector3.zero;
+        
+        UnUsingInventory.CheckFullSlot();
     }
 
     /// <summary>

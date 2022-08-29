@@ -30,9 +30,17 @@ public class PlayerManager : Singleton<PlayerManager>
 
    public void AutoSetItem()
    {
-      for(int i=0; i<Players.Length; i++)
+      foreach (var player in Players)
       {
-         Players[i].AutoSetItem();
+         player.AutoSetItem();
+      }
+   }
+
+   public void AddDefaultItem()
+   {
+      foreach (var player in Players)
+      {
+         player.AddDefaultItem();
       }
    }
 

@@ -133,6 +133,7 @@ public class Select : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Debug.Log("게임 시작");
         WindowManager.Instance.SetWindow((int)WindowType.InGame);
+        PlayerManager.Instance.AddDefaultItem();
     }
 
     /// <summary>

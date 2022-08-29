@@ -76,7 +76,7 @@ public class Ready : MonoBehaviour
         if(_isActive)
             OpenRoulette();
         else
-            CloseRoulette();            
+            CloseRoulette();    
     }
 
     private void OpenRoulette()
