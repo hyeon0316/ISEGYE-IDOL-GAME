@@ -237,17 +237,17 @@ public class NetworkManager : Singleton<NetworkManager>
                     .ChangeCharacterImage(changeCharacterPacket.networkID, (int) changeCharacterPacket.characterType);
                 break;
             case PacketType.sc_battleInfo:
-                var battleItemQueuePacket = ByteArrayToStruct<sc_battleInfoPacket>(bytes);
-                for (int i = 0; i < battleItemQueuePacket.itemQueueInfos.Length; i++)
+                var battleInfoPacket = ByteArrayToStruct<sc_battleInfoPacket>(bytes);
+                for (int i = 0; i < battleInfoPacket.itemQueueInfos.Length; i++)
                 {
-                    int playerID = battleItemQueuePacket.itemQueueInfos[i].networkID;
+                    int playerID = battleInfoPacket.itemQueueInfos[i].networkID;
                     if (playerID == -1)
                         break;
 
                     Player player = PlayerManager.Instance.GetPlayer(playerID);
-                    player.ActiveIndex = battleItemQueuePacket.itemQueueInfos[i].itemQueue;
+                    player.ActiveIndex = battleInfoPacket.itemQueueInfos[i].itemQueue;
                 }
-                FindObjectOfType<BattleManager>().BattleOpponents = battleItemQueuePacket.battleOpponents;
+                FindObjectOfType<BattleManager>().BattleOpponents = battleInfoPacket.battleOpponents;
                 FindObjectOfType<InGame>().OpenBattle();
                 break;
             default:
