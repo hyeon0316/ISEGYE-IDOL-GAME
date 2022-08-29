@@ -21,7 +21,6 @@ enum PacketType
     cs_sc_upgradeItem,
     cs_sc_changeCharacter,
     sc_battleItemQueue,
-    sc_battleOpponentQueue,
     cs_battleReady,
 }
 
@@ -171,6 +170,11 @@ namespace Packet
     {
         public readonly UInt16 size;
         public readonly Byte type;
+        // todo : 패킷 구조체랑 패킷 타입 이름 변경
+        // 플레이어가 없는경우 int 최대값이 들어옴
+        // int 최대값이 들어오면 반복문 멈추게 설정
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.MaxRoomPlayer)]
+        public Int32[] battleOpponents;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.MaxRoomPlayer)]
         public ItemQueueInfo[] itemQueueInfos;
     }
