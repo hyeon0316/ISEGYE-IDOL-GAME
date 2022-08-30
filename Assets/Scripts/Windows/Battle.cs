@@ -45,7 +45,6 @@ public class Battle : MonoBehaviour
     {
         Player player = PlayerManager.Instance.GetPlayer(playerID);
         BattlePlayers[0].SetBattlePlayer(player, player.ActiveIndex);
-        BattlePlayers[0].SetFirstTurn();
     }
 
     public void SetEnemy(int enemyID)

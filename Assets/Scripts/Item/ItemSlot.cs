@@ -40,6 +40,7 @@ public class ItemSlot : MonoBehaviour
         if (this.transform.childCount == 1)
         {
             this.GetComponentInChildren<Item>().Active(battlePlayer);
+            Invoke("DeleteItem", 1f);
         }
     }
 

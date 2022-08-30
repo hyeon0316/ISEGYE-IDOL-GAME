@@ -247,7 +247,16 @@ public class NetworkManager : Singleton<NetworkManager>
                     Player player = PlayerManager.Instance.GetPlayer(playerID);
                     player.ActiveIndex = battleInfoPacket.itemQueueInfos[i].itemQueue;
                 }
-                FindObjectOfType<BattleManager>().BattleOpponents = battleInfoPacket.battleOpponents;
+
+                BattleManager battleManager = FindObjectOfType<InGame>().transform.Find("Background").transform.Find("Battle").GetComponent<BattleManager>();
+                battleManager.BattleOpponents.Clear();
+                for (int i = 0; i < battleInfoPacket.battleOpponents.Length; i++)
+                {
+                    if (battleInfoPacket.battleOpponents[i] == Int32.MaxValue)
+                        break;
+                    battleManager.BattleOpponents.Add(battleInfoPacket.battleOpponents[i]);
+                }
+
                 FindObjectOfType<InGame>().OpenBattle();
                 break;
             default:

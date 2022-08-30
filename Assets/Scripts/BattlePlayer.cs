@@ -67,7 +67,6 @@ public class BattlePlayer : MonoBehaviour
                 else
                 {
                     ItemSlots[itemSlot].ActiveItem(this);
-                    ItemSlots[itemSlot].DeleteItem();//임시
                 }
             }
         }
