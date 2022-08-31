@@ -31,16 +31,16 @@ public class BattleManager : MonoBehaviour
             {
                 Battles[0].SetPlayer(BattleOpponents[i]);
                 myselfID = BattleOpponents[i];
-                if ((i + 1) % 2 == 0)
+                if ((i + 1) % 2 == 0)//적이 선 공격일때
                 {
                     Battles[0].SetEnemy(BattleOpponents[i - 1] < 0 ? ~BattleOpponents[i - 1] : BattleOpponents[i - 1]);
-                    Battles[0].SetFirstPlayer(BattleOpponents[i]);
+                    Battles[0].SetFirstPlayer(BattleOpponents[i - 1]);
                     opponentID = BattleOpponents[i - 1];
                 }
-                else
+                else//자신이 선 공격일때
                 {
                     Battles[0].SetEnemy(BattleOpponents[i + 1] < 0 ? ~BattleOpponents[i + 1] : BattleOpponents[i + 1]);
-                    Battles[0].SetFirstPlayer(BattleOpponents[i + 1] < 0 ? ~BattleOpponents[i + 1] : BattleOpponents[i + 1]);
+                    Battles[0].SetFirstPlayer(BattleOpponents[i]);
                     opponentID = BattleOpponents[i + 1];
                 }
                 Battles[0].StartBattle();
