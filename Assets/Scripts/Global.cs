@@ -10,4 +10,6 @@
     public const int DefaultItem2 = 6;
 
     public const int SlotMaxCount = 10;
+
+    public const int NextBattle = 13;
 }
