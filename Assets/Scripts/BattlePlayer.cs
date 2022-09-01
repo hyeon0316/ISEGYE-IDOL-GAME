@@ -20,11 +20,13 @@ public class BattlePlayer : MonoBehaviour
     private int _index = 0;
     private bool _isMyturn = false;
 
+    public BattlePlayer Opponent { get; set; }
 
-    public void SetBattlePlayer(Player player, byte[] itemOrder)
+    public void SetBattlePlayer(Player player, byte[] itemOrder, BattlePlayer oppoent)
     {
         Player = player;
         _itemOrder = itemOrder;
+        Opponent = oppoent;
         
         Player.SetItem(ItemSlots);
         _isMyturn = false;
@@ -66,7 +68,7 @@ public class BattlePlayer : MonoBehaviour
                     Debug.Log("비어 있음");
                 else
                 {
-                    ItemSlots[itemSlot].ActiveItem(this);
+                    ItemSlots[itemSlot].ActiveItem(this, Opponent);
                 }
             }
         }
@@ -74,6 +76,9 @@ public class BattlePlayer : MonoBehaviour
         _isMyturn = !_isMyturn;
     }
 
+    /// <summary>
+    /// 다음 6번의 랜덤 발동을 위한 아이템 셋팅
+    /// </summary>
     public void UseNextItem()
     {
         foreach (var slot in ItemSlots)

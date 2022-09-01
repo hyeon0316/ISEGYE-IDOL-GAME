@@ -61,7 +61,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     /// <summary>
     /// 아이템 효과 사용
     /// </summary>
-    public abstract void Active(BattlePlayer battlePlayer); //todo: 매개변수로 배틀플레이어를 넘겨주는 식?
+    public abstract void Active(BattlePlayer player, BattlePlayer opponent); //todo: 매개변수로 배틀플레이어를 넘겨주는 식?
 
     /// <summary>
     /// todo: 임시, 아이템 사용 했다는것 표시

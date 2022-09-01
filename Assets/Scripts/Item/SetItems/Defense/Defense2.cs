@@ -5,14 +5,13 @@ using UnityEngine;
 public class Defense2 : Item
 {
    
-    public override void Active(BattlePlayer battlePlayer)
+    public override void Active(BattlePlayer player, BattlePlayer opponent)
     {
         Debug.Log(this.GetType().Name);
-        battlePlayer.UpdateAvatarHp(-10);//임시
+        opponent.UpdateAvatarHp(-10);//임시
         
         ChangeColor(Color.black);
     }
-    
 
     public override void ChangeColor(Color color)
     {

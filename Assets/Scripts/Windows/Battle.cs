@@ -6,7 +6,7 @@ public class Battle : MonoBehaviour
 {
     public BattlePlayer[] BattlePlayers;
 
-    public bool IsFinish;
+    public bool IsFinish { get; set; }
 
     private int _count;
     
@@ -58,13 +58,13 @@ public class Battle : MonoBehaviour
     public void SetPlayer(int playerID)
     {
         Player player = PlayerManager.Instance.GetPlayer(playerID);
-        BattlePlayers[0].SetBattlePlayer(player, player.ActiveIndex);
+        BattlePlayers[0].SetBattlePlayer(player, player.ActiveIndex, BattlePlayers[1]);
     }
 
     public void SetEnemy(int enemyID)
     {
         Player enemy = PlayerManager.Instance.GetPlayer(enemyID);
-        BattlePlayers[1].SetBattlePlayer(enemy, enemy.ActiveIndex);
+        BattlePlayers[1].SetBattlePlayer(enemy, enemy.ActiveIndex, BattlePlayers[0]);
     }
     
 }
