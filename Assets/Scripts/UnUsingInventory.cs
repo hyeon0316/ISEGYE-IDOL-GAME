@@ -54,4 +54,12 @@ public class UnUsingInventory : MonoBehaviour
         else
             GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = true;
     }
+
+    public void InitItem()
+    {
+        foreach (var item in ItemSlots)
+        {
+            item.DeleteItem();
+        }
+    }
 }

@@ -40,4 +40,11 @@ public class UsingInventory : MonoBehaviour
         return false;
     }
 
+    public void InitItem()
+    {
+        foreach (var item in ItemSlots)
+        {
+            item.DeleteItem();
+        }
+    }
 }

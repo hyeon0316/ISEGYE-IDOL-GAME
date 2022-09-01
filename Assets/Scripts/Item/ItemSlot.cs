@@ -56,6 +56,9 @@ public class ItemSlot : MonoBehaviour
 
     public void DeleteItem()
     {
-        Destroy(this.transform.GetChild(0).gameObject);
+        if (this.transform.childCount == 1)
+        {
+            Destroy(this.transform.GetChild(0).gameObject);
+        }
     }
 }

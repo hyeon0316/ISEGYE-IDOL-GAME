@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
         _hp = hp;
         HpText.text = $"체력: {_hp}";
         _defense = defense;
+        
+        UnUsingInventory.InitItem();
+        UsingInventory.InitItem();
     }
 
     public void SetName(string name)
@@ -101,7 +104,17 @@ public class Player : MonoBehaviour
     public void UpdateHp(int amount)
     {
         _hp += amount;
+
+        if (_hp < 0)
+        {
+            _hp = 0;
+            NetworkManager.Instance.DisconnectServer();
+            WindowManager.Instance.SetWindow((int)WindowType.Lobby);
+            //todo: 전부 초기화
+        }
+
         HpText.text = $"체력: {_hp}";
+        
     }
 
     /// <summary>
