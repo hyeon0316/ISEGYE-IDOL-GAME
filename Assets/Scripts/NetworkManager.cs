@@ -265,7 +265,7 @@ public class NetworkManager : Singleton<NetworkManager>
         }
     }
 
-    void DisconnectServer()
+    public void DisconnectServer()
     {
         if (_socket == null)
             return;
