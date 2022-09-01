@@ -90,6 +90,8 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+            
+            UnUsingInventory.CheckFullSlot();
         }
     }
     

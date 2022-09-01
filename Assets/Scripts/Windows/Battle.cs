@@ -7,6 +7,8 @@ public class Battle : MonoBehaviour
     public BattlePlayer[] BattlePlayers;
 
     public bool IsFinish;
+
+    private int _count;
     
     public void SetFirstPlayer(int networkID)
     {
@@ -23,20 +25,32 @@ public class Battle : MonoBehaviour
             if (BattlePlayers[0].AvatarHp <= 0 || BattlePlayers[1].AvatarHp <= 0) //todo: 나중에는 제한시간이 다 지나면 끝나는 조건문도 추가
             {
                 IsFinish = true;
+                BattlePlayers[0].DeleteItem();
+                BattlePlayers[1].DeleteItem();
                 FindObjectOfType<BattleManager>().CheckFinishBattle();
                 break;
+            }
+
+            _count++;
+            if (_count == Global.NextBattle)//두 플레이어 아이템 모두 사용 뒤 곧 이어 다음 배틀을 위한 준비 시간
+            {
+                _count = 1;
+                BattlePlayers[0].UseNextItem();
+                BattlePlayers[1].UseNextItem();
+                yield return new WaitForSeconds(1f);
             }
 
             BattlePlayers[0].ActiveItem();
             BattlePlayers[1].ActiveItem();
         
-            BattlePlayers[1].UpdateAvatarHp(-20);//임시
             yield return new WaitForSeconds(2f);
         }
     }
     
     public void StartBattle()
     {
+        IsFinish = false;
+        _count = 0;
         StartCoroutine(StartBattleCo());
     }
 

@@ -19,7 +19,7 @@ public class BattlePlayer : MonoBehaviour
     private byte[] _itemOrder;
     private int _index = 0;
     private bool _isMyturn = false;
-    
+
 
     public void SetBattlePlayer(Player player, byte[] itemOrder)
     {
@@ -72,5 +72,20 @@ public class BattlePlayer : MonoBehaviour
         }
 
         _isMyturn = !_isMyturn;
+    }
+
+    public void UseNextItem()
+    {
+        foreach (var slot in ItemSlots)
+            slot.ChangeColor(Color.white);
+    }
+    
+    public void DeleteItem()
+    {
+        for (int i = 0; i < ItemSlots.Length; i++)
+        {
+            if(ItemSlots[i].transform.childCount == 1)
+                ItemSlots[i].DeleteItem();
+        }
     }
 }

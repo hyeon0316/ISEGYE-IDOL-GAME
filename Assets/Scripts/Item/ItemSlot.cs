@@ -40,7 +40,17 @@ public class ItemSlot : MonoBehaviour
         if (this.transform.childCount == 1)
         {
             this.GetComponentInChildren<Item>().Active(battlePlayer);
-            Invoke("DeleteItem", 1f);//todo: 바꾸기
+        }
+    }
+
+    /// <summary>
+    /// todo: 임시, 아이템 사용 했다는것 표시
+    /// </summary>
+    public void ChangeColor(Color color)
+    {
+        if (this.transform.childCount == 1)
+        {
+            this.GetComponentInChildren<Item>().ChangeColor(color);
         }
     }
 

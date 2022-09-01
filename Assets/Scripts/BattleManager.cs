@@ -59,8 +59,10 @@ public class BattleManager : MonoBehaviour
                 break;
 
             Battles[i].SetPlayer(BattleOpponents[index] < 0 ? ~BattleOpponents[index] : BattleOpponents[index]);
-            Battles[i].SetFirstPlayer(BattleOpponents[index++] < 0 ? ~BattleOpponents[index] : BattleOpponents[index]);
-            Battles[i].SetEnemy(BattleOpponents[index++] < 0 ? ~BattleOpponents[index] : BattleOpponents[index]);
+            Battles[i].SetFirstPlayer(BattleOpponents[index++]);
+            Battles[i].SetEnemy(BattleOpponents[index] < 0 ? ~BattleOpponents[index] : BattleOpponents[index]);
+            index++;
+            
             Battles[i].StartBattle();
         }
     }

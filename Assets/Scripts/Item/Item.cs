@@ -63,6 +63,11 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     /// </summary>
     public abstract void Active(BattlePlayer battlePlayer); //todo: 매개변수로 배틀플레이어를 넘겨주는 식?
 
+    /// <summary>
+    /// todo: 임시, 아이템 사용 했다는것 표시
+    /// </summary>
+    public abstract void ChangeColor(Color color);
+
     public virtual void ShowUsingEffect()
     {
         //todo: 아이템 사용 시 나오는 이펙트 효과 
