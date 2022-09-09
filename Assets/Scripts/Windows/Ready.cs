@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Ready : MonoBehaviour
 {
     public GameObject RouletteWindow;
+    public Button RouletteButton;
     
     public TextMeshProUGUI ReadyTimer;
     private float _readyTime;
@@ -16,6 +18,7 @@ public class Ready : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(SetReadyTimerCo());
+        PlayerManager.Instance.SetPlayerView(PlayerManager.Instance.Players[0].ID);
     }
 
 
@@ -23,10 +26,7 @@ public class Ready : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (RouletteWindow.activeSelf)
-            {
-                ClickCloseRoulette();
-            }
+            ClickCloseRoulette();
         }
     }
     
@@ -59,34 +59,39 @@ public class Ready : MonoBehaviour
     /// </summary>
     private void ClickCloseRoulette()
     {
-        Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Ray2D ray = new Ray2D(pos, Vector2.zero);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Roulette"));
-
-        if (hit.collider == null)
+        if (RouletteWindow.activeSelf)
         {
-            TryRoulette();
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Ray2D ray = new Ray2D(pos, Vector2.zero);
+            RaycastHit2D hit =
+                Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, LayerMask.GetMask("Roulette"));
+
+            if (hit.collider == null)
+            {
+                TryRoulette();
+            }
         }
     }
 
+    /// <summary>
+    /// 룰렛 버튼의 활성화 여부
+    /// </summary>
+    public void TryInteractRoulette(int checkCount)
+    {
+        if (checkCount == Global.SlotMaxCount)
+            RouletteButton.interactable = false;
+        else
+            RouletteButton.interactable = true;
+    }
+    
     public void TryRoulette()
     {
         _isActive = !_isActive;
         
         if(_isActive)
-            OpenRoulette();
+            RouletteWindow.SetActive(true);
         else
-            CloseRoulette();    
-    }
-
-    private void OpenRoulette()
-    {
-        RouletteWindow.SetActive(true);
-    }
-    
-    private void CloseRoulette()
-    {
-        RouletteWindow.SetActive(false);
+            RouletteWindow.SetActive(false);
     }
 
 }

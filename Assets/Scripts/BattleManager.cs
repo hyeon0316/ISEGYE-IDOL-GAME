@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : Singleton<BattleManager>
 {
     public Battle[] Battles;
 
@@ -18,6 +18,7 @@ public class BattleManager : MonoBehaviour
     private void OnEnable()
     {
         StartBattle();
+        SetBattleView(PlayerManager.Instance.Players[0].ID);
     }
 
     private void StartBattle()
@@ -67,6 +68,28 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 남은 플레이어 중 카메라에 담길 전투화면 셋팅
+    /// </summary>
+    public void SetBattleView(int playerID)
+    {
+        foreach (var battle in Battles)
+        {
+            battle.gameObject.transform.position = new Vector3(0, 1200, 0);
+            foreach (var battlePlayer in battle.BattlePlayers)
+            {
+                if (battlePlayer.Player.ID == playerID)
+                {
+                    battle.gameObject.transform.position = new Vector3(-128, 0, 0);
+                    break;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 남아있는 전체 플레이어들의 전투가 끝났는지 체크
+    /// </summary>
     public void CheckFinishBattle()
     {
         foreach (var battle in Battles)

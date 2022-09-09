@@ -6,17 +6,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class UnUsingInventory : MonoBehaviour
+public class UnUsingInventory : Inventory
 {
-    public ItemSlot[] ItemSlots;
-    
 
     /// <summary>
     /// 100% 확률 버튼
     /// </summary>
     public void AddRandomItem() //로컬  
     {
-        int rand = Random.Range(1, 16); //SetItems에 지정되어있는 0~14번째 인덱스중 하나 선택
+        ItemCode rand = (ItemCode)Random.Range((int)ItemCode.Minimun + 1, (int)ItemCode.Maximun); //SetItems에 지정되어있는 0~14번째 인덱스중 하나 선택
         
         AddItem(rand);
         NetworkManager.Instance.SendAddNewItemPacket(PlayerManager.Instance.Players[0].ID,(byte)rand);
@@ -25,7 +23,7 @@ public class UnUsingInventory : MonoBehaviour
     }
 
 
-    public void AddItem(int itemCode)
+    public void AddItem(ItemCode itemCode)
     {
         for (int i = 0; i < ItemSlots.Length; i++)
         {
@@ -43,23 +41,12 @@ public class UnUsingInventory : MonoBehaviour
     public void CheckFullSlot()
     {
         int fullCheck = 0;
-        for (int i = 0; i < ItemSlots.Length; i++)
+        foreach (var slot in ItemSlots)
         {
-            if (ItemSlots[i].transform.childCount == 1)
+            if (slot.transform.childCount == 1)
                 ++fullCheck;
         }
-
-        if (fullCheck == Global.SlotMaxCount)
-            GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = false;
-        else
-            GameObject.Find("RouletteBtn").GetComponent<Button>().interactable = true;
-    }
-
-    public void InitItem()
-    {
-        foreach (var item in ItemSlots)
-        {
-            item.DeleteItem();
-        }
+        
+        WindowManager.Instance.Windows[(int)WindowType.InGame].GetComponentInChildren<Ready>().TryInteractRoulette(fullCheck);
     }
 }

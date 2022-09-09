@@ -105,7 +105,6 @@ public class Select : MonoBehaviour
     {
         Player player = PlayerManager.Instance.Players[0];
        
-        player.Init(ChoiceCharacters[0].Image.sprite, 100, 10);
         NetworkManager.Instance.SendChangeCharacterPacket(player.ID, type);
         player.Type = (CharacterType)type;
         
@@ -129,7 +128,7 @@ public class Select : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         SetButton(false);
-        SetAutoCharacter();
+        SetCharacter();
         yield return new WaitForSeconds(1f);
         Debug.Log("게임 시작");
         WindowManager.Instance.SetWindow((int)WindowType.InGame);
@@ -137,19 +136,27 @@ public class Select : MonoBehaviour
     }
 
     /// <summary>
-    /// 캐릭터를 고르지 않은 상태에서 제한시간이 지날 때
+    /// 제한시간이 지난 이후 모든 플레이어들의 캐릭터 셋팅
     /// </summary>
-    private void SetAutoCharacter()
+    private void SetCharacter()
     {
         for (int i = 0; i < PlayerManager.Instance.Players.Length; i++)
         {
-            if (PlayerManager.Instance.Players[i].Type == CharacterType.Empty)
+            if (PlayerManager.Instance.Players[i].Type == CharacterType.Empty)//캐릭터를 고르지 않았을 경우
             {
                 Character character = Characters[(int) CharacterType.Woowakgood];
 
                 ChoiceCharacters[i].Image.sprite = character.Image.sprite;
                 PlayerManager.Instance.Players[i].Init(ChoiceCharacters[i].Image.sprite, 100, 10);
             }
+            else//캐릭터를 고른 경우
+            {
+                Character character = Characters[(int)PlayerManager.Instance.Players[i].Type];
+                
+                ChoiceCharacters[i].Image.sprite = character.Image.sprite;
+                PlayerManager.Instance.Players[i].Init(ChoiceCharacters[i].Image.sprite,100,10);
+            }
+            
         }
     }
 }

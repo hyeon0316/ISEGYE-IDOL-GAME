@@ -22,6 +22,7 @@ public class BattlePlayer : MonoBehaviour
 
     public BattlePlayer Opponent { get; set; }
 
+    
     public void SetBattlePlayer(Player player, byte[] itemOrder, BattlePlayer oppoent)
     {
         Player = player;
@@ -81,16 +82,19 @@ public class BattlePlayer : MonoBehaviour
     /// </summary>
     public void UseNextItem()
     {
-        foreach (var slot in ItemSlots)
-            slot.ChangeColor(Color.white);
+        foreach (var itemSlot in ItemSlots)
+        {
+            if(itemSlot.transform.childCount == 1)
+                itemSlot.ChangeColor(Color.white);
+        }
     }
     
     public void DeleteItem()
     {
-        for (int i = 0; i < ItemSlots.Length; i++)
+        foreach (var itemSlot in ItemSlots)
         {
-            if(ItemSlots[i].transform.childCount == 1)
-                ItemSlots[i].DeleteItem();
+            if(itemSlot.transform.childCount == 1)
+                itemSlot.DeleteItem();
         }
     }
 }

@@ -3,12 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UsingInventory : MonoBehaviour
+public class UsingInventory : Inventory
 {
-    //todo: 슬롯 별로 확률 지정하기
-    public ItemSlot[] ItemSlots;
-
-
 
     /// <summary>
     /// 6개의 슬롯 모두 아이템이 없는지 확인
@@ -38,13 +34,5 @@ public class UsingInventory : MonoBehaviour
 
         }
         return false;
-    }
-
-    public void InitItem()
-    {
-        foreach (var item in ItemSlots)
-        {
-            item.DeleteItem();
-        }
     }
 }

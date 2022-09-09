@@ -112,8 +112,8 @@ public class Player : MonoBehaviour
             WindowManager.Instance.SetWindow((int)WindowType.Lobby);
             //todo: 전부 초기화
         }
-
         HpText.text = $"체력: {_hp}";
+        WindowManager.Instance.Windows[(int)WindowType.InGame].GetComponent<InGame>().PlayersMap.UpdatePlayersHp(ID);
         
     }
 

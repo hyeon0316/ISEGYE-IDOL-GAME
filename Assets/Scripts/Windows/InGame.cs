@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -15,7 +16,14 @@ public class InGame : MonoBehaviour
     public GameObject ReadyWindow;
 
     public static GameType CurGameType = GameType.Ready;
-    
+
+    public Map PlayersMap;
+
+    private void OnEnable()
+    {
+        PlayersMap.SetPlayersInfo();
+    }
+
     private void Start()
     {
         CloseBattle();

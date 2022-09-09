@@ -26,9 +26,9 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public uint Upgrade = 0;
 
-    [SerializeField] private int _code;
+    [SerializeField] private ItemCode _code;
 
-    public int Code
+    public ItemCode Code
     {
         get { return _code; }
         set { _code = value; }

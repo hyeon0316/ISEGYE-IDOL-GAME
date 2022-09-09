@@ -218,7 +218,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case PacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<cs_sc_AddNewItemPacket>(bytes);
-                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory.AddItem(addNewItemPacket.itemCode);
+                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory.AddItem((ItemCode)addNewItemPacket.itemCode);
                 //AddDebug($"{addNewItemPacket.networkID} 번 유저가 새로운 아이템 {addNewItemPacket.itemCode} 을 추가하였습니다");
                 break;
             case PacketType.sc_disconnect:

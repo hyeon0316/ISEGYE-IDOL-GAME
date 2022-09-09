@@ -8,10 +8,29 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum ItemCode
+{
+    Minimun,
+    Item1,
+    Item2,
+    Item3,
+    Item4,
+    Item5,
+    Item6,
+    Item7,
+    Item8,
+    Item9,
+    Item10,
+    Item11,
+    Item12,
+    Item13,
+    Item14,
+    Item15,
+    Maximun
+}
+
 public class ItemSlot : MonoBehaviour
 {
-    private const int MIN_CODE_RANGE = 1;
-    private const int MAX_CODE_RANGE = 15;
     private const int INDEX = 1;
     
     private static SetItems _setItems;
@@ -24,23 +43,20 @@ public class ItemSlot : MonoBehaviour
     }
 
 
-    public void AddNewItem(int itemCode)
+    public void AddNewItem(ItemCode itemCode)
     {
-        Debug.Assert(itemCode >= MIN_CODE_RANGE && itemCode <= MAX_CODE_RANGE);
+        Debug.Assert(itemCode > ItemCode.Minimun && itemCode < ItemCode.Maximun);
 
-        GameObject obj = Instantiate(_setItems.Items[itemCode - INDEX]);
+        GameObject obj = Instantiate(_setItems.Items[(int)itemCode - INDEX]);
         obj.transform.SetParent(this.transform);
         obj.transform.position = this.transform.position;
 
-        obj.GetComponent<Item>().Code = itemCode; //아이템 코드 지정 후 전투씬에서 가져오기
+        obj.GetComponent<Item>().Code = itemCode; 
     }
 
-    public void ActiveItem(BattlePlayer player, BattlePlayer opponet)
+    public void ActiveItem(BattlePlayer player, BattlePlayer opponent)
     {
-        if (this.transform.childCount == 1)
-        {
-            this.GetComponentInChildren<Item>().Active(player, opponet);
-        }
+        this.GetComponentInChildren<Item>().Active(player, opponent);
     }
 
     /// <summary>
@@ -48,17 +64,12 @@ public class ItemSlot : MonoBehaviour
     /// </summary>
     public void ChangeColor(Color color)
     {
-        if (this.transform.childCount == 1)
-        {
-            this.GetComponentInChildren<Item>().ChangeColor(color);
-        }
+        this.GetComponentInChildren<Item>().ChangeColor(color);
     }
 
     public void DeleteItem()
     {
-        if (this.transform.childCount == 1)
-        {
+        if(this.transform.childCount == 1)
             Destroy(this.transform.GetChild(0).gameObject);
-        }
     }
 }

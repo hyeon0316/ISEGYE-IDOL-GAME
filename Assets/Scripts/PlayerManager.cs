@@ -36,6 +36,20 @@ public class PlayerManager : Singleton<PlayerManager>
       }
    }
 
+   /// <summary>
+   /// 남은 플레이어 중 카메라 안에 담길 플레이어를 셋팅
+   /// </summary>
+   public void SetPlayerView(int playerID)
+   {
+      foreach (var player in PlayerManager.Instance.Players)
+      {
+         if (player.ID == playerID)
+            player.gameObject.transform.position = new Vector3(0, 0, 0);
+         else
+            player.gameObject.transform.position = new Vector3(0, 1200, 0);
+      }
+   }
+
    public void AddDefaultItem()
    {
       foreach (var player in Players)
@@ -56,7 +70,7 @@ public class PlayerManager : Singleton<PlayerManager>
          
          GameObject enemy = Instantiate(Resources.Load<GameObject>("Prefabs/Enemy"));
          enemy.transform.SetParent(EnemyParent);
-         enemy.transform.position += new Vector3(1000 * (index - 1), -800, 0);
+         enemy.transform.position += new Vector3(0, 1200, 0);
          enemy.name = $"Enemy{userInfos[i].networkID}";
          Players[index] = enemy.GetComponent<Player>();
          Players[index].SetID((int)userInfos[i].networkID);
