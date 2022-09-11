@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum CharacterType
+public enum ECharacterType
 {
     Woowakgood,
     Ine,
@@ -20,9 +20,9 @@ public class Character : MonoBehaviour
 {
 
     [SerializeField]
-    private CharacterType _curCharType;
+    private ECharacterType _curCharType;
 
-    public CharacterType CurCharType => _curCharType;
+    public ECharacterType CurCharType => _curCharType;
     
     private Image _image;
 
@@ -51,32 +51,32 @@ public class Character : MonoBehaviour
     {
         switch (_curCharType)
         {
-            case CharacterType.Woowakgood:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Woowakgood}/Woowakgood");
+            case ECharacterType.Woowakgood:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Woowakgood}/Woowakgood");
                 _name = "우왁굳";
                 break;
-            case CharacterType.Ine:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Ine}/Ine");
+            case ECharacterType.Ine:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Ine}/Ine");
                 _name = "아이네";
                 break;
-            case CharacterType.Jingburger:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Jingburger}/Jingburger");
+            case ECharacterType.Jingburger:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Jingburger}/Jingburger");
                 _name = "징버거";
                 break;
-            case CharacterType.Lilpa:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Lilpa}/Lilpa");
+            case ECharacterType.Lilpa:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Lilpa}/Lilpa");
                 _name = "릴파";
                 break;
-            case CharacterType.Jururu:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Jururu}/Jururu");
+            case ECharacterType.Jururu:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Jururu}/Jururu");
                 _name = "주르르";
                 break;
-            case CharacterType.Gosegu:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Gosegu}/Gosegu");
+            case ECharacterType.Gosegu:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Gosegu}/Gosegu");
                 _name = "고세구";
                 break;
-            case CharacterType.Viichan:
-                _image.sprite = Resources.Load<Sprite>($"Characters/{CharacterType.Viichan}/Viichan");
+            case ECharacterType.Viichan:
+                _image.sprite = Resources.Load<Sprite>($"Characters/{ECharacterType.Viichan}/Viichan");
                 _name = "비챤";
                 break;
             
@@ -85,7 +85,7 @@ public class Character : MonoBehaviour
     
     public void ShowInfo()
     {
-        WindowManager.Instance.Windows[(int) WindowType.Select].GetComponent<Select>().ShowInfo(_name, Description, _image.sprite);
+        WindowManager.Instance.Windows[(int) EWindowType.Select].GetComponent<Select>().ShowInfo(_name, Description, _image.sprite);
     }
     
     

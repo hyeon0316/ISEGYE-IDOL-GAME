@@ -56,7 +56,7 @@ public class Select : MonoBehaviour
             if (networkID == ChoiceCharacters[i].NetworkID)
             {
                 ChoiceCharacters[i].ChangeCharacterImage(characterType);
-                PlayerManager.Instance.GetPlayer(networkID).Type = (CharacterType)characterType;
+                PlayerManager.Instance.GetPlayer(networkID).Type = (ECharacterType)characterType;
                 PlayerManager.Instance.GetPlayer(networkID).Sprite = ChoiceCharacters[i].Image.sprite;
                 break;
             }
@@ -91,7 +91,7 @@ public class Select : MonoBehaviour
     {
         foreach (var btn in Characters)
         {
-            if(btn.CurCharType == (CharacterType)type)
+            if(btn.CurCharType == (ECharacterType)type)
                 btn.GetComponent<Button>().interactable = false;
             else
                 btn.GetComponent<Button>().interactable = true;
@@ -106,7 +106,7 @@ public class Select : MonoBehaviour
         Player player = PlayerManager.Instance.Players[0];
        
         NetworkManager.Instance.SendChangeCharacterPacket(player.ID, type);
-        player.Type = (CharacterType)type;
+        player.Type = (ECharacterType)type;
         
         SetOnlyButton(type);
     }
@@ -131,7 +131,7 @@ public class Select : MonoBehaviour
         SetCharacter();
         yield return new WaitForSeconds(1f);
         Debug.Log("게임 시작");
-        WindowManager.Instance.SetWindow((int)WindowType.InGame);
+        WindowManager.Instance.SetWindow((int)EWindowType.InGame);
         PlayerManager.Instance.AddDefaultItem();
     }
 
@@ -142,9 +142,9 @@ public class Select : MonoBehaviour
     {
         for (int i = 0; i < PlayerManager.Instance.Players.Length; i++)
         {
-            if (PlayerManager.Instance.Players[i].Type == CharacterType.Empty)//캐릭터를 고르지 않았을 경우
+            if (PlayerManager.Instance.Players[i].Type == ECharacterType.Empty)//캐릭터를 고르지 않았을 경우
             {
-                Character character = Characters[(int) CharacterType.Woowakgood];
+                Character character = Characters[(int) ECharacterType.Woowakgood];
 
                 ChoiceCharacters[i].Image.sprite = character.Image.sprite;
                 PlayerManager.Instance.Players[i].Init(ChoiceCharacters[i].Image.sprite, 100, 10);

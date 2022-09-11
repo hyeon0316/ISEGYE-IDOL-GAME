@@ -39,7 +39,7 @@ public class Ready : MonoBehaviour
             {
                 _readyTime = 0;
                 ReadyTimer.text = $"남은 시간: {_readyTime}";
-                InGame.CurGameType = GameType.Battle;
+                InGame.CurGameType = EGameType.Battle;
                 break;
             }
 

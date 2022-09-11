@@ -24,7 +24,7 @@ public class Lobby : MonoBehaviour
             InputNickName.text = "플레이어";
         
         PlayerManager.Instance.Players[0].SetName(InputNickName.text);
-        WindowManager.Instance.SetWindow((int)WindowType.Server);
+        WindowManager.Instance.SetWindow((int)EWindowType.Server);
     }
 
    

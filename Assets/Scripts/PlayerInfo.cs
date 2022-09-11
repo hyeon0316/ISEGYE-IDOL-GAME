@@ -16,11 +16,11 @@ public class PlayerInfo : MonoBehaviour
    /// </summary>
    public void ShowPlayersInfo() //todo: 수정(임시방편)
    {
-       if (InGame.CurGameType == GameType.Ready)
+       if (InGame.CurGameType == EGameType.Ready)
        {
            PlayerManager.Instance.SetPlayerView(ID);
        }
-       else if (InGame.CurGameType == GameType.Battle)
+       else if (InGame.CurGameType == EGameType.Battle)
        {
            BattleManager.Instance.SetBattleView(ID);
        }

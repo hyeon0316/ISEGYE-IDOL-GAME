@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum CursorType
+public enum ECursorType
 {
     Nomal,
     Upgrade,
@@ -11,7 +11,7 @@ public class CursorManager : Singleton<CursorManager>
     [SerializeField] private Texture2D _nomalCursor;
     [SerializeField] private Texture2D _upgradeCursor;
 
-    public CursorType CurCursorType;
+    public ECursorType CurCursorType;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +21,13 @@ public class CursorManager : Singleton<CursorManager>
     public void SetNomalCursor()
     {
         Cursor.SetCursor(_nomalCursor,Vector2.zero, CursorMode.ForceSoftware);
-        CurCursorType = CursorType.Nomal;
+        CurCursorType = ECursorType.Nomal;
     }
     
     public void SetUpgradeCursor()
     {
         Cursor.SetCursor(_upgradeCursor,Vector2.zero, CursorMode.ForceSoftware);
-        CurCursorType = CursorType.Upgrade;
+        CurCursorType = ECursorType.Upgrade;
     }
 
     

@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum ItemCode
+public enum EItemCode
 {
     Minimun,
     Item1,
@@ -43,9 +43,9 @@ public class ItemSlot : MonoBehaviour
     }
 
 
-    public void AddNewItem(ItemCode itemCode)
+    public void AddNewItem(EItemCode itemCode)
     {
-        Debug.Assert(itemCode > ItemCode.Minimun && itemCode < ItemCode.Maximun);
+        Debug.Assert(itemCode > EItemCode.Minimun && itemCode < EItemCode.Maximun);
 
         GameObject obj = Instantiate(_setItems.Items[(int)itemCode - INDEX]);
         obj.transform.SetParent(this.transform);

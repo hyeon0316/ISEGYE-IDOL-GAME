@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    public CharacterType Type = CharacterType.Empty;
+    public ECharacterType Type = ECharacterType.Empty;
 
     private int _hp;
     private int _defense;
@@ -109,11 +109,11 @@ public class Player : MonoBehaviour
         {
             _hp = 0;
             NetworkManager.Instance.DisconnectServer();
-            WindowManager.Instance.SetWindow((int)WindowType.Lobby);
+            WindowManager.Instance.SetWindow((int)EWindowType.Lobby);
             //todo: 전부 초기화
         }
         HpText.text = $"체력: {_hp}";
-        WindowManager.Instance.Windows[(int)WindowType.InGame].GetComponent<InGame>().PlayersMap.UpdatePlayersHp(ID);
+        WindowManager.Instance.Windows[(int)EWindowType.InGame].GetComponent<InGame>().PlayersMap.UpdatePlayersHp(ID);
         
     }
 

@@ -14,7 +14,7 @@ public class UnUsingInventory : Inventory
     /// </summary>
     public void AddRandomItem() //로컬  
     {
-        ItemCode rand = (ItemCode)Random.Range((int)ItemCode.Minimun + 1, (int)ItemCode.Maximun); //SetItems에 지정되어있는 0~14번째 인덱스중 하나 선택
+        EItemCode rand = (EItemCode)Random.Range((int)EItemCode.Minimun + 1, (int)EItemCode.Maximun); //SetItems에 지정되어있는 0~14번째 인덱스중 하나 선택
         
         AddItem(rand);
         NetworkManager.Instance.SendAddNewItemPacket(PlayerManager.Instance.Players[0].ID,(byte)rand);
@@ -23,7 +23,7 @@ public class UnUsingInventory : Inventory
     }
 
 
-    public void AddItem(ItemCode itemCode)
+    public void AddItem(EItemCode itemCode)
     {
         for (int i = 0; i < ItemSlots.Length; i++)
         {
@@ -47,6 +47,6 @@ public class UnUsingInventory : Inventory
                 ++fullCheck;
         }
         
-        WindowManager.Instance.Windows[(int)WindowType.InGame].GetComponentInChildren<Ready>().TryInteractRoulette(fullCheck);
+        WindowManager.Instance.Windows[(int)EWindowType.InGame].GetComponentInChildren<Ready>().TryInteractRoulette(fullCheck);
     }
 }

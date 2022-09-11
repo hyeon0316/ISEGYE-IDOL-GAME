@@ -26,9 +26,9 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public uint Upgrade = 0;
 
-    [SerializeField] private ItemCode _code;
+    [SerializeField] private EItemCode _code;
 
-    public ItemCode Code
+    public EItemCode Code
     {
         get { return _code; }
         set { _code = value; }
@@ -102,7 +102,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (InGame.CurGameType == GameType.Ready)
+        if (InGame.CurGameType == EGameType.Ready)
         {
             _originPos = this.transform.position;
             _originParent = this.transform.GetComponentInParent<ItemSlot>().transform;
@@ -121,7 +121,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (InGame.CurGameType == GameType.Ready)
+        if (InGame.CurGameType == EGameType.Ready)
         {
             Vector3 pos = Input.mousePosition;
             pos = Camera.main.ScreenToWorldPoint(pos); //마우스 좌표를 월드 좌표(카메라 안)로 변환
@@ -131,7 +131,7 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (InGame.CurGameType == GameType.Ready)
+        if (InGame.CurGameType == EGameType.Ready)
         {
             ChangeSlot();
         }

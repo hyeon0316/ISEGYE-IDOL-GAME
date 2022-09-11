@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum WindowType //todo: 매칭창 추가
+public enum EWindowType //todo: 매칭창 추가
 {
    Lobby,
    Server,
@@ -21,7 +21,7 @@ public class WindowManager : Singleton<WindowManager>
       
    private void Start()
    {
-      SetWindow((int)WindowType.Lobby);
+      SetWindow((int)EWindowType.Lobby);
    }
 
    public void SetWindow(int windowNum)
