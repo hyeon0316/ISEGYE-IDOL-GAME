@@ -130,7 +130,7 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         cs_StartMatchingPacket packet;
         packet.size = (UInt16) Marshal.SizeOf<cs_StartMatchingPacket>();
-        packet.type = (Byte) PacketType.cs_startMatching;
+        packet.type = EPacketType.cs_startMatching;
         packet.networkID = PlayerManager.Instance.Players[0].ID;
         byte[] nameBuf = new byte[22];
         var encodingStrBytes = Encoding.Unicode.GetBytes(PlayerManager.Instance.Players[0].NickName.Trim((char) 8203));
@@ -200,43 +200,43 @@ public class NetworkManager : Singleton<NetworkManager>
         byte[] bytes = new byte[size];
         Debug.Log($"{size}의 데이터를 받았습니다");
         Array.Copy(packet, 0, bytes, 0, size);
-        switch ((PacketType) packet[2]) // type
+        switch ((EPacketType) packet[2]) // type
         {
-            case PacketType.sc_connectServer:
+            case EPacketType.sc_connectServer:
                 var connectServerPacket = ByteArrayToStruct<sc_ConnectServerPacket>(bytes);
                 //Users[i].networkID = connectServerPacket.networkID;4
                 PlayerManager.Instance.Players[0].SetID(connectServerPacket.networkID);
                 Debug.Log($"플레이어 네트워크ID : {connectServerPacket.networkID} 로 접속");
                 break;
-            case PacketType.sc_connectRoom:
+            case EPacketType.sc_connectRoom:
                 var connectRoomPacket = ByteArrayToStruct<sc_ConnectRoomPacket>(bytes);
                 Debug.Log("room에 입장");
                 PlayerManager.Instance.CreateEnemy(connectRoomPacket.users);
-                WindowManager.Instance.SetWindow((int) WindowType.Select);
+                WindowManager.Instance.SetWindow((int) EWindowType.Select);
                 FindObjectOfType<Select>().ChoiceCharacters[0].NetworkID = PlayerManager.Instance.Players[0].ID;
                 FindObjectOfType<Select>().SetUserInfo(connectRoomPacket.users);
                 break;
-            case PacketType.cs_sc_addNewItem:
+            case EPacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<cs_sc_AddNewItemPacket>(bytes);
-                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory.AddItem((ItemCode)addNewItemPacket.itemCode);
+                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory.AddItem((EItemCode)addNewItemPacket.itemCode);
                 //AddDebug($"{addNewItemPacket.networkID} 번 유저가 새로운 아이템 {addNewItemPacket.itemCode} 을 추가하였습니다");
                 break;
-            case PacketType.sc_disconnect:
+            case EPacketType.sc_disconnect:
                 DisconnectServer();
                 Debug.Log("연결이 해제되었습니다");
                 break;
-            case PacketType.cs_sc_changeItemSlot:
+            case EPacketType.cs_sc_changeItemSlot:
                 var changeItemSlotPacket = ByteArrayToStruct<cs_sc_changeItemSlotPacket>(bytes);
                 PlayerManager.Instance.GetPlayer(changeItemSlotPacket.networkID)
                              .SwapItemNetwork(changeItemSlotPacket.slot1, changeItemSlotPacket.slot2);
                 break;
-            case PacketType.cs_sc_changeCharacter:
+            case EPacketType.cs_sc_changeCharacter:
                 var changeCharacterPacket = ByteArrayToStruct<cs_sc_changeCharacterPacket>(bytes);
                 Debug.Log($"{changeCharacterPacket.networkID} -> {(int) changeCharacterPacket.characterType}");
                 FindObjectOfType<Select>()
                     .ChangeCharacterImage(changeCharacterPacket.networkID, (int) changeCharacterPacket.characterType);
                 break;
-            case PacketType.sc_battleInfo:
+            case EPacketType.sc_battleInfo:
                 var battleInfoPacket = ByteArrayToStruct<sc_battleInfoPacket>(bytes);
                 for (int i = 0; i < battleInfoPacket.itemQueueInfos.Length; i++)
                 {
