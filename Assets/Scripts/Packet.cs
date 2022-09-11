@@ -149,12 +149,14 @@ namespace Packet
         public readonly UInt16 size;
         public readonly EPacketType type;
         public readonly Int32 networkID;
+        public readonly Int16 firstAttack;
 
-        public cs_battleReadyPacket(Int32 networkID)
+        public cs_battleReadyPacket(Int32 networkID, Int16 firstAttack)
         {
             size = (UInt16) Marshal.SizeOf<cs_battleReadyPacket>();
             type = EPacketType.cs_battleReady;
             this.networkID = networkID;
+            this.firstAttack = firstAttack;
         }
     }
 
