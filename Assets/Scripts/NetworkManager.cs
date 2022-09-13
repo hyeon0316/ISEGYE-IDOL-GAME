@@ -154,9 +154,9 @@ public class NetworkManager : Singleton<NetworkManager>
         SendPacket(packet);
     }
 
-    public void SendBattleReadyPacket(Int32 networkID)
+    public void SendBattleReadyPacket(Int32 networkID, Int16 firstAttack)
     {
-        cs_battleReadyPacket packet = new cs_battleReadyPacket(networkID);
+        cs_battleReadyPacket packet = new cs_battleReadyPacket(networkID, firstAttack);
         DebugText.text = networkID.ToString();
         SendPacket(packet);
     }

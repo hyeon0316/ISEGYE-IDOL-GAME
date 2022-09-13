@@ -56,7 +56,8 @@ public class ItemSlot : MonoBehaviour
 
     public void ActiveItem(BattlePlayer player, BattlePlayer opponent)
     {
-        this.GetComponentInChildren<Item>().Active(player, opponent);
+        if(this.transform.childCount ==1)
+            this.GetComponentInChildren<Item>().Active(player, opponent);
     }
 
     /// <summary>

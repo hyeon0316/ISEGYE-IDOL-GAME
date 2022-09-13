@@ -14,6 +14,7 @@ public class BattlePlayer : MonoBehaviour
     public Image AvatarImage;
     public TextMeshProUGUI PlayerNickName;
     public TextMeshProUGUI AvatarHpText;
+    public TextMeshProUGUI DefenseText;
     
     public Player Player { get; private set; }
     private byte[] _itemOrder;
@@ -22,6 +23,7 @@ public class BattlePlayer : MonoBehaviour
 
     public BattlePlayer Opponent { get; set; }
 
+    private int _remainNum;
     
     public void SetBattlePlayer(Player player, byte[] itemOrder, BattlePlayer oppoent)
     {
@@ -33,6 +35,7 @@ public class BattlePlayer : MonoBehaviour
         _isMyturn = false;
         AvatarHp = 100;
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
+        DefenseText.text = $"방어력: {Player.Defense}";
         AvatarImage.sprite = Player.Sprite;
         PlayerNickName.text = $"{Player.NickName}";
         _index = 0;
@@ -40,10 +43,33 @@ public class BattlePlayer : MonoBehaviour
 
     public void UpdateAvatarHp(int amount)
     {
-        AvatarHp += amount;
-        if (AvatarHp < 0)
-            AvatarHp = 0;
+        if (amount < 0) //데미지
+        {
+            UpdateDefense(amount);
+            AvatarHp += _remainNum;
+            
+            if (AvatarHp < 0) //todo: 초과 기준점도 생각하기
+                AvatarHp = 0;
+        }
+        else //회복
+        {
+            AvatarHp += amount;
+        }
+
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
+    }
+
+    public void UpdateDefense(int amount)
+    {
+        _remainNum = 0;
+        Player.Defense += amount;
+        if (Player.Defense < 0) //todo: 초과 기준점도 생각하기
+        {
+            _remainNum = Player.Defense;
+            Player.Defense = 0;
+        }
+
+        DefenseText.text = $"방어력: {Player.Defense}";
     }
 
     public void SetFirstTurn()

@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
 
     public byte[] ActiveIndex = new byte[60];
 
+    public Int16 FirstAttack { get; set; }
+
     public Sprite Sprite
     {
         get { return _sprite; }
@@ -33,6 +35,11 @@ public class Player : MonoBehaviour
 
     public int ID => _id;
     public int Hp => _hp;
+    public int Defense
+    {
+        get { return _defense; }
+        set { _defense = value; }
+    }
 
     public UsingInventory UsingInventory;
     public UnUsingInventory UnUsingInventory;

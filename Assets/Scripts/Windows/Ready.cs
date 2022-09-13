@@ -51,7 +51,7 @@ public class Ready : MonoBehaviour
         PlayerManager.Instance.AutoSetItem();
         yield return new WaitForSeconds(1f);
         Debug.Log("전투 돌입");
-        NetworkManager.Instance.SendBattleReadyPacket(PlayerManager.Instance.Players[0].ID);
+        NetworkManager.Instance.SendBattleReadyPacket(PlayerManager.Instance.Players[0].ID, PlayerManager.Instance.Players[0].FirstAttack);
     }
     
     /// <summary>
