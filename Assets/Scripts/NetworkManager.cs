@@ -259,6 +259,8 @@ public class NetworkManager : Singleton<NetworkManager>
 
                 FindObjectOfType<InGame>().OpenBattle();
                 break;
+            case EPacketType.sc_ping:
+                break;
             default:
                 Debug.LogError("새로운 패킷");
                 break;
