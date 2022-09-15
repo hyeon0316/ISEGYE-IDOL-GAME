@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum ECharacterType
+public enum ECharacterType : Byte
 {
     Woowakgood,
     Ine,
