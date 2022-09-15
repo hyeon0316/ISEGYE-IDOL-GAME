@@ -52,7 +52,7 @@ public class NetworkManager : Singleton<NetworkManager>
         {
             _serverIp = Dns.GetHostEntry(ServerDomain).AddressList[0];
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Debug.LogError("해당 도메인을 찾을 수 없습니다");
             throw;
@@ -94,8 +94,6 @@ public class NetworkManager : Singleton<NetworkManager>
 
         _isFinishConnectServer = true;
     }
-
-    private float timer = 0;
 
     private void Update()
     {
@@ -141,7 +139,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void SendChangeCharacterPacket(int networkID, int characterType)
     {
-        cs_sc_changeCharacterPacket packet = new cs_sc_changeCharacterPacket(networkID, (char) characterType);
+        cs_sc_ChangeCharacterPacket packet = new cs_sc_ChangeCharacterPacket(networkID, (ECharacterType) characterType);
         SendPacket(packet);
     }
 
@@ -149,14 +147,14 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         if (slot1 == slot2)
             return;
-        
-        var packet = new cs_sc_changeItemSlotPacket(networkID, slot1, slot2);
+
+        var packet = new cs_sc_ChangeItemSlotPacket(networkID, slot1, slot2);
         SendPacket(packet);
     }
 
     public void SendBattleReadyPacket(Int32 networkID, Int16 firstAttack)
     {
-        cs_battleReadyPacket packet = new cs_battleReadyPacket(networkID, firstAttack);
+        cs_BattleReadyPacket packet = new cs_BattleReadyPacket(networkID, firstAttack);
         DebugText.text = networkID.ToString();
         SendPacket(packet);
     }
@@ -185,7 +183,7 @@ public class NetworkManager : Singleton<NetworkManager>
         {
             receive = _socket.Receive(packet);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //Debug.Log(ex.ToString());
             return;
@@ -218,7 +216,8 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
             case EPacketType.cs_sc_addNewItem:
                 var addNewItemPacket = ByteArrayToStruct<cs_sc_AddNewItemPacket>(bytes);
-                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory.AddItem((EItemCode)addNewItemPacket.itemCode);
+                PlayerManager.Instance.GetPlayer(addNewItemPacket.networkID).UnUsingInventory
+                             .AddItem((EItemCode) addNewItemPacket.itemCode);
                 //AddDebug($"{addNewItemPacket.networkID} 번 유저가 새로운 아이템 {addNewItemPacket.itemCode} 을 추가하였습니다");
                 break;
             case EPacketType.sc_disconnect:
@@ -226,18 +225,18 @@ public class NetworkManager : Singleton<NetworkManager>
                 Debug.Log("연결이 해제되었습니다");
                 break;
             case EPacketType.cs_sc_changeItemSlot:
-                var changeItemSlotPacket = ByteArrayToStruct<cs_sc_changeItemSlotPacket>(bytes);
+                var changeItemSlotPacket = ByteArrayToStruct<cs_sc_ChangeItemSlotPacket>(bytes);
                 PlayerManager.Instance.GetPlayer(changeItemSlotPacket.networkID)
                              .SwapItemNetwork(changeItemSlotPacket.slot1, changeItemSlotPacket.slot2);
                 break;
             case EPacketType.cs_sc_changeCharacter:
-                var changeCharacterPacket = ByteArrayToStruct<cs_sc_changeCharacterPacket>(bytes);
+                var changeCharacterPacket = ByteArrayToStruct<cs_sc_ChangeCharacterPacket>(bytes);
                 Debug.Log($"{changeCharacterPacket.networkID} -> {(int) changeCharacterPacket.characterType}");
                 FindObjectOfType<Select>()
                     .ChangeCharacterImage(changeCharacterPacket.networkID, (int) changeCharacterPacket.characterType);
                 break;
             case EPacketType.sc_battleInfo:
-                var battleInfoPacket = ByteArrayToStruct<sc_battleInfoPacket>(bytes);
+                var battleInfoPacket = ByteArrayToStruct<sc_BattleInfoPacket>(bytes);
                 for (int i = 0; i < battleInfoPacket.itemQueueInfos.Length; i++)
                 {
                     int playerID = battleInfoPacket.itemQueueInfos[i].networkID;
@@ -248,7 +247,8 @@ public class NetworkManager : Singleton<NetworkManager>
                     player.ActiveIndex = battleInfoPacket.itemQueueInfos[i].itemQueue;
                 }
 
-                BattleManager battleManager = FindObjectOfType<InGame>().transform.Find("Background").transform.Find("Battle").GetComponent<BattleManager>();
+                BattleManager battleManager = FindObjectOfType<InGame>().transform.Find("Background").transform
+                                                                        .Find("Battle").GetComponent<BattleManager>();
                 battleManager.BattleOpponents.Clear();
                 for (int i = 0; i < battleInfoPacket.battleOpponents.Length; i++)
                 {
