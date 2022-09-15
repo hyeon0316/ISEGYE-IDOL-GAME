@@ -9,6 +9,7 @@ using TMPro;
 
 public class BattlePlayer : MonoBehaviour
 {
+    public int MaxAvaterHp;
     public int AvatarHp;//전투용 Hp
     public ItemSlot[] ItemSlots;
     public Image AvatarImage;
@@ -25,6 +26,10 @@ public class BattlePlayer : MonoBehaviour
 
     private int _remainNum;
     
+    public bool IsNextRound { get; set; }
+    
+    public int UsingCount { get; set; }
+    
     public void SetBattlePlayer(Player player, byte[] itemOrder, BattlePlayer oppoent)
     {
         Player = player;
@@ -33,12 +38,14 @@ public class BattlePlayer : MonoBehaviour
         
         Player.SetItem(ItemSlots);
         _isMyturn = false;
-        AvatarHp = 100;
+        MaxAvaterHp = 100;
+        AvatarHp = MaxAvaterHp;
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
         DefenseText.text = $"방어력: {Player.Defense}";
         AvatarImage.sprite = Player.Sprite;
         PlayerNickName.text = $"{Player.NickName}";
         _index = 0;
+        UsingCount = 0;
     }
 
     public void UpdateAvatarHp(int amount)
@@ -54,6 +61,8 @@ public class BattlePlayer : MonoBehaviour
         else //회복
         {
             AvatarHp += amount;
+            if (AvatarHp > MaxAvaterHp)
+                AvatarHp = MaxAvaterHp;
         }
 
         AvatarHpText.text = $"아바타 체력: {AvatarHp}";
@@ -63,7 +72,7 @@ public class BattlePlayer : MonoBehaviour
     {
         _remainNum = 0;
         Player.Defense += amount;
-        if (Player.Defense < 0) //todo: 초과 기준점도 생각하기
+        if (Player.Defense < 0) 
         {
             _remainNum = Player.Defense;
             Player.Defense = 0;
@@ -77,6 +86,11 @@ public class BattlePlayer : MonoBehaviour
         _isMyturn = true;
     }
 
+    public void SetDisabledTurn()
+    {
+        _isMyturn = false;
+    }
+
     public void ActiveItem()
     {
         if (_isMyturn)
@@ -85,19 +99,29 @@ public class BattlePlayer : MonoBehaviour
             bool active = false;
 
             itemSlot = _itemOrder[_index++];
-            active = Convert.ToBoolean(_itemOrder[_index++]);
+            active = Convert.ToBoolean(_itemOrder[_index++]); //나중에 확률아이템에 대한 bool값
             if (_index == _itemOrder.Length)
                 _index = 0;
 
-            if (active)
+            if (active) 
             {
-                if(itemSlot == 255)
-                    Debug.Log("비어 있음");
-                else
+                ItemSlots[itemSlot].ActiveItem(this, Opponent);
+                if (_itemOrder[_index] == Global.EmptySlotIndex) // 발동된 아이템의 다음 차례가 빈 슬롯일 경우
                 {
-                    ItemSlots[itemSlot].ActiveItem(this, Opponent);
+                    while (_itemOrder[_index] == Global.EmptySlotIndex)
+                    {
+                        _index += 2;
+                        if (_index >= _itemOrder.Length)
+                            _index = 0;
+                    }
                 }
             }
+            else
+            {
+                Debug.Log("아이템 발동 실패");
+                //todo: 아이템 실패 표시
+            }
+            UsingCount++;
         }
 
         _isMyturn = !_isMyturn;
@@ -122,5 +146,17 @@ public class BattlePlayer : MonoBehaviour
             if(itemSlot.transform.childCount == 1)
                 itemSlot.DeleteItem();
         }
+    }
+
+    public int CountItem()
+    {
+        int count = 0;
+        foreach (var itemSlot in ItemSlots)
+        {
+            if (itemSlot.transform.childCount == 1)
+                count++;
+        }
+
+        return count;
     }
 }

@@ -11,5 +11,9 @@
 
     public const int SlotMaxCount = 10;
 
-    public const int NextBattle = 13;
+    public const int NextBattle = 12;
+
+    public const int EmptySlotIndex = 255;
+    
+    public const int MaxUserNameSizeByByte = 22;
 }

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 {
     public ECharacterType Type = ECharacterType.Empty;
 
+    private int _maxHp;
     private int _hp;
     private int _defense;
 
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
 
     public int ID => _id;
     public int Hp => _hp;
+    public int MaxHp => _maxHp;
     public int Defense
     {
         get { return _defense; }
@@ -45,10 +47,11 @@ public class Player : MonoBehaviour
     public UnUsingInventory UnUsingInventory;
 
 
-    public void Init(Sprite image, int hp, int defense)
+    public void Init(Sprite image, int maxHp, int defense)
     {
         _sprite = image;
-        _hp = hp;
+        _maxHp = maxHp;
+        _hp = _maxHp;
         HpText.text = $"체력: {_hp}";
         _defense = defense;
         
