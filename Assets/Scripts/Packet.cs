@@ -18,7 +18,6 @@ public enum EPacketType : byte
     cs_sc_changeCharacter,      // 어느쪽으로든 선택 캐릭터가 교체되었음을 알리는 패킷 타입
     sc_battleInfo,              // 서버가 클라이언트에게 전투 정보를 알리는 패킷 타입
     cs_battleReady,             // 클라이언트가 서버에게 전투 준비를 알리는 패킷 타입
-    sc_ping,                    // 서버가 클라이언트에게 연결이 되어있는지 확인하는 패킷 타입
 }
 
 namespace Packet
@@ -229,14 +228,5 @@ namespace Packet
         // 자세한 내용은 구조체 설명을 참고
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = Global.MaxRoomPlayer)]
         public readonly ItemQueueInfo[] itemQueueInfos;
-    }
-    
-    /// <summary> 서버가 클라이언트에게 연결이 되어있는지 확인하는 패킷 </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-    [Serializable]
-    public struct sc_PingPacket
-    {
-        public readonly UInt16 size;
-        public readonly EPacketType type;
     }
 }
