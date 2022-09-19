@@ -13,8 +13,5 @@ public class Ability3 : Item
         ChangeColor(Color.black);
     }
 
-    public override void ChangeColor(Color color)
-    {
-        Image.color = color;
-    }
+    
 }

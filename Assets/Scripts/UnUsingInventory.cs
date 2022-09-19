@@ -2,13 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
+
 
 public class UnUsingInventory : Inventory
 {
-
+    [Header("아이템 선택")]
+    public EItemCode CurItemCode;
+    
     /// <summary>
     /// 100% 확률 버튼
     /// </summary>

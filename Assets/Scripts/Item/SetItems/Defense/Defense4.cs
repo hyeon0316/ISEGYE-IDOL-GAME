@@ -14,8 +14,5 @@ public class Defense4 : Item
     }
     
 
-    public override void ChangeColor(Color color)
-    {
-        Image.color = color;
-    }
+    
 }

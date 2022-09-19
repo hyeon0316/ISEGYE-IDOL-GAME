@@ -14,8 +14,5 @@ public class Ability2 : Item
     }
     
 
-    public override void ChangeColor(Color color)
-    {
-        Image.color = color;
-    }
+  
 }

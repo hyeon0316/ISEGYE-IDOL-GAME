@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 낡은 채찍
+/// </summary>
 public class NomalAbility : Item
 {
 
@@ -14,8 +17,5 @@ public class NomalAbility : Item
     }
     
 
-    public override void ChangeColor(Color color)
-    {
-        Image.color = color;
-    }
+   
 }

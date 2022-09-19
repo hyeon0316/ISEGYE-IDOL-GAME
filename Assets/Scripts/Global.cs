@@ -13,7 +13,7 @@
 
     public const int NextBattle = 12;
 
-    public const int EmptySlotIndex = 255;
-    
     public const int MaxUserNameSizeByByte = 22;
+    
+    
 }

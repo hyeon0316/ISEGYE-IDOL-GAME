@@ -15,8 +15,5 @@ public class Attack3 : Item
     }
     
 
-    public override void ChangeColor(Color color)
-    {
-        Image.color = color;
-    }
+   
 }

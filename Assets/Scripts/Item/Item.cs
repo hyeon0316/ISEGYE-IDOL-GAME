@@ -66,7 +66,10 @@ public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     /// <summary>
     /// todo: 임시, 아이템 사용 했다는것 표시
     /// </summary>
-    public abstract void ChangeColor(Color color);
+    public virtual void ChangeColor(Color color)
+    {
+        Image.color = color;
+    }
 
     public virtual void ShowUsingEffect()
     {

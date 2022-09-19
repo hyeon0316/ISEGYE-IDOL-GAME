@@ -14,14 +14,14 @@ public class BattleManager : Singleton<BattleManager>
     public List<Int32> BattleOpponents = new List<Int32>();
 
     
-    
     private void OnEnable()
     {
+        SetBattle();
         StartBattle();
         SetBattleView(PlayerManager.Instance.Players[0].ID);
     }
 
-    private void StartBattle()
+    private void SetBattle()
     {
         //플레이어 자신과 자신의 상대 먼저 배틀 셋팅
         int myselfID = 0;
@@ -44,7 +44,6 @@ public class BattleManager : Singleton<BattleManager>
                     Battles[0].SetFirstPlayer(BattleOpponents[i]);
                     opponentID = BattleOpponents[i + 1];
                 }
-                Battles[0].StartBattle();
                 break;
             }
         }
@@ -63,8 +62,14 @@ public class BattleManager : Singleton<BattleManager>
             Battles[i].SetFirstPlayer(BattleOpponents[index++]);
             Battles[i].SetEnemy(BattleOpponents[index] < 0 ? ~BattleOpponents[index] : BattleOpponents[index]);
             index++;
-            
-            Battles[i].StartBattle();
+        }
+    }
+
+    private void StartBattle()
+    {
+        foreach (var battle in Battles)
+        {
+            battle.StartBattle();
         }
     }
 

@@ -1216,7 +1216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 1866700065}
   - {fileID: 1754737497}
@@ -4266,8 +4268,8 @@ GameObject:
   - component: {fileID: 368904090}
   - component: {fileID: 368904094}
   - component: {fileID: 368904093}
-  - component: {fileID: 368904092}
   - component: {fileID: 368904091}
+  - component: {fileID: 368904092}
   - component: {fileID: 368904095}
   m_Layer: 5
   m_Name: UnUsingInventory
@@ -4329,6 +4331,7 @@ MonoBehaviour:
   - {fileID: 2039466915}
   - {fileID: 1585744194}
   - {fileID: 1070091718}
+  CurItemCode: 0
 --- !u!114 &368904092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7144,7 +7147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 181047906}
   - {fileID: 1869877826}
@@ -7982,7 +7987,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 1594093015}
   - {fileID: 1481734646}
@@ -9026,7 +9033,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 639495453}
   - {fileID: 1344220661}
@@ -9186,7 +9195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 1062913159}
   - {fileID: 1059841928}
@@ -12724,7 +12735,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 1311009594}
   - {fileID: 1681044480}
@@ -19848,7 +19861,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 843146245}
   - {fileID: 400107242}
@@ -20751,7 +20766,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92af74cdbf2a27e4fa33e8f5783209c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxAvaterHp: 0
   AvatarHp: 0
+  AvaterDefense: 0
   ItemSlots:
   - {fileID: 1715309556}
   - {fileID: 1156435755}

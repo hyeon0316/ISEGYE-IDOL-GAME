@@ -58,6 +58,11 @@ public class ItemSlot : MonoBehaviour
     {
         if(this.transform.childCount ==1)
             this.GetComponentInChildren<Item>().Active(player, opponent);
+        else
+        {
+            Debug.Log("빈 슬롯");
+            //todo: 빈슬롯에 대한 이펙트 효과 적용
+        }
     }
 
     /// <summary>

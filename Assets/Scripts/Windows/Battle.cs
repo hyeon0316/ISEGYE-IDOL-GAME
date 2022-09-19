@@ -10,6 +10,8 @@ public class Battle : MonoBehaviour
     
     public bool IsFinish { get; set; }
 
+    private int _count = 0;
+
     public void SetFirstPlayer(int networkID)
     {
         if (BattlePlayers[0].Player.ID == networkID)
@@ -31,8 +33,7 @@ public class Battle : MonoBehaviour
                 opponent.Player.UpdateHp(-40);
 
             IsFinish = true;
-            player.DeleteItem();
-            opponent.DeleteItem();
+            InitItem(player, opponent);
             BattleManager.Instance.CheckFinishBattle();
             FinishImage.gameObject.SetActive(true);
             return true;
@@ -40,6 +41,25 @@ public class Battle : MonoBehaviour
         return false;
     }
 
+    private void InitItem(BattlePlayer player, BattlePlayer opponent)
+    {
+        foreach (var itemSlot in player.ItemSlots)
+            if(itemSlot.transform.childCount == 1)
+                itemSlot.DeleteItem();
+        
+        foreach (var itemSlot in opponent.ItemSlots)
+            if(itemSlot.transform.childCount == 1)
+                itemSlot.DeleteItem();
+    }
+    
+    public void StartBattle()
+    {
+        _count = -1;
+        IsFinish = false;
+        FinishImage.gameObject.SetActive(false);
+        StartCoroutine(StartBattleCo());
+    }
+    
     private IEnumerator StartBattleCo()
     {
         while (true)
@@ -47,27 +67,14 @@ public class Battle : MonoBehaviour
             if (IsFinishBattle(BattlePlayers[0],BattlePlayers[1])) //todo: 나중에는 제한시간이 다 지나면 끝나는 조건문도 추가
                 break;
 
-            
-            if (IsNextRound(BattlePlayers[0],BattlePlayers[1]))//두 플레이어 아이템 모두 사용 뒤 곧 이어 다음 배틀을 위한 준비 시간
+            _count++;
+            if (_count == Global.NextBattle)//다음 배틀을 위한 준비 시간
             {
+                _count = 0;
                 yield return new WaitForSeconds(1f);
-                BattlePlayers[0].UseNextItem();
-                BattlePlayers[1].UseNextItem();
+                SetNextRound(BattlePlayers[0], BattlePlayers[1]);
             }
-            else //한쪽 플레이어만 아이템을 모두 사용한 상태일때
-            {
-                if (BattlePlayers[0].UsingCount == BattlePlayers[0].CountItem())
-                {
-                    BattlePlayers[0].SetDisabledTurn();
-                    BattlePlayers[1].SetFirstTurn();
-                }
-                else if (BattlePlayers[1].UsingCount == BattlePlayers[1].CountItem())
-                {
-                    BattlePlayers[1].SetDisabledTurn();
-                    BattlePlayers[0].SetFirstTurn();
-                }
-            }
-            
+
             yield return new WaitForSeconds(1f);
             
             BattlePlayers[0].ActiveItem();
@@ -77,22 +84,18 @@ public class Battle : MonoBehaviour
         }
     }
 
-    private bool IsNextRound(BattlePlayer player, BattlePlayer opponent)
+    /// <summary>
+    ///  다음 아이템 순회 발동에 대한 준비
+    /// </summary>
+    private void SetNextRound(BattlePlayer player, BattlePlayer opponent)
     {
-        if (player.UsingCount == player.CountItem() && opponent.UsingCount == opponent.CountItem())
-        {
-            player.UsingCount = 0;
-            opponent.UsingCount = 0;
-            return true;
-        }
-        return false;
-    }
-    
-    public void StartBattle()
-    {
-        IsFinish = false;
-        FinishImage.gameObject.SetActive(false);
-        StartCoroutine(StartBattleCo());
+        foreach (var itemSlot in player.ItemSlots)
+            if(itemSlot.transform.childCount == 1)
+                itemSlot.ChangeColor(Color.white);
+        
+        foreach (var itemSlot in opponent.ItemSlots)
+            if(itemSlot.transform.childCount == 1)
+                itemSlot.ChangeColor(Color.white);
     }
 
     
