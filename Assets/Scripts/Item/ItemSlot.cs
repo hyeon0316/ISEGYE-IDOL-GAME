@@ -56,8 +56,10 @@ public class ItemSlot : MonoBehaviour
 
     public void ActiveItem(BattlePlayer player, BattlePlayer opponent)
     {
-        if(this.transform.childCount ==1)
+        if (this.transform.childCount == 1)
+        {
             this.GetComponentInChildren<Item>().Active(player, opponent);
+        }
         else
         {
             Debug.Log("빈 슬롯");

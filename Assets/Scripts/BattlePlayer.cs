@@ -29,6 +29,7 @@ public class BattlePlayer : MonoBehaviour
 
     private bool _isCC; //출혈 등 상태이상에 걸렸을때에 대한 bool값
     private int _nestValue; //상태이상 데미지에 대한 중첩값이 담긴 변수
+    public int UseAttackCount { get; set; }//아이템 타입 중 Attack의 사용 횟수를 저장하기 위한 변수
     
     
     public void SetBattlePlayer(Player player, byte[] itemOrder, BattlePlayer oppoent)
@@ -47,6 +48,8 @@ public class BattlePlayer : MonoBehaviour
         AvatarImage.sprite = Player.Sprite;
         PlayerNickName.text = $"{Player.NickName}";
         _index = 0;
+        _nestValue = 0;
+        UseAttackCount = 0;
     }
 
     public void UpdateAvatarHp(int amount)
@@ -89,7 +92,7 @@ public class BattlePlayer : MonoBehaviour
         _isMyturn = true;
     }
 
-    public void TakeCC(int amount)
+    public void ActiveCC(int amount)
     {
         _isCC = true;
         _nestValue += amount;
@@ -100,18 +103,29 @@ public class BattlePlayer : MonoBehaviour
         _isCC = false;
         _nestValue = 0;
     }
+
+    private void TakeCC()
+    {
+        if (_isCC)//아이템 발동 전 자신에게 상태이상이 걸렸을 경우
+        {
+            Debug.Log("상태이상");
+            ActiveCCEfect();
+            UpdateAvatarHp(_nestValue);
+        }
+    }
+
+    public void TakeDiaSwordDamage(int amount)
+    {
+        UpdateAvatarHp(amount * (UseAttackCount + 1));
+        UseAttackCount = 0;
+    }
     
 
     public void ActiveItem()
     {
         if (_isMyturn)
         {
-            if (_isCC)//아이템 발동 전 자신에게 상태이상이 걸렸을 경우
-            {
-                Debug.Log("상태이상");
-                ActiveCCEfect();
-                UpdateAvatarHp(_nestValue);
-            }
+            TakeCC();
             
             int itemSlot;
             bool active = false;
@@ -121,8 +135,14 @@ public class BattlePlayer : MonoBehaviour
             if (_index == _itemOrder.Length)
                 _index = 0;
 
-            if (active) 
+            if (active)
             {
+                if (ItemSlots[itemSlot].transform.childCount == 1)
+                {
+                    if (ItemSlots[itemSlot].GetComponentInChildren<Item>().CurItemType == Item.ItemType.Attack) //비챤 검
+                        UseAttackCount++;
+                }
+
                 ItemSlots[itemSlot].ActiveItem(this, Opponent);
             }
             else

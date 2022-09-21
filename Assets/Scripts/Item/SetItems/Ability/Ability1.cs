@@ -12,7 +12,7 @@ public class Ability1 : Item
     public override void Active(BattlePlayer player, BattlePlayer opponent)
     {
         Debug.Log(this.GetType().Name);
-        opponent.TakeCC(_damage);
+        opponent.ActiveCC(_damage);
         
         ChangeColor(Color.black);
     }

@@ -8,6 +8,14 @@ using UnityEngine.UI;
 
 public abstract class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    public enum ItemType
+    {
+        Attack,
+        Defense,
+        Ability
+    }
+
+    public ItemType CurItemType;
     private Vector3 _originPos;
     private Transform _originParent;
     private int _slotIndex1;

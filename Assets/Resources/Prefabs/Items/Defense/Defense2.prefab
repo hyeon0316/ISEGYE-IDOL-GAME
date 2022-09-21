@@ -90,7 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209cc96b6ffa8f24992507b7affe432d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurItemType: 1
   Upgrade: 0
+  _code: 0
   _sprite: {fileID: 21300000, guid: 2a14549b73e10e84c821552c2e261916, type: 3}
 --- !u!61 &4664185410311649003
 BoxCollider2D:

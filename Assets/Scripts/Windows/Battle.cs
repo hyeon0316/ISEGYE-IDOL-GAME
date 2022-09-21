@@ -73,6 +73,8 @@ public class Battle : MonoBehaviour
                 _count = 0;
                 yield return new WaitForSeconds(1f);
                 SetNextRound(BattlePlayers[0], BattlePlayers[1]);
+                BattlePlayers[0].UseAttackCount = 0;
+                BattlePlayers[1].UseAttackCount = 0;
             }
 
             yield return new WaitForSeconds(1f);

@@ -90,8 +90,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dae2f0dc6be8a4da56b88c97b26d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurItemType: 2
   Upgrade: 0
-  _sprite: {fileID: 21300000, guid: 56c917a9c2d6be348ad0ae4c55aac96d, type: 3}
+  _code: 0
+  _sprite: {fileID: 21300000, guid: ffeb2de18df1d94418565712cbf957ec, type: 3}
+  BurgerSprite: {fileID: 21300000, guid: 56dfc9aac2ec18d41889cdbe119acf4d, type: 3}
+  BurgerSprite2: {fileID: 21300000, guid: f33f822b2fcb4b04eabdf766948ae616, type: 3}
 --- !u!61 &-7002088130744039802
 BoxCollider2D:
   m_ObjectHideFlags: 0
