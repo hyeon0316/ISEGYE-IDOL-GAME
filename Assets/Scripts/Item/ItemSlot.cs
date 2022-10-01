@@ -63,6 +63,7 @@ public class ItemSlot : MonoBehaviour
         else
         {
             Debug.Log("빈 슬롯");
+            player.NextActiveItem();
             //todo: 빈슬롯에 대한 이펙트 효과 적용
         }
     }

@@ -15,8 +15,9 @@ public class Attack4 : Item
         opponent.TakeDiaSwordDamage(_damage);
         
         ChangeColor(Color.black);
+        player.NextActiveItem();
     }
-    
+   
 
    
 }

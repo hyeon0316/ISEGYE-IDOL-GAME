@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Battle : MonoBehaviour
 {
+    
     public BattlePlayer[] BattlePlayers;
     public Image FinishImage;
     
@@ -57,33 +58,34 @@ public class Battle : MonoBehaviour
         _count = -1;
         IsFinish = false;
         FinishImage.gameObject.SetActive(false);
-        StartCoroutine(StartBattleCo());
+        ProgressBattle();
     }
-    
-    private IEnumerator StartBattleCo()
+
+    /// <summary>
+    /// 가지고 있는 아이템으로 전투 진행
+    /// </summary>
+    public void ProgressBattle()
     {
-        while (true)
+        if (IsFinishBattle(BattlePlayers[0], BattlePlayers[1])) //todo: 나중에는 제한시간이 다 지나면 끝나는 조건문도 추가
+            return;
+
+        _count++;
+        if (_count == Global.NextBattle)//다음 배틀을 위한 준비 시간
         {
-            if (IsFinishBattle(BattlePlayers[0],BattlePlayers[1])) //todo: 나중에는 제한시간이 다 지나면 끝나는 조건문도 추가
-                break;
-
-            _count++;
-            if (_count == Global.NextBattle)//다음 배틀을 위한 준비 시간
-            {
-                _count = 0;
-                yield return new WaitForSeconds(1f);
-                SetNextRound(BattlePlayers[0], BattlePlayers[1]);
-                BattlePlayers[0].UseAttackCount = 0;
-                BattlePlayers[1].UseAttackCount = 0;
-            }
-
-            yield return new WaitForSeconds(1f);
-            
-            BattlePlayers[0].ActiveItem();
-            BattlePlayers[1].ActiveItem();
-            
-            //todo: 각 아이템이 발동할 시간 동안에는 다음 반복문으로 넘어가면 안됨
+            StartCoroutine(NextBattleCo());
         }
+
+        BattlePlayers[0].ActiveItem();
+        BattlePlayers[1].ActiveItem();
+    }
+
+    private IEnumerator NextBattleCo()
+    {
+        _count = 0;
+        SetNextRound(BattlePlayers[0], BattlePlayers[1]);
+        BattlePlayers[0].ItemTriggerData.UseAttackCount = 0;
+        BattlePlayers[1].ItemTriggerData.UseAttackCount = 0;
+        yield return new WaitForSeconds(1f);
     }
 
     /// <summary>

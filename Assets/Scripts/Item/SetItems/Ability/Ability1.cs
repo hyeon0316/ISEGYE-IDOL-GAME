@@ -15,6 +15,7 @@ public class Ability1 : Item
         opponent.ActiveCC(_damage);
         
         ChangeColor(Color.black);
+        player.NextActiveItem();
     }
     
 }

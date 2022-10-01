@@ -9,9 +9,9 @@ using TMPro;
 
 public class BattlePlayer : MonoBehaviour
 {
-    public int MaxAvaterHp;
-    public int AvatarHp;//전투용 Hp
-    public int AvaterDefense;
+    public int MaxAvaterHp { get; set; }
+    public int AvatarHp { get; set; }//전투용 Hp
+    public int AvaterDefense { get; set; }
     public ItemSlot[] ItemSlots;
     public Image AvatarImage;
     public TextMeshProUGUI PlayerNickName;
@@ -20,18 +20,15 @@ public class BattlePlayer : MonoBehaviour
     
     public Player Player { get; private set; }
     private byte[] _itemOrder;
-    private int _index = 0;
+    private int _slotIndex = 0;
     private bool _isMyturn = false;
 
     public BattlePlayer Opponent { get; set; }
-
     private int _remainValue; //특정 데미지를 받아 방어도가 전부 깎이고 체력에 데미지를 줄때의 값을 저장하기 위한 변수
 
     private bool _isCC; //출혈 등 상태이상에 걸렸을때에 대한 bool값
-    private int _nestValue; //상태이상 데미지에 대한 중첩값이 담긴 변수
-    public int UseAttackCount { get; set; }//아이템 타입 중 Attack의 사용 횟수를 저장하기 위한 변수
-    
-    
+    public ItemTriggerData ItemTriggerData;
+
     public void SetBattlePlayer(Player player, byte[] itemOrder, BattlePlayer oppoent)
     {
         Player = player;
@@ -47,9 +44,9 @@ public class BattlePlayer : MonoBehaviour
         DefenseText.text = $"방어력: {AvaterDefense}";
         AvatarImage.sprite = Player.Sprite;
         PlayerNickName.text = $"{Player.NickName}";
-        _index = 0;
-        _nestValue = 0;
-        UseAttackCount = 0;
+        _slotIndex = 0;
+        ItemTriggerData.NestValue = 0;
+        ItemTriggerData.UseAttackCount = 0;
     }
 
     public void UpdateAvatarHp(int amount)
@@ -95,13 +92,13 @@ public class BattlePlayer : MonoBehaviour
     public void ActiveCC(int amount)
     {
         _isCC = true;
-        _nestValue += amount;
+        ItemTriggerData.NestValue += amount;
     }
 
     public void ClearCC()
     {
         _isCC = false;
-        _nestValue = 0;
+        ItemTriggerData.NestValue = 0;
     }
 
     private void TakeCC()
@@ -110,16 +107,26 @@ public class BattlePlayer : MonoBehaviour
         {
             Debug.Log("상태이상");
             ActiveCCEfect();
-            UpdateAvatarHp(_nestValue);
+            UpdateAvatarHp(ItemTriggerData.NestValue);
         }
     }
 
     public void TakeDiaSwordDamage(int amount)
     {
-        UpdateAvatarHp(amount * (UseAttackCount + 1));
-        UseAttackCount = 0;
+        UpdateAvatarHp(amount * (ItemTriggerData.UseAttackCount + 1));
+        ItemTriggerData.UseAttackCount = 0;
     }
-    
+
+    public void NextActiveItem()
+    {
+        StartCoroutine(NextActiveItemCo());
+    }
+
+    private IEnumerator NextActiveItemCo()
+    {
+        yield return new WaitForSeconds(1f);
+        this.GetComponentInParent<Battle>().ProgressBattle();
+    }
 
     public void ActiveItem()
     {
@@ -130,18 +137,16 @@ public class BattlePlayer : MonoBehaviour
             int itemSlot;
             bool active = false;
 
-            itemSlot = _itemOrder[_index++];
-            active = Convert.ToBoolean(_itemOrder[_index++]); //나중에 확률아이템에 대한 bool값
-            if (_index == _itemOrder.Length)
-                _index = 0;
+            itemSlot = _itemOrder[_slotIndex++];
+            active = Convert.ToBoolean(_itemOrder[_slotIndex++]); //나중에 확률아이템에 대한 bool값
+            if (_slotIndex == _itemOrder.Length)
+                _slotIndex = 0;
 
             if (active)
             {
                 if (ItemSlots[itemSlot].transform.childCount == 1)
-                {
                     if (ItemSlots[itemSlot].GetComponentInChildren<Item>().CurItemType == Item.ItemType.Attack) //비챤 검
-                        UseAttackCount++;
-                }
+                        ItemTriggerData.UseAttackCount++;
 
                 ItemSlots[itemSlot].ActiveItem(this, Opponent);
             }

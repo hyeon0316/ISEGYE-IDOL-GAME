@@ -11,6 +11,7 @@ public class Defense1 : Item
         opponent.UpdateAvatarHp(-10);//임시
         
         ChangeColor(Color.black);
+        player.NextActiveItem();
     }
     
 

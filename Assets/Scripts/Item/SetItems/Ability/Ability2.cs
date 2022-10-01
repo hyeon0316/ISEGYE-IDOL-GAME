@@ -25,8 +25,9 @@ public class Ability2 : Item
         opponent.UpdateAvatarHp(-10);//임시
         
         ChangeColor(Color.black);
+        player.NextActiveItem();
     }
-
+   
     private IEnumerator ChangeSprite()
     {
         switch (_spriteIndex)
